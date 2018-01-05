@@ -86,16 +86,13 @@ class Simple_LIS3DH {
 
     void setDataRate(lis3dh_dataRate_t dataRate);
     lis3dh_dataRate_t getDataRate(void);
+    uint8_t fifoGetStatus( void );
 
     int16_t x, y, z;
-
-  private:
 
     uint8_t readRegister8(uint8_t reg);
     void writeRegister8(uint8_t reg, uint8_t value);
 
-    int32_t _sensorID;
-    int8_t  _i2caddr;
 
     // SPI
     int8_t _cs;

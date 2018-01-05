@@ -60,8 +60,8 @@ bool Simple_LIS3DH::begin() {
   // Turn on orientation config
   //writeRegister8(LIS3DH_REG_PL_CFG, 0x40);
 
-  // enable adcs
-  writeRegister8(LIS3DH_REG_TEMPCFG, 0x80);
+  // disable adcs
+  writeRegister8(LIS3DH_REG_TEMPCFG, 0x00);
 
   /*
     for (uint8_t i=0; i<0x30; i++) {
@@ -92,9 +92,6 @@ void Simple_LIS3DH::read(void) {
     SPI.endTransaction();              // release the SPI bus
 
   }
-
-
-
 }
 
 
@@ -184,3 +181,12 @@ uint8_t Simple_LIS3DH::readRegister8(uint8_t reg) {
 
   return value;
 }
+
+uint8_t Simple_LIS3DH::fifoGetStatus( void )
+{
+  //Return some data on the state of the fifo
+  uint8_t tempReadByte = 0;
+  tempReadByte=readRegister8(LIS3DH_REG_FIFOSRC);
+  return tempReadByte;  
+}
+
