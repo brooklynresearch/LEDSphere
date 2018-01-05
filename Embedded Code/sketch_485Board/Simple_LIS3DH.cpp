@@ -48,14 +48,14 @@ bool Simple_LIS3DH::begin() {
 
   // enable all axes, normal mode
   writeRegister8(LIS3DH_REG_CTRL1, 0x07);
-  // 400Hz rate
-  setDataRate(LIS3DH_DATARATE_400_HZ);
+  // 100Hz rate
+  setDataRate(LIS3DH_DATARATE_100_HZ);
 
   // High res & BDU enabled
   writeRegister8(LIS3DH_REG_CTRL4, 0x88);
 
   // DRDY on INT1
-  writeRegister8(LIS3DH_REG_CTRL3, 0x10);
+//  writeRegister8(LIS3DH_REG_CTRL3, 0x10);
 
   // Turn on orientation config
   //writeRegister8(LIS3DH_REG_PL_CFG, 0x40);

@@ -94,7 +94,7 @@ void loop() {
     }*/
 
   static unsigned long sensorPreviousMillis = 0;
-  if (currentMillis - sensorPreviousMillis >= 10) {
+  if (currentMillis - sensorPreviousMillis >= 20) {
     bool fifoError = false;
 
     uint8_t fifoStatus = lis.fifoGetStatus();
