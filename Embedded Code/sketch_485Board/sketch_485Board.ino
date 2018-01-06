@@ -14,6 +14,7 @@ char inputString[64];         // a String to hold incoming data
 unsigned char inputStringIndex = 0;
 boolean stringComplete = false;  // whether the string is complete
 
+bool powerUPLedFinished = false;
 
 bool streamRawData = false;
 unsigned long streamRawDataBeginTime = 0;
@@ -46,6 +47,25 @@ void setup() {
 
 void loop() {
   unsigned long currentMillis = millis();
+
+  if (!powerUPLedFinished) {
+    static unsigned long LEDPreviousMillis = 0;
+    static int stepCount = 0;
+    if (currentMillis - LEDPreviousMillis >= 200) {
+      pixels.clear();
+      if (stepCount < 6) {
+        for (int i = 0; i < NUMPIXELS; i++) {
+          uint8_t modValue = (i + stepCount) % 3;
+          uint8_t testBrightness = 15;
+          pixels.setPixelColor(i, pixels.Color((modValue == 0) ? testBrightness : 0, (modValue == 1) ? testBrightness : 0, (modValue == 2) ? testBrightness : 0));
+        }
+      }
+      pixels.show(); // This sends the updated pixel color to the hardware.
+      stepCount++;
+      if (stepCount > 6) powerUPLedFinished = true;;
+      LEDPreviousMillis = currentMillis;
+    }
+  }
 
   /*static unsigned long LEDPreviousMillis = 0;
     static int stepCount = 0;
@@ -129,10 +149,6 @@ void loop() {
 
     stringComplete = false;
   }
-
-}
-
-void serialEvent() {
   while (Serial.available()) {
     // get the new byte:
     char inChar = (char)Serial.read();
@@ -147,5 +163,6 @@ void serialEvent() {
       }
     }
   }
+
 }
 
