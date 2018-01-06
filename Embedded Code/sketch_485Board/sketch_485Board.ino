@@ -1,14 +1,13 @@
 #include <SPI.h>
-#include <Adafruit_NeoPixel.h>
 #include <avr/power.h>
 #include "Simple_LIS3DH.h"
+#include "Simple_NeoPixel.h"
 
 #define LED_PIN        A3
-#define NUMPIXELS      12
 
 #define LIS3DH_REG_WHOAMI        0x0F
 
-Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, LED_PIN, NEO_GRB + NEO_KHZ800);
+Simple_NeoPixel pixels = Simple_NeoPixel(LED_PIN, NEO_GRB + NEO_KHZ800);
 Simple_LIS3DH lis = Simple_LIS3DH(10);
 
 char inputString[64];         // a String to hold incoming data
@@ -40,38 +39,7 @@ void setup() {
   Serial.print("Range = "); Serial.print(2 << lis.getRange());
   Serial.println("G");
 
-  //set fifo
-  uint8_t dataToWrite = 0;  //Temporary variable
-
-  //Build LIS3DH_FIFO_CTRL_REG
-  dataToWrite = lis.readRegister8(LIS3DH_REG_FIFOCTRL); //Start with existing data
-  dataToWrite &= 0x20;//clear all but bit 5
-  dataToWrite |= ((0x01) << 6) | (20 & 0x1F); //apply mode & watermark threshold
-  lis.writeRegister8(LIS3DH_REG_FIFOCTRL, dataToWrite);
-
-  //Build CTRL_REG5
-  dataToWrite = lis.readRegister8(LIS3DH_REG_CTRL5); //Start with existing data
-  dataToWrite &= 0xBF;//clear bit 6 //FIFO enable
-  dataToWrite |= (0x01) << 6;
-  //Now, write the patched together data
-  lis.writeRegister8(LIS3DH_REG_CTRL5, dataToWrite);
-
-  //fifoClear
-  while ( (lis.fifoGetStatus() & 0x20 ) == 0 ) {  // EMPTY flag
-    lis.read();
-  }
-
-  //fifoStartRec( void )
-  //Turn off...
-  dataToWrite = lis.readRegister8(LIS3DH_REG_FIFOCTRL);
-  dataToWrite &= 0x3F;//clear mode
-  lis.writeRegister8(LIS3DH_REG_FIFOCTRL, dataToWrite);
-  //  ... then back on again
-  dataToWrite = lis.readRegister8(LIS3DH_REG_FIFOCTRL); //Start with existing data
-  dataToWrite &= 0x3F;//clear mode
-  dataToWrite |= (0x01 & 0x03) << 6; //apply mode
-  //Now, write the patched together data
-  lis.writeRegister8(LIS3DH_REG_FIFOCTRL, dataToWrite);
+  lis.setupFifo();
 }
 
 
@@ -80,6 +48,7 @@ void loop() {
   unsigned long currentMillis = millis();
 
   /*static unsigned long LEDPreviousMillis = 0;
+    static int stepCount = 0;
     if (currentMillis - LEDPreviousMillis >= 200) {
     pixels.clear();
     for (int i = 0; i < NUMPIXELS; i++) {
@@ -119,12 +88,7 @@ void loop() {
 
     if (fifoError) {
       Serial.println("FIFO ERR");
-      uint8_t dataToWrite = lis.readRegister8(LIS3DH_REG_FIFOCTRL);
-      dataToWrite &= 0x3F;//clear mode
-      lis.writeRegister8(LIS3DH_REG_FIFOCTRL, dataToWrite);
-      dataToWrite |= (0x01 & 0x03) << 6; //apply mode
-      //Now, write the patched together data
-      lis.writeRegister8(LIS3DH_REG_FIFOCTRL, dataToWrite);
+      lis.resetFifo();
     }
 
     sensorPreviousMillis = currentMillis;

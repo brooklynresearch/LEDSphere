@@ -24,7 +24,7 @@ void setup() {
   myPort.bufferUntil('\n');
 
 
-  size(512, 256);
+  size(1024, 512);
   frameRate(30);
 }
 
@@ -42,6 +42,7 @@ void drawGraph(int[] data, int startPt) {
 }
 
 void draw() {
+  scale(2);
   background(0);
   stroke(255, 0, 0);
   drawGraph(dataX, xWritePtr);

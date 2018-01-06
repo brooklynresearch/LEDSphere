@@ -87,6 +87,8 @@ class Simple_LIS3DH {
     void setDataRate(lis3dh_dataRate_t dataRate);
     lis3dh_dataRate_t getDataRate(void);
     uint8_t fifoGetStatus( void );
+    void setupFifo(void);
+    void resetFifo(void);
 
     int16_t x, y, z;
 

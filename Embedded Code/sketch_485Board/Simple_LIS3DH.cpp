@@ -55,7 +55,7 @@ bool Simple_LIS3DH::begin() {
   writeRegister8(LIS3DH_REG_CTRL4, 0x88);
 
   // DRDY on INT1
-//  writeRegister8(LIS3DH_REG_CTRL3, 0x10);
+  //  writeRegister8(LIS3DH_REG_CTRL3, 0x10);
 
   // Turn on orientation config
   //writeRegister8(LIS3DH_REG_PL_CFG, 0x40);
@@ -74,6 +74,41 @@ bool Simple_LIS3DH::begin() {
   return true;
 }
 
+void Simple_LIS3DH::setupFifo(void) {
+  //set fifo
+  uint8_t dataToWrite = 0;  //Temporary variable
+
+  //Build LIS3DH_FIFO_CTRL_REG
+  dataToWrite = readRegister8(LIS3DH_REG_FIFOCTRL); //Start with existing data
+  dataToWrite &= 0x20;//clear all but bit 5
+  dataToWrite |= ((0x01) << 6) | (20 & 0x1F); //apply mode & watermark threshold
+  writeRegister8(LIS3DH_REG_FIFOCTRL, dataToWrite);
+
+  //Build CTRL_REG5
+  dataToWrite = readRegister8(LIS3DH_REG_CTRL5); //Start with existing data
+  dataToWrite &= 0xBF;//clear bit 6 //FIFO enable
+  dataToWrite |= (0x01) << 6;
+  //Now, write the patched together data
+  writeRegister8(LIS3DH_REG_CTRL5, dataToWrite);
+
+  //fifoClear
+  while ( (fifoGetStatus() & 0x20 ) == 0 ) {  // EMPTY flag
+    read();
+  }
+
+  resetFifo();
+}
+
+void Simple_LIS3DH::resetFifo(void) {
+  //Turn off...
+  uint8_t dataToWrite = readRegister8(LIS3DH_REG_FIFOCTRL);
+  dataToWrite &= 0x3F;//clear mode
+  writeRegister8(LIS3DH_REG_FIFOCTRL, dataToWrite);
+  dataToWrite |= (0x01 & 0x03) << 6; //apply mode
+  //Now, write the patched together data
+  writeRegister8(LIS3DH_REG_FIFOCTRL, dataToWrite);
+
+}
 
 void Simple_LIS3DH::read(void) {
   // read x y z at once
@@ -186,7 +221,7 @@ uint8_t Simple_LIS3DH::fifoGetStatus( void )
 {
   //Return some data on the state of the fifo
   uint8_t tempReadByte = 0;
-  tempReadByte=readRegister8(LIS3DH_REG_FIFOSRC);
-  return tempReadByte;  
+  tempReadByte = readRegister8(LIS3DH_REG_FIFOSRC);
+  return tempReadByte;
 }
 
