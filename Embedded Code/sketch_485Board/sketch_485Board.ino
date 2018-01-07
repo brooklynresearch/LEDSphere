@@ -10,7 +10,7 @@
 Simple_NeoPixel pixels = Simple_NeoPixel(LED_PIN, NEO_GRB + NEO_KHZ800);
 Simple_LIS3DH lis = Simple_LIS3DH(10);
 
-char inputString[64];         // a String to hold incoming data
+char inputString[64] = {'\0'};       // a String to hold incoming data
 unsigned char inputStringIndex = 0;
 boolean stringComplete = false;  // whether the string is complete
 
@@ -18,7 +18,9 @@ bool powerUPLedFinished = false;
 
 bool streamRawData = false;
 unsigned long streamRawDataBeginTime = 0;
-signed int streamTime = 10 * 1000;
+signed long streamTime = 10 * 1000;
+
+unsigned char boardID = 1;
 
 void setup() {
 
@@ -67,21 +69,6 @@ void loop() {
     }
   }
 
-  /*static unsigned long LEDPreviousMillis = 0;
-    static int stepCount = 0;
-    if (currentMillis - LEDPreviousMillis >= 200) {
-    pixels.clear();
-    for (int i = 0; i < NUMPIXELS; i++) {
-      if (i == stepCount) {
-        pixels.setPixelColor(i, pixels.Color(15, 0, 0)); // Moderately bright green color.
-      }
-    }
-    pixels.show(); // This sends the updated pixel color to the hardware.
-    stepCount++;
-    if (stepCount >= 12) stepCount = 0;
-    LEDPreviousMillis = currentMillis;
-    }*/
-
   static unsigned long sensorPreviousMillis = 0;
   if (currentMillis - sensorPreviousMillis >= 20) {
     bool fifoError = false;
@@ -95,6 +82,9 @@ void loop() {
       if (streamRawData) {
         char buf[16];
         char* bufPtr = buf;
+        *bufPtr = 'S';
+        *bufPtr++;
+        bufPtr = ucharToHex2_no_end(boardID, bufPtr);
         bufPtr = uintToHex4_no_end(lis.x, bufPtr);
         bufPtr = uintToHex4_no_end(lis.y, bufPtr);
         bufPtr = uintToHex4(lis.z, bufPtr);
@@ -125,14 +115,16 @@ void loop() {
 
   if (stringComplete) {
     uint8_t id = hexToUchar2(&inputString[1]);
-    if (inputString[0] == 'S') {
-      if (id == 1) {
+    uint8_t stringLength = strlen(inputString);
+    if (inputString[0] == 'S' && stringLength == 5  ) {
+      if (id == boardID) {
         streamRawDataBeginTime = millis();
-        streamTime = hexToUchar2(&inputString[3]) * 100;
+        uint8_t inputTime = hexToUchar2(&inputString[3]);
+        streamTime = ((unsigned int)inputTime) * inputTime * 100ul;
         streamRawData = true;
       }
-    } else if (inputString[0] == 'L') {
-      if (id == 1) {  //L01080808
+    } else if (inputString[0] == 'L' && stringLength == 9 ) {
+      if (id == boardID) {  //L01080808
         uint8_t r = hexToUchar2(&inputString[3]);
         uint8_t g = hexToUchar2(&inputString[5]);
         uint8_t b = hexToUchar2(&inputString[7]);
@@ -141,6 +133,8 @@ void loop() {
         }
         pixels.show();
       }
+    } else if (memcmp ( inputString, "STREAM", sizeof(6)) == 0 && stringLength == 8) {
+
     }
 
 

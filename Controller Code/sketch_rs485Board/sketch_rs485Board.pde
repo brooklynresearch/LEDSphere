@@ -24,7 +24,7 @@ void setup() {
   myPort.bufferUntil('\n');
 
 
-  size(1024, 512);
+  size(1536, 1024);
   frameRate(30);
 }
 
@@ -42,49 +42,69 @@ void drawGraph(int[] data, int startPt) {
 }
 
 void draw() {
-  scale(2);
+
   background(0);
-  stroke(255, 0, 0);
-  drawGraph(dataX, xWritePtr);
-  stroke(0, 255, 0);
-  drawGraph(dataY, yWritePtr);
-  stroke( 0, 0, 255);
-  drawGraph(dataZ, zWritePtr);
+  stroke(64);//grid
+  line(0, 256, 1024, 256);
+  line(0, 256*2, 1024, 256*2);
+  line(0, 256*3, 1024, 256*3);
+  line(1024, 0, 1024, 1024);
+
+  stroke(32);//center line
+  line(0, 128, 1024, 128);
+  line(0, 128*3, 1024, 128*3);
+  line(0, 128*5, 1024, 128*5);
+
+  fill(255);
+
+  text("X axis", 10, 20);
+  text("Y axis", 10, 20+256);
+  text("Z axis", 10, 20+512);
+
+  draw_graph(dataX, 0, 0, 1024, 256, -16384, 16384, 0xFFFF0000, 2, xWritePtr);
+  draw_graph(dataY, 0, 256, 1024, 256, -16384, 16384, 0xFF00FF00, 2, yWritePtr);
+  draw_graph(dataZ, 0, 512, 1024, 256, -16384, 16384, 0xFF0000FF, 2, zWritePtr);
 }
 
 void serialEvent(Serial p) {
   String inString = p.readString().trim();
-  if (inString.length() == 12) {
-    try {
-      String xStr = inString.substring(0, 4);
-      String yStr = inString.substring(4, 8);
-      String zStr = inString.substring(8, 12);
-      int x=Integer.parseInt(xStr, 16);
-      if (x>32767) x=x-65536;
-      int y=Integer.parseInt(yStr, 16);
-      if (y>32767) y=y-65536;      
-      int z=Integer.parseInt(zStr, 16);
-      if (z>32767) z=z-65536;
+  char firstChar = inString.charAt(0);
+  if (firstChar=='S') {
+    if (inString.length() == 15) {
+      try {
+        String xStr = inString.substring(3, 7);
+        String yStr = inString.substring(7, 11);
+        String zStr = inString.substring(11, 15);
+        int x=Integer.parseInt(xStr, 16);
+        if (x>32767) x=x-65536;
+        int y=Integer.parseInt(yStr, 16);
+        if (y>32767) y=y-65536;      
+        int z=Integer.parseInt(zStr, 16);
+        if (z>32767) z=z-65536;
 
-      dataX[xWritePtr]=x;
-      xWritePtr++;
-      if (xWritePtr>=512) xWritePtr=0;
-      dataY[yWritePtr]=y;
-      yWritePtr++;
-      if (yWritePtr>=512) yWritePtr=0;
-      dataZ[yWritePtr]=z;
-      zWritePtr++;
-      if (zWritePtr>=512) zWritePtr=0;
+        dataX[xWritePtr]=x;
+        xWritePtr++;
+        if (xWritePtr>=512) xWritePtr=0;
+        dataY[yWritePtr]=y;
+        yWritePtr++;
+        if (yWritePtr>=512) yWritePtr=0;
+        dataZ[yWritePtr]=z;
+        zWritePtr++;
+        if (zWritePtr>=512) zWritePtr=0;
+      }
+      catch(Exception e) {
+      }
     }
-    catch(Exception e) {
-    }
+  } else {
+
+
+    println(inString);
   }
-  //println(inString);
 }
 
 void mousePressed() {
-    myPort.write("S01FF\n");
-    println("request");
+  myPort.write("S01FF\n");
+  println("request");
 }
 
 void keyPressed() {
