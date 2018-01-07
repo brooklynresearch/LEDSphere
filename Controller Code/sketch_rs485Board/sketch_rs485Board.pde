@@ -1,4 +1,4 @@
-import processing.serial.*;
+import processing.serial.*; //<>//
 
 Serial myPort;                       // The serial port
 
@@ -14,6 +14,9 @@ AxisData dataX = new AxisData(dataLen, envelopeRate);
 AxisData dataY = new AxisData(dataLen, envelopeRate); 
 AxisData dataZ = new AxisData(dataLen, envelopeRate); 
 
+HScrollbar hsEnvelope;  
+
+
 void setup() {
 
   String validPort="";
@@ -24,9 +27,14 @@ void setup() {
     }
   }
 
-  myPort = new Serial(this, validPort, 115200);
-  myPort.bufferUntil('\n');
+  if (validPort.length()>0) {
+    myPort = new Serial(this, validPort, 115200);
+    myPort.bufferUntil('\n');
+  }
 
+  hsEnvelope = new HScrollbar(1024+30, 512+20, 200, 16, 1, "Envelope", 16, 128);  //last 2 is range
+
+  hsEnvelope.setMapValue(0);
 
   size(1536, 1024);
   frameRate(30);
@@ -61,8 +69,17 @@ void draw() {
   dataZ.drawData(0, 512, 1024, 256, -16384, 16384, 0xFF0000FF, 2);
 
   {  //get lastest x,y value
-    draw_horizontalAcceleratrion(1024, 0, 512, 512, 16384, dataX.value, -dataY.value);  //computer y is downward
+    draw_horizontalAcceleratrion(1024, 0, 512, 512, 16384, dataX.value, -dataY.value);  //computer y is downward //<>//
   }
+
+  if (hsEnvelope.update()) {
+    envelopeRate=(int)hsEnvelope.getMapValue();
+    dataX.axisEvenlopRate=envelopeRate;
+    dataY.axisEvenlopRate=envelopeRate;
+    dataZ.axisEvenlopRate=envelopeRate;
+  }
+
+  hsEnvelope.display();
 }
 
 void serialEvent(Serial p) {
@@ -89,15 +106,8 @@ void serialEvent(Serial p) {
       }
     }
   } else {
-
-
     println(inString);
   }
-}
-
-void mousePressed() {
-  myPort.write("S01FF\n");
-  println("request");
 }
 
 void keyPressed() {
@@ -109,5 +119,9 @@ void keyPressed() {
   }
   if (key == '3') {
     myPort.write("L01000008\n");
+  }
+  if (key == ' ') {
+    myPort.write("S01FF\n");
+    println("request");
   }
 }
