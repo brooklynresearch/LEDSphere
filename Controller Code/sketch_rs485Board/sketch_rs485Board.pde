@@ -8,13 +8,14 @@ int xWritePtr = 0;
 int yWritePtr = 0;
 int zWritePtr = 0;
 
-int envelopeRate = 16;
+int envelopeRate = 64;
+int envelopeThreshold = 512;
 
 AxisData dataX = new AxisData(dataLen, envelopeRate); 
 AxisData dataY = new AxisData(dataLen, envelopeRate); 
 AxisData dataZ = new AxisData(dataLen, envelopeRate); 
 
-HScrollbar hsEnvelope;  
+HScrollbar hsEnvelope, hsThreshold;  
 
 
 void setup() {
@@ -33,8 +34,9 @@ void setup() {
   }
 
   hsEnvelope = new HScrollbar(1024+30, 512+20, 200, 16, 1, "Envelope", 16, 128);  //last 2 is range
-
-  hsEnvelope.setMapValue(0);
+  hsThreshold = new HScrollbar(1024+30, 512+60, 200, 16, 1, "Threshold", 128, 2048); 
+  hsEnvelope.setMapValue(envelopeRate);
+  hsThreshold.setMapValue(envelopeThreshold);
 
   size(1536, 1024);
   frameRate(30);
@@ -67,9 +69,9 @@ void draw() {
   dataX.drawData(0, 0, 1024, 256, -16384, 16384, 0xFFFF0000, 2);
   dataY.drawData(0, 256, 1024, 256, -16384, 16384, 0xFF00FF00, 2);
   dataZ.drawData(0, 512, 1024, 256, -16384, 16384, 0xFF0000FF, 2);
-
+ //<>//
   {  //get lastest x,y value
-    draw_horizontalAcceleratrion(1024, 0, 512, 512, 16384, dataX.value, -dataY.value);  //computer y is downward //<>//
+    draw_horizontalAcceleratrion(1024, 0, 512, 512, 16384, dataX, dataY, envelopeThreshold);  //computer y is downward
   }
 
   if (hsEnvelope.update()) {
@@ -79,6 +81,11 @@ void draw() {
     dataZ.axisEvenlopRate=envelopeRate;
   }
 
+  if (hsThreshold.update()) {
+    envelopeThreshold=(int)hsThreshold.getMapValue();
+  }
+
+  hsThreshold.display();
   hsEnvelope.display();
 }
 

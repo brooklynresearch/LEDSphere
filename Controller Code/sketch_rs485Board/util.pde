@@ -18,14 +18,31 @@ void draw_graph(int[] channelData, int x, int y, int w, int h, int minVal, int m
 
 
 
-void draw_horizontalAcceleratrion(int x, int y, int w, int h, int fullScale, int xValue, int yValue) {
+void draw_horizontalAcceleratrion(int x, int y, int w, int h, int fullScale, AxisData xD, AxisData yD, int _threshold) {
   pushStyle();  
-
-  stroke(255, 255, 0);
-  strokeWeight(3);
   int halfW = w/2, halfH=h/2;
   int horiCenterX = x+halfW, horiCenterY=y+halfH;
-  line(horiCenterX, horiCenterY, horiCenterX+halfW*xValue/fullScale, horiCenterY+halfH*yValue/fullScale);
+
+  boolean stable =((xD.axisEvenlopTop-xD.axisEvenlopBtm)<_threshold) &&((yD.axisEvenlopTop-yD.axisEvenlopBtm)<_threshold);
+
+  stroke(255);
+  strokeWeight(1);
+  float xMinPos = halfW*xD.axisEvenlopBtm/fullScale;
+  float xMaxPos = halfW*xD.axisEvenlopTop/fullScale;
+  float yMinPos = halfH*yD.axisEvenlopBtm/fullScale;
+  float yMaxPos = halfH*yD.axisEvenlopTop/fullScale;
+  line(horiCenterX+xMinPos, horiCenterY-yMinPos, horiCenterX+xMaxPos, horiCenterY-yMinPos);
+  line(horiCenterX+xMinPos, horiCenterY-yMaxPos, horiCenterX+xMaxPos, horiCenterY-yMaxPos);
+  line(horiCenterX+xMinPos, horiCenterY-yMinPos, horiCenterX+xMinPos, horiCenterY-yMaxPos);
+  line(horiCenterX+xMaxPos, horiCenterY-yMinPos, horiCenterX+xMaxPos, horiCenterY-yMaxPos);
+
+  if (stable) {
+    stroke(0, 255, 0);
+  } else {
+    stroke(255, 0, 0);
+  }
+  strokeWeight(3);
+  line(horiCenterX, horiCenterY, horiCenterX+halfW*xD.value/fullScale, horiCenterY-halfH*yD.value/fullScale);
 
   popStyle();
 }
@@ -158,9 +175,9 @@ class HScrollbar {
     }
     rect(spos, ypos, sheight, sheight);
     fill(255);
-    text(((int)mapMin),xpos-28,ypos+12);
-    text(((int)mapMax),xpos+swidth+3,ypos+12);
-    text(label+": "+((int)getMapValue()),xpos+swidth+3+30,ypos+12);
+    text(((int)mapMin), xpos-28, ypos+12);
+    text(((int)mapMax), xpos+swidth+3, ypos+12);
+    text(label+": "+((int)getMapValue()), xpos+swidth+3+30, ypos+12);
   }
 
   float getPos() {
