@@ -2,13 +2,17 @@ import processing.serial.*;
 
 Serial myPort;                       // The serial port
 
-int dataX[]=new int[512];
-int dataY[]=new int[512];
-int dataZ[]=new int[512];
+int dataLen = 512;
+
 int xWritePtr = 0;
 int yWritePtr = 0;
 int zWritePtr = 0;
 
+int envelopeRate = 16;
+
+AxisData dataX = new AxisData(dataLen, envelopeRate); 
+AxisData dataY = new AxisData(dataLen, envelopeRate); 
+AxisData dataZ = new AxisData(dataLen, envelopeRate); 
 
 void setup() {
 
@@ -28,19 +32,6 @@ void setup() {
   frameRate(30);
 }
 
-void drawGraph(int[] data, int startPt) {
-  int nextPt=startPt+1;
-  if (nextPt>=512) nextPt=0;
-  for (int i=0; i<511; i++) {
-    int value1=data[startPt];
-    int value2=data[nextPt];
-    line(i, 128+value1/128, i+1, 128+value2/128);
-    startPt=nextPt;
-    nextPt++;
-    if (nextPt>=512) nextPt=0;
-  }
-}
-
 void draw() {
 
   background(0);
@@ -49,6 +40,7 @@ void draw() {
   line(0, 256*2, 1024, 256*2);
   line(0, 256*3, 1024, 256*3);
   line(1024, 0, 1024, 1024);
+  line(1024, 512, 1536, 512);
 
   stroke(32);//center line
   line(0, 128, 1024, 128);
@@ -56,14 +48,21 @@ void draw() {
   line(0, 128*5, 1024, 128*5);
 
   fill(255);
-
-  text("X axis", 10, 20);
+  text("X axis", 10, 20);//label
   text("Y axis", 10, 20+256);
   text("Z axis", 10, 20+512);
+  text("horizontal acceleration", 1024+10, 20);
 
-  draw_graph(dataX, 0, 0, 1024, 256, -16384, 16384, 0xFFFF0000, 2, xWritePtr);
-  draw_graph(dataY, 0, 256, 1024, 256, -16384, 16384, 0xFF00FF00, 2, yWritePtr);
-  draw_graph(dataZ, 0, 512, 1024, 256, -16384, 16384, 0xFF0000FF, 2, zWritePtr);
+  dataX.drawEvenlop(0, 0, 1024, 256, -16384, 16384, 0xFFAA4000, 0xFFAA0040, 1);
+  dataY.drawEvenlop(0, 256, 1024, 256, -16384, 16384, 0xFF40AA00, 0xFF00AA40, 1);
+
+  dataX.drawData(0, 0, 1024, 256, -16384, 16384, 0xFFFF0000, 2);
+  dataY.drawData(0, 256, 1024, 256, -16384, 16384, 0xFF00FF00, 2);
+  dataZ.drawData(0, 512, 1024, 256, -16384, 16384, 0xFF0000FF, 2);
+
+  {  //get lastest x,y value
+    draw_horizontalAcceleratrion(1024, 0, 512, 512, 16384, dataX.value, -dataY.value);  //computer y is downward
+  }
 }
 
 void serialEvent(Serial p) {
@@ -82,15 +81,9 @@ void serialEvent(Serial p) {
         int z=Integer.parseInt(zStr, 16);
         if (z>32767) z=z-65536;
 
-        dataX[xWritePtr]=x;
-        xWritePtr++;
-        if (xWritePtr>=512) xWritePtr=0;
-        dataY[yWritePtr]=y;
-        yWritePtr++;
-        if (yWritePtr>=512) yWritePtr=0;
-        dataZ[yWritePtr]=z;
-        zWritePtr++;
-        if (zWritePtr>=512) zWritePtr=0;
+        dataX.addNewValue(x);
+        dataY.addNewValue(y);
+        dataZ.addNewValue(z);
       }
       catch(Exception e) {
       }
