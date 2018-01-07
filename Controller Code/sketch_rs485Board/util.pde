@@ -18,12 +18,12 @@ void draw_graph(int[] channelData, int x, int y, int w, int h, int minVal, int m
 
 
 
-void draw_horizontalAcceleratrion(int x, int y, int w, int h, int fullScale, AxisData xD, AxisData yD, int _threshold) {
+void draw_horizontalAcceleratrion(int x, int y, int w, int h, int fullScale, AxisData xD, AxisData yD, int _threshold, boolean _stable) {
   pushStyle();  
   int halfW = w/2, halfH=h/2;
   int horiCenterX = x+halfW, horiCenterY=y+halfH;
 
-  boolean stable =((xD.axisEvenlopTop-xD.axisEvenlopBtm)<_threshold) &&((yD.axisEvenlopTop-yD.axisEvenlopBtm)<_threshold);
+ 
 
   stroke(255);
   strokeWeight(1);
@@ -36,7 +36,7 @@ void draw_horizontalAcceleratrion(int x, int y, int w, int h, int fullScale, Axi
   line(horiCenterX+xMinPos, horiCenterY-yMinPos, horiCenterX+xMinPos, horiCenterY-yMaxPos);
   line(horiCenterX+xMaxPos, horiCenterY-yMinPos, horiCenterX+xMaxPos, horiCenterY-yMaxPos);
 
-  if (stable) {
+  if (_stable) {
     stroke(0, 255, 0);
   } else {
     stroke(255, 0, 0);

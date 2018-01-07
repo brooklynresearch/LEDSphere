@@ -14,9 +14,11 @@ int envelopeThreshold = 512;
 AxisData dataX = new AxisData(dataLen, envelopeRate); 
 AxisData dataY = new AxisData(dataLen, envelopeRate); 
 AxisData dataZ = new AxisData(dataLen, envelopeRate); 
+AxisData dataEvenlope = new AxisData(dataLen, 0); 
 
 HScrollbar hsEnvelope, hsThreshold;  
 
+static boolean sensorStable = true;
 
 void setup() {
 
@@ -56,22 +58,39 @@ void draw() {
   line(0, 128, 1024, 128);
   line(0, 128*3, 1024, 128*3);
   line(0, 128*5, 1024, 128*5);
+  //line(0, 128*7, 1024, 128*7);
 
   fill(255);
   text("X axis", 10, 20);//label
   text("Y axis", 10, 20+256);
   text("Z axis", 10, 20+512);
+  text("max differnce on XY envelope", 10, 20+768);
   text("horizontal acceleration", 1024+10, 20);
 
   dataX.drawEvenlop(0, 0, 1024, 256, -16384, 16384, 0xFFAA4000, 0xFFAA0040, 1);
   dataY.drawEvenlop(0, 256, 1024, 256, -16384, 16384, 0xFF40AA00, 0xFF00AA40, 1);
-
+ //<>//
   dataX.drawData(0, 0, 1024, 256, -16384, 16384, 0xFFFF0000, 2);
   dataY.drawData(0, 256, 1024, 256, -16384, 16384, 0xFF00FF00, 2);
   dataZ.drawData(0, 512, 1024, 256, -16384, 16384, 0xFF0000FF, 2);
- //<>//
+  dataEvenlope.drawData(0, 768, 1024, 256, -128, 8192, 0xFFFFFFFF, 2);
+
+
   {  //get lastest x,y value
-    draw_horizontalAcceleratrion(1024, 0, 512, 512, 16384, dataX, dataY, envelopeThreshold);  //computer y is downward
+    //add hysteresis to envelopeThreshold
+    float newThreshold, newThresholdLinePos;
+    if (sensorStable) {
+      newThreshold = envelopeThreshold*1.1;
+      if (dataEvenlope.value>(newThreshold)) sensorStable = false;
+    } else {
+      newThreshold = envelopeThreshold*0.9;
+      if (dataEvenlope.value<(newThreshold)) sensorStable = true;
+    }
+    newThresholdLinePos = map(newThreshold, -128, 8192, 1024, 768);
+    stroke(32);//center line
+    line(0, newThresholdLinePos, 1024, newThresholdLinePos);
+
+    draw_horizontalAcceleratrion(1024, 0, 512, 512, 16384, dataX, dataY, envelopeThreshold, sensorStable);  //computer y is downward
   }
 
   if (hsEnvelope.update()) {
@@ -108,6 +127,7 @@ void serialEvent(Serial p) {
         dataX.addNewValue(x);
         dataY.addNewValue(y);
         dataZ.addNewValue(z);
+        dataEvenlope.addNewValue(max(dataX.axisEvenlopTop-dataX.axisEvenlopBtm, dataY.axisEvenlopTop-dataY.axisEvenlopBtm));
       }
       catch(Exception e) {
       }
