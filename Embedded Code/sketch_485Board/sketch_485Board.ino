@@ -1,4 +1,5 @@
 #include <SPI.h>
+#include <EEPROM.h>
 #include <avr/power.h>
 #include "Simple_LIS3DH.h"
 #include "Simple_NeoPixel.h"
@@ -20,7 +21,17 @@ bool streamRawData = false;
 unsigned long streamRawDataBeginTime = 0;
 signed long streamTime = 10 * 1000;
 
-unsigned char boardID = 1;
+unsigned char boardID = 0;
+
+
+#define ACC_EVENT_STABLE_CENTER  0
+#define ACC_EVENT_STABLE_TILTED  1
+#define ACC_EVENT_UNSTABLE       2
+
+unsigned char accelerometerEvent = ACC_EVENT_STABLE_CENTER;
+
+int envelopeRate = 32;
+int envelopeThreshold = 768;
 
 void setup() {
 
@@ -28,6 +39,11 @@ void setup() {
   digitalWrite(4, LOW);
 
   Serial.begin(115200);
+
+  boardID = EEPROM.read(0);
+
+  Serial.print("RS485 Address: ");
+  Serial.println(boardID);
 
   pixels.begin(); // This initializes the NeoPixel library.
 
@@ -77,6 +93,7 @@ void loop() {
     fifoError = ((fifoStatus & 0x60) != 0);//OVRN_FIFO or EMPTY
     while ( (fifoStatus & 0x20 ) == 0 ) {
       lis.read();      // get X Y and Z data at once
+      accelerometerEvent = accelerometerEventProcess(lis.x, lis.y);
       // Then print out the raw data
 
       if (streamRawData) {
@@ -90,6 +107,11 @@ void loop() {
         bufPtr = uintToHex4(lis.z, bufPtr);
         digitalWrite(4, HIGH);
         Serial.println(buf);
+
+        if (accelerometerEvent == ACC_EVENT_UNSTABLE) setLEDcolor(64, 0, 0);
+        else if (accelerometerEvent == ACC_EVENT_STABLE_CENTER) setLEDcolor(0, 64, 0);
+        else if (accelerometerEvent == ACC_EVENT_STABLE_TILTED) setLEDcolor(0, 0, 64);
+
       }
       fifoStatus = lis.fifoGetStatus();
     }
@@ -158,5 +180,35 @@ void loop() {
     }
   }
 
+}
+
+unsigned char accelerometerEventProcess(int16_t x, int16_t y) {
+  static unsigned char state = ACC_EVENT_UNSTABLE;
+  static int axisEvenlopXTop = 0, axisEvenlopXBtm = 0;
+  static int axisEvenlopYTop = 0, axisEvenlopYBtm = 0;
+  axisEvenlopXTop -= envelopeRate;
+  if (axisEvenlopXTop < x) axisEvenlopXTop = x;
+  axisEvenlopXBtm += envelopeRate;
+  if (axisEvenlopXBtm > x) axisEvenlopXBtm = x;
+  axisEvenlopYTop -= envelopeRate;
+  if (axisEvenlopYTop < y) axisEvenlopYTop = y;
+  axisEvenlopYBtm += envelopeRate;
+  if (axisEvenlopYBtm > y) axisEvenlopYBtm = y;
+  int envelopMaxXY = max(axisEvenlopXTop - axisEvenlopXBtm, axisEvenlopYTop - axisEvenlopYBtm);
+
+  switch (state) {
+    case ACC_EVENT_STABLE_CENTER:
+    case ACC_EVENT_STABLE_TILTED:
+      if (envelopMaxXY > envelopeThreshold) {
+        state = ACC_EVENT_UNSTABLE;
+      }
+      break;
+    case ACC_EVENT_UNSTABLE:
+      if (envelopMaxXY < (envelopeThreshold / 8)) {
+        state = ACC_EVENT_STABLE_CENTER;
+      }
+      break;
+  }
+  return state;
 }
 

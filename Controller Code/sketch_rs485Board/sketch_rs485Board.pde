@@ -1,4 +1,4 @@
-import processing.serial.*; //<>//
+import processing.serial.*; //<>// //<>//
 
 Serial myPort;                       // The serial port
 
@@ -8,8 +8,9 @@ int xWritePtr = 0;
 int yWritePtr = 0;
 int zWritePtr = 0;
 
-int envelopeRate = 64;
-int envelopeThreshold = 512;
+int envelopeRate = 32;
+int envelopeThreshold = 768;
+int centerThreshold = 128;
 
 AxisData dataX = new AxisData(dataLen, envelopeRate); 
 AxisData dataY = new AxisData(dataLen, envelopeRate); 
@@ -69,24 +70,30 @@ void draw() {
 
   dataX.drawEvenlop(0, 0, 1024, 256, -16384, 16384, 0xFFAA4000, 0xFFAA0040, 1);
   dataY.drawEvenlop(0, 256, 1024, 256, -16384, 16384, 0xFF40AA00, 0xFF00AA40, 1);
- //<>//
+
   dataX.drawData(0, 0, 1024, 256, -16384, 16384, 0xFFFF0000, 2);
   dataY.drawData(0, 256, 1024, 256, -16384, 16384, 0xFF00FF00, 2);
   dataZ.drawData(0, 512, 1024, 256, -16384, 16384, 0xFF0000FF, 2);
-  dataEvenlope.drawData(0, 768, 1024, 256, -128, 8192, 0xFFFFFFFF, 2);
+  dataEvenlope.drawData(0, 768, 1024, 256, -128, 8192/2, 0xFFFFFFFF, 2);
 
 
   {  //get lastest x,y value
     //add hysteresis to envelopeThreshold
     float newThreshold, newThresholdLinePos;
     if (sensorStable) {
-      newThreshold = envelopeThreshold*1.1;
-      if (dataEvenlope.value>(newThreshold)) sensorStable = false;
+      newThreshold = envelopeThreshold*1;
+      if (dataEvenlope.value>(newThreshold)) {
+        sensorStable = false;
+        println("unstable "+millis());
+      }
     } else {
-      newThreshold = envelopeThreshold*0.9;
-      if (dataEvenlope.value<(newThreshold)) sensorStable = true;
+      newThreshold = envelopeThreshold/8;
+      if (dataEvenlope.value<(newThreshold)) {
+        sensorStable = true;
+        println("Stable "+millis());
+      }
     }
-    newThresholdLinePos = map(newThreshold, -128, 8192, 1024, 768);
+    newThresholdLinePos = map(newThreshold, -128, 8192/2, 1024, 768);
     stroke(32);//center line
     line(0, newThresholdLinePos, 1024, newThresholdLinePos);
 
@@ -139,16 +146,16 @@ void serialEvent(Serial p) {
 
 void keyPressed() {
   if (key == '1') {
-    myPort.write("L01080000\n");
+    myPort.write("L02080000\n");
   }
   if (key == '2') {
-    myPort.write("L01000800\n");
+    myPort.write("L02000800\n");
   }
   if (key == '3') {
-    myPort.write("L01000008\n");
+    myPort.write("L02000008\n");
   }
   if (key == ' ') {
-    myPort.write("S01FF\n");
+    myPort.write("S02FF\n");
     println("request");
   }
 }

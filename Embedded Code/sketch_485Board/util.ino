@@ -1,7 +1,7 @@
 
 #define toHex(i) (((i) <= 9)?('0' +(i)):((i)+'@'-9))
 
-static char *ucharToHex2(unsigned char data, char *s) { 
+static char *ucharToHex2(unsigned char data, char *s) {
   unsigned int d;
   d = data >> 4;
   *s++ = toHex(d);
@@ -11,7 +11,7 @@ static char *ucharToHex2(unsigned char data, char *s) {
   return s;
 }
 
-static char *ucharToHex2_no_end(unsigned char data, char *s) { 
+static char *ucharToHex2_no_end(unsigned char data, char *s) {
   unsigned int d;
   d = data >> 4;
   *s++ = toHex(d);
@@ -51,3 +51,11 @@ unsigned char hexToUchar(char s) {
 unsigned char hexToUchar2(char *s) {
   return (hexToUchar(*s) << 4) + hexToUchar(*(s + 1));
 }
+
+void setLEDcolor(uint8_t r, uint8_t g, uint8_t b) {
+  for (int i = 0; i < NUMPIXELS; i++) {
+    pixels.setPixelColor(i, pixels.Color(r, g, b));
+  }
+  pixels.show(); // This sends the updated pixel color to the hardware.
+}
+
