@@ -27,13 +27,13 @@ class LEDSphere {
     acceEvent=_acceEvent;
     switch(_acceEvent) {
     case 0:
-      fillcolor=color(64, 64, 64);
+      fillcolor=color(64, 64, 64);  //stable
       break;
     case 1:
-      fillcolor=color(0, 0, 192);
+      fillcolor=color(0, 0, 192);   //tilt
       break;
     case 2:
-      fillcolor=color(0, 192, 0);
+      fillcolor=color(0, 192, 0);  //unstable
       break;
     }
   }

@@ -3,7 +3,7 @@ import processing.serial.*;
 Serial myPort;       
 
 //int boardsID[]={1, 2, 3};
-LEDSphere spheres[] = new LEDSphere[2];
+LEDSphere spheres[] = new LEDSphere[1];
 
 int boardCheckingIndex = 0;
 
@@ -22,7 +22,7 @@ int boardCheckStates = CheckStates.IDLE;
 void setup() {
 
   for (int i=0; i<spheres.length; i++) {
-    spheres[i] = new LEDSphere(i+1, 150+300*i, 150);
+    spheres[i] = new LEDSphere(i+2, 150+300*i, 150);
   }
 
   String validPort="";
@@ -113,7 +113,7 @@ void serialEvent(Serial p) {
         LEDSphere oneSphere=spheres[boardCheckingIndex];
 
         if (oneSphere.id == id) {
-          oneSphere.updateData(x, y, eventID);
+          oneSphere.updateData(x, y, eventID); println(eventID);
         } else {
           println("ID mismatch");
         }
