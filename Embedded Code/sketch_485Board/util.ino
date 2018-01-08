@@ -52,6 +52,11 @@ unsigned char hexToUchar2(char *s) {
   return (hexToUchar(*s) << 4) + hexToUchar(*(s + 1));
 }
 
+unsigned int hexToInt16(char *s) {
+  return (hexToUchar2(s) << 8) + hexToUchar2(s+2);
+}
+
+
 void setLEDcolor(uint8_t r, uint8_t g, uint8_t b) {
   for (int i = 0; i < NUMPIXELS; i++) {
     pixels.setPixelColor(i, pixels.Color(r, g, b));

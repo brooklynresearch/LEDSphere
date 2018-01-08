@@ -33,6 +33,9 @@ unsigned char accelerometerEvent = ACC_EVENT_STABLE_CENTER;
 int envelopeRate = 32;
 int envelopeThreshold = 768;
 int centerThreshold = 384;
+int offsetX = 0;
+int offsetY = 0;
+
 
 void setup() {
 
@@ -94,6 +97,9 @@ void loop() {
     fifoError = ((fifoStatus & 0x60) != 0);//OVRN_FIFO or EMPTY
     while ( (fifoStatus & 0x20 ) == 0 ) {
       lis.read();      // get X Y and Z data at once
+      lis.x -= offsetX;
+      lis.y -= offsetY;
+
       accelerometerEvent = accelerometerEventProcess(lis.x, lis.y);
       // Then print out the raw data
 
@@ -108,16 +114,15 @@ void loop() {
         bufPtr = uintToHex4(lis.z, bufPtr);
         digitalWrite(4, HIGH);
         Serial.println(buf);
-
-        if (accelerometerEvent == ACC_EVENT_UNSTABLE) setLEDcolor(64, 0, 0);
-        else if (accelerometerEvent == ACC_EVENT_STABLE_CENTER) setLEDcolor(0, 64, 0);
-        else if (accelerometerEvent == ACC_EVENT_STABLE_TILTED) setLEDcolor(0, 0, 64);
-
       }
       fifoStatus = lis.fifoGetStatus();
     }
+    /*if (accelerometerEvent == ACC_EVENT_UNSTABLE) setLEDcolor(64, 0, 0);
+      else if (accelerometerEvent == ACC_EVENT_STABLE_CENTER) setLEDcolor(0, 64, 0);
+      else if (accelerometerEvent == ACC_EVENT_STABLE_TILTED) setLEDcolor(0, 0, 64);*/
     Serial.flush();
     digitalWrite(4, LOW);
+
 
     if (fifoError) {
       Serial.println("FIFO ERR");
@@ -156,10 +161,28 @@ void loop() {
         }
         pixels.show();
       }
-    } else if (memcmp ( inputString, "STREAM", sizeof(6)) == 0 && stringLength == 8) {
-
+    } else if (inputString[0] == 'E' && stringLength == 3) {
+      if (id == boardID) {
+        char buf[16];
+        char* bufPtr = buf;
+        *bufPtr = 'E';
+        *bufPtr++;
+        bufPtr = ucharToHex2_no_end(boardID, bufPtr);
+        bufPtr = ucharToHex2_no_end(accelerometerEvent, bufPtr);
+        bufPtr = uintToHex4_no_end(lis.x, bufPtr);
+        bufPtr = uintToHex4(lis.y, bufPtr);
+        digitalWrite(4, HIGH);
+        Serial.println(buf);
+        Serial.flush();
+        digitalWrite(4, LOW);
+      }
+    } else if (inputString[0] == 'P' && stringLength == (3+12)) {
+      if (id == boardID) {
+        envelopeRate = hexToInt16(&inputString[3]);
+        envelopeThreshold = hexToInt16(&inputString[7]);
+        centerThreshold = hexToInt16(&inputString[11]);
+      }
     }
-
 
     inputStringIndex = 0;
     inputString[0] = '\0';
@@ -237,7 +260,6 @@ unsigned char accelerometerEventProcess(int16_t x, int16_t y) {
   } else {
     if (stableCenterAccu > 16)  stableCenterAccu = 16;
     if (stableTiltAccu > 16)  stableTiltAccu = 16;
-
   }
   return state;
 }

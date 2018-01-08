@@ -10,7 +10,7 @@ int zWritePtr = 0;
 
 int envelopeRate = 32;
 int envelopeThreshold = 768;
-int centerThreshold = 512;
+int centerThreshold = 384;
 int stableCenterAccu = 0;
 int stableTiltAccu = 0;
 
@@ -68,8 +68,8 @@ void draw() {
   //line(0, 128*7, 1024, 128*7);
 
   fill(255);
-  text("X axis", 10, 20);//label
-  text("Y axis", 10, 20+256);
+  text("X axis: "+dataX.value, 10, 20);//label
+  text("Y axis: "+dataY.value, 10, 20+256);
   text("Z axis", 10, 20+512);
   text("max differnce on XY envelope", 10, 20+768);
   text("horizontal acceleration", 1024+10, 20);
