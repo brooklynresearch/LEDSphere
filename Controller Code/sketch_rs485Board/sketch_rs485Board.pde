@@ -10,16 +10,20 @@ int zWritePtr = 0;
 
 int envelopeRate = 32;
 int envelopeThreshold = 768;
-int centerThreshold = 128;
+int centerThreshold = 512;
+int stableCenterAccu = 0;
+int stableTiltAccu = 0;
+
 
 AxisData dataX = new AxisData(dataLen, envelopeRate); 
 AxisData dataY = new AxisData(dataLen, envelopeRate); 
 AxisData dataZ = new AxisData(dataLen, envelopeRate); 
 AxisData dataEvenlope = new AxisData(dataLen, 0); 
 
-HScrollbar hsEnvelope, hsThreshold;  
+HScrollbar hsEnvelope, hsThreshold, hsCenter;  
 
-static boolean sensorStable = true;
+boolean sensorStable = true;
+boolean sensorCentered = true;
 
 void setup() {
 
@@ -38,8 +42,10 @@ void setup() {
 
   hsEnvelope = new HScrollbar(1024+30, 512+20, 200, 16, 1, "Envelope", 16, 128);  //last 2 is range
   hsThreshold = new HScrollbar(1024+30, 512+60, 200, 16, 1, "Threshold", 128, 2048); 
+  hsCenter = new HScrollbar(1024+30, 512+100, 200, 16, 1, "Center", 128, 2048); 
   hsEnvelope.setMapValue(envelopeRate);
   hsThreshold.setMapValue(envelopeThreshold);
+  hsCenter.setMapValue(centerThreshold);
 
   size(1536, 1024);
   frameRate(30);
@@ -90,6 +96,7 @@ void draw() {
       newThreshold = envelopeThreshold/8;
       if (dataEvenlope.value<(newThreshold)) {
         sensorStable = true;
+        sensorCentered=true;
         println("Stable "+millis());
       }
     }
@@ -97,7 +104,28 @@ void draw() {
     stroke(32);//center line
     line(0, newThresholdLinePos, 1024, newThresholdLinePos);
 
-    draw_horizontalAcceleratrion(1024, 0, 512, 512, 16384, dataX, dataY, envelopeThreshold, sensorStable);  //computer y is downward
+
+    if (sensorStable) {
+      int maxXY = max(abs(dataX.value), abs(dataY.value));
+      if (maxXY>centerThreshold) {
+        stableTiltAccu++;
+        stableCenterAccu=0;
+      } else if (maxXY<centerThreshold/2) {
+        stableCenterAccu++;
+        stableTiltAccu=0;
+      }
+      if (stableCenterAccu>16) {
+        stableCenterAccu=0;
+        stableTiltAccu=0;
+        sensorCentered=true;
+      }
+      if (stableTiltAccu>16) {
+        stableCenterAccu=0;
+        stableTiltAccu=0;
+        sensorCentered=false;
+      }
+    }
+    draw_horizontalAcceleratrion(1024, 0, 512, 512, 16384, dataX, dataY, envelopeThreshold, sensorStable, sensorCentered);  //computer y is downward
   }
 
   if (hsEnvelope.update()) {
@@ -110,17 +138,22 @@ void draw() {
   if (hsThreshold.update()) {
     envelopeThreshold=(int)hsThreshold.getMapValue();
   }
+  if (hsCenter.update()) {
+    centerThreshold=(int)hsCenter.getMapValue();
+  }
 
   hsThreshold.display();
   hsEnvelope.display();
+  hsCenter.display();
 }
 
 void serialEvent(Serial p) {
   String inString = p.readString().trim();
-  char firstChar = inString.charAt(0);
-  if (firstChar=='S') {
-    if (inString.length() == 15) {
-      try {
+  try {
+    char firstChar = inString.charAt(0);
+    if (firstChar=='S') {
+      if (inString.length() == 15) {
+
         String xStr = inString.substring(3, 7);
         String yStr = inString.substring(7, 11);
         String zStr = inString.substring(11, 15);
@@ -136,11 +169,11 @@ void serialEvent(Serial p) {
         dataZ.addNewValue(z);
         dataEvenlope.addNewValue(max(dataX.axisEvenlopTop-dataX.axisEvenlopBtm, dataY.axisEvenlopTop-dataY.axisEvenlopBtm));
       }
-      catch(Exception e) {
-      }
+    } else {
+      println(inString);
     }
-  } else {
-    println(inString);
+  }
+  catch(Exception e) {
   }
 }
 

@@ -32,6 +32,7 @@ unsigned char accelerometerEvent = ACC_EVENT_STABLE_CENTER;
 
 int envelopeRate = 32;
 int envelopeThreshold = 768;
+int centerThreshold = 384;
 
 void setup() {
 
@@ -186,6 +187,10 @@ unsigned char accelerometerEventProcess(int16_t x, int16_t y) {
   static unsigned char state = ACC_EVENT_UNSTABLE;
   static int axisEvenlopXTop = 0, axisEvenlopXBtm = 0;
   static int axisEvenlopYTop = 0, axisEvenlopYBtm = 0;
+  static unsigned char stableCenterAccu = 0;
+  static unsigned char stableTiltAccu = 0;
+
+
   axisEvenlopXTop -= envelopeRate;
   if (axisEvenlopXTop < x) axisEvenlopXTop = x;
   axisEvenlopXBtm += envelopeRate;
@@ -208,6 +213,31 @@ unsigned char accelerometerEventProcess(int16_t x, int16_t y) {
         state = ACC_EVENT_STABLE_CENTER;
       }
       break;
+  }
+  int maxXY = max(abs(x), abs(y));
+  if (maxXY > centerThreshold) {
+    stableTiltAccu++;
+    stableCenterAccu = 0;
+  } else if (maxXY < centerThreshold / 2) {
+    stableCenterAccu++;
+    stableTiltAccu = 0;
+  }
+
+  if (state != ACC_EVENT_UNSTABLE) {
+    if (stableCenterAccu >= 16) {
+      stableCenterAccu = 0;
+      stableTiltAccu = 0;
+      state = ACC_EVENT_STABLE_CENTER;
+    }
+    if (stableTiltAccu >= 16) {
+      stableCenterAccu = 0;
+      stableTiltAccu = 0;
+      state = ACC_EVENT_STABLE_TILTED;
+    }
+  } else {
+    if (stableCenterAccu > 16)  stableCenterAccu = 16;
+    if (stableTiltAccu > 16)  stableTiltAccu = 16;
+
   }
   return state;
 }
