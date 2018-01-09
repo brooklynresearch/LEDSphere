@@ -49,7 +49,7 @@ void draw() {
   int id= oneSphere.id;
   switch (boardCheckStates) {
   case CheckStates.IDLE:
-    String checkOutput = String.format("E%02X\n", id);
+    String checkOutput = String.format("\nE%02X\n", id);  //weird new line needed?
     myPort.write(checkOutput);
     boardCheckStates=CheckStates.INQUIRED;
     boardCheckInquireTime=millis();
@@ -61,9 +61,8 @@ void draw() {
     break;
 
   case CheckStates.RESPONSED:
-    String ledOutput = String.format("L%02X%02X%02X%02X\n", id, oneSphere.fillcolor >> 16 & 0xFF, oneSphere.fillcolor >> 8 & 0xFF, oneSphere.fillcolor >> 0 & 0xFF);
+    String ledOutput = String.format("\nL%02X%02X%02X%02X\n", id, oneSphere.fillcolor >> 16 & 0xFF, oneSphere.fillcolor >> 8 & 0xFF, oneSphere.fillcolor >> 0 & 0xFF);
     myPort.write(ledOutput);
-
   case CheckStates.TIMEOUT:
     boardCheckStates = CheckStates.IDLE;
     boardCheckingIndex++;
@@ -113,7 +112,8 @@ void serialEvent(Serial p) {
         LEDSphere oneSphere=spheres[boardCheckingIndex];
 
         if (oneSphere.id == id) {
-          oneSphere.updateData(x, y, eventID); println(eventID);
+          oneSphere.updateData(x, y, eventID); 
+          println(eventID);
         } else {
           println("ID mismatch");
         }
