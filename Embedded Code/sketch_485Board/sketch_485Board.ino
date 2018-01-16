@@ -9,6 +9,7 @@
 #define LIS3DH_REG_WHOAMI        0x0F
 
 Simple_NeoPixel pixels = Simple_NeoPixel(LED_PIN, NEO_GRB + NEO_KHZ800);
+//Simple_NeoPixel pixels = Simple_NeoPixel(LED_PIN, NEO_GRBW + NEO_KHZ800);
 Simple_LIS3DH lis = Simple_LIS3DH(10);
 
 char inputString[64] = {'\0'};       // a String to hold incoming data
@@ -63,6 +64,9 @@ void setup() {
   Serial.println("G");
 
   lis.setupFifo();
+
+  pinMode(7, OUTPUT); //debug 
+  pinMode(8, OUTPUT); //debug
 }
 
 
