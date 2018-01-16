@@ -2,20 +2,30 @@
 class LEDSphere {
   int id;
   float xpos, ypos;       // x and y position of bar
-  color fillcolor;
+  color fillcolor,fillcolorDim;
   int acceX, acceY, acceEvent;
-
+  int timeLost,timeoutLimit;
+  boolean lost;
+  int needUpdateParameter;
+  int envelopeRate = 32;
+  int envelopeThreshold =768;
+  int centerThreshold = 384;
 
   LEDSphere (int _id, float _xpos, float _ypos) {
     id=_id;
     xpos=_xpos;
     ypos=_ypos;
     fillcolor=color(0);
+    lost=false;
+    timeoutLimit=100;
+    needUpdateParameter=3;
+    
+    centerThreshold=1500;
   }
 
   void draw() {
-    stroke(255);
-    fill(fillcolor);
+    stroke(lost?64:255);
+    fill(lost?0:fillcolor);
     ellipse(xpos, ypos, 100, 100);
     fill(255);
     text(id+" "+acceX+"\t"+acceY, xpos-50, ypos+70);
@@ -36,5 +46,6 @@ class LEDSphere {
       fillcolor=color(0, 192, 0);  //unstable
       break;
     }
+    fillcolorDim=color(red(fillcolor)/1,green(fillcolor)/1,blue(fillcolor)/1);
   }
 }

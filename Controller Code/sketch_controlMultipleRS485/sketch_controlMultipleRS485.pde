@@ -1,9 +1,10 @@
+
 import processing.serial.*;
 
 Serial myPort;       
 
 //int boardsID[]={1, 2, 3};
-LEDSphere spheres[] = new LEDSphere[1];
+LEDSphere spheres[] = new LEDSphere[2];
 
 int boardCheckingIndex = 0;
 
@@ -22,7 +23,7 @@ int boardCheckStates = CheckStates.IDLE;
 void setup() {
 
   for (int i=0; i<spheres.length; i++) {
-    spheres[i] = new LEDSphere(i+2, 150+300*i, 150);
+    spheres[i] = new LEDSphere(i+1, 150+300*i, 150);
   }
 
   String validPort="";
@@ -32,45 +33,61 @@ void setup() {
       validPort=port;
     }
   }
+  println(validPort);
 
   if (validPort.length()>0) {
     myPort = new Serial(this, validPort, 115200);
     myPort.bufferUntil('\n');
   }
 
-  size(900, 300);
+  size(600, 300);
   frameRate(60);
 }
 
 
 void draw() {
   background(0);
+
   LEDSphere oneSphere=spheres[boardCheckingIndex];
   int id= oneSphere.id;
   switch (boardCheckStates) {
   case CheckStates.IDLE:
-    String checkOutput = String.format("\nE%02X\n", id);  //weird new line needed?
+    String checkOutput = String.format("E%02X\n", id);  //weird new line needed?
+    //println(checkOutput);
     myPort.write(checkOutput);
     boardCheckStates=CheckStates.INQUIRED;
     boardCheckInquireTime=millis();
     break;
   case CheckStates.INQUIRED:
-    if ((millis()-boardCheckInquireTime)>50) {
+    if ((millis()-boardCheckInquireTime)>20) {
       boardCheckStates=CheckStates.TIMEOUT;
+      oneSphere.lost=true;
+      oneSphere.timeLost=millis();
+      //println("TIMEOUT first");
     }
     break;
 
   case CheckStates.RESPONSED:
-    String ledOutput = String.format("\nL%02X%02X%02X%02X\n", id, oneSphere.fillcolor >> 16 & 0xFF, oneSphere.fillcolor >> 8 & 0xFF, oneSphere.fillcolor >> 0 & 0xFF);
-    myPort.write(ledOutput);
+    oneSphere.lost=false;
+    oneSphere.timeoutLimit=100;
+    //println("RESPONSED");
   case CheckStates.TIMEOUT:
+    if (boardCheckStates==CheckStates.TIMEOUT) {
+      //println("TIMEOUT "+oneSphere.id);
+      oneSphere.timeLost = millis();
+      oneSphere.timeoutLimit=oneSphere.timeoutLimit*100+(int)random(100);
+      if (oneSphere.timeoutLimit>30000) oneSphere.timeoutLimit =30000;
+    }
     boardCheckStates = CheckStates.IDLE;
+    //while (1) {
     boardCheckingIndex++;
     if (boardCheckingIndex>=spheres.length) boardCheckingIndex=0;
+    //}
     break;
   default:
     break;
   }
+
 
   for (int i=0; i<spheres.length; i++) {
     spheres[i].draw();
@@ -79,6 +96,7 @@ void draw() {
 
 void serialEvent(Serial p) {
   String inString = p.readString().trim();
+  //println(inString);
   try {
     char firstChar = inString.charAt(0);
     if (firstChar=='S') {
@@ -113,12 +131,22 @@ void serialEvent(Serial p) {
 
         if (oneSphere.id == id) {
           oneSphere.updateData(x, y, eventID); 
-          println(eventID);
+          //println(eventID);
         } else {
-          println("ID mismatch");
+          //println("ID mismatch");
         }
-
-        if (boardCheckStates == CheckStates.INQUIRED)  boardCheckStates = CheckStates.RESPONSED;
+        if (boardCheckStates == CheckStates.INQUIRED) {
+          boardCheckStates = CheckStates.RESPONSED;
+          if (oneSphere.needUpdateParameter>0) {
+            String paraOutput = String.format("P%02X%04X%04X%04X\n", id, oneSphere.envelopeRate, oneSphere.envelopeThreshold, oneSphere.centerThreshold);
+            myPort.write(paraOutput);
+            //println(paraOutput);
+            oneSphere.needUpdateParameter--;
+          } else {
+            String ledOutput = String.format("L%02X%02X%02X%02X\n", id, oneSphere.fillcolorDim >> 16 & 0xFF, oneSphere.fillcolorDim >> 8 & 0xFF, oneSphere.fillcolorDim >> 0 & 0xFF);
+            myPort.write(ledOutput);
+          }
+        }
       }
     } else {
       println(inString);
