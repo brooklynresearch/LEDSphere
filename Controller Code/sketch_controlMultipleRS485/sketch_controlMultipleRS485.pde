@@ -4,7 +4,8 @@ import processing.serial.*;
 Serial myPort;       
 
 //int boardsID[]={1, 2, 3};
-LEDSphere spheres[] = new LEDSphere[2];
+LEDSphere spheres[] = new LEDSphere[1];
+int boardIndexOffset = 9;
 
 int boardCheckingIndex = 0;
 
@@ -23,7 +24,7 @@ int boardCheckStates = CheckStates.IDLE;
 void setup() {
 
   for (int i=0; i<spheres.length; i++) {
-    spheres[i] = new LEDSphere(i+1, 150+300*i, 150);
+    spheres[i] = new LEDSphere(i+boardIndexOffset, 150+300*i, 150);
   }
 
   String validPort="";
@@ -116,6 +117,8 @@ void serialEvent(Serial p) {
       }
     } else if (firstChar=='E') {
       if (inString.length() == 13) {
+        println(millis()-boardCheckInquireTime);
+        
         String idStr = inString.substring(1, 3);
         String eventStr = inString.substring(3, 5);
         String xStr = inString.substring(5, 9);
