@@ -21,8 +21,8 @@ void setup() {
 }
 
 void loop() {
-  unsigned long currentMillis = millis();
-  static unsigned long previousSendMillis = 0;
+  unsigned long currentMicros = micros();
+  static unsigned long previousSendMicros = 0;
 
   if (RS485stringComplete) {
 
@@ -31,7 +31,7 @@ void loop() {
     // Serial.println(RS485stringLength);
     if (RS485inputString[0] == 'E' && RS485stringLength == 13) {
       digitalWrite(4,HIGH);
-      previousSendMillis = currentMillis - 100;
+      previousSendMicros = currentMicros - 2000;
       digitalWrite(4,LOW);
     }
 
@@ -41,7 +41,7 @@ void loop() {
     RS485stringComplete = false;
   }
 
-  if ((signed int)(currentMillis - previousSendMillis) >= 2) { //send next request command 
+  if ((signed int)(currentMicros - previousSendMicros) >= 1200) { //send next request command 
 
     char buf[8];
     char* bufPtr = buf;
@@ -54,12 +54,12 @@ void loop() {
     Serial1.write(buf);
     Serial1.flush();
     digitalWrite(2, LOW);
-    previousSendMillis = millis()+1;
+    previousSendMicros = micros();
   }
 
 
 
-  bool resetPreviousSendMillis = false;
+  bool resetPreviousSendMicros = false;
   while (Serial1.available()) {
     // get the new byte:
     char inChar = (char)Serial1.read();
@@ -73,11 +73,11 @@ void loop() {
         RS485inputStringIndex++;
       }
     }
-    resetPreviousSendMillis = true;
+    resetPreviousSendMicros = true;
   }
-  if (resetPreviousSendMillis) {
+  if (resetPreviousSendMicros) {
     digitalWrite(5,HIGH);
-    previousSendMillis = millis()+1;
+    previousSendMicros = micros();
     digitalWrite(5,LOW);
   }
 }
