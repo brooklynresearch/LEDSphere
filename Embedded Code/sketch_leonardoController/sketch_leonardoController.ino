@@ -2,6 +2,8 @@ char RS485inputString[64] = {'\0'};       // a String to hold incoming data
 unsigned char RS485inputStringIndex = 0;
 boolean RS485stringComplete = false;  // whether the string is complete
 
+unsigned char startID = 0;
+unsigned char endID = 9;
 
 void setup() {
 
@@ -28,7 +30,9 @@ void loop() {
     uint8_t RS485stringLength = strlen(RS485inputString);
     // Serial.println(RS485stringLength);
     if (RS485inputString[0] == 'E' && RS485stringLength == 13) {
+      digitalWrite(4,HIGH);
       previousSendMillis = currentMillis - 100;
+      digitalWrite(4,LOW);
     }
 
     RS485inputStringIndex = 0;
@@ -37,21 +41,20 @@ void loop() {
     RS485stringComplete = false;
   }
 
-  if ((signed int)(currentMillis - previousSendMillis) >= 19) {
+  if ((signed int)(currentMillis - previousSendMillis) >= 2) { //send next request command 
+
+    char buf[8];
+    char* bufPtr = buf;
+    *bufPtr++ = 'E';
+    bufPtr = ucharToHex2_no_end(9, bufPtr);
+    *bufPtr++ = '\n';
+    *bufPtr++ = '\0';
+
     digitalWrite(2, HIGH);
-
-    //Serial1.print("E09\n");
-    Serial1.write('E');
-    Serial1.write('0');
-    Serial1.write('9');
-    Serial1.write('\n');
-
-
-
+    Serial1.write(buf);
     Serial1.flush();
-
     digitalWrite(2, LOW);
-    previousSendMillis = millis();
+    previousSendMillis = millis()+1;
   }
 
 
@@ -73,6 +76,8 @@ void loop() {
     resetPreviousSendMillis = true;
   }
   if (resetPreviousSendMillis) {
-    previousSendMillis = millis();
+    digitalWrite(5,HIGH);
+    previousSendMillis = millis()+1;
+    digitalWrite(5,LOW);
   }
 }
