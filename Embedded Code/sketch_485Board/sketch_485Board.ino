@@ -65,7 +65,7 @@ void setup() {
 
   lis.setupFifo();
 
-  pinMode(7, OUTPUT); //debug 
+  pinMode(7, OUTPUT); //debug
   pinMode(8, OUTPUT); //debug
 }
 
@@ -108,7 +108,7 @@ void loop() {
       // Then print out the raw data
 
       if (streamRawData) {
-        char buf[16];
+        char buf[20];
         char* bufPtr = buf;
         *bufPtr = 'S';
         *bufPtr++;
@@ -116,8 +116,10 @@ void loop() {
         bufPtr = uintToHex4_no_end(lis.x, bufPtr);
         bufPtr = uintToHex4_no_end(lis.y, bufPtr);
         bufPtr = uintToHex4(lis.z, bufPtr);
+        *bufPtr++ = '\n';
+        *bufPtr++ = '\0';
         digitalWrite(4, HIGH);
-        Serial.println(buf);
+        Serial.print(buf);
       }
       fifoStatus = lis.fifoGetStatus();
     }
@@ -175,12 +177,14 @@ void loop() {
         bufPtr = ucharToHex2_no_end(accelerometerEvent, bufPtr);
         bufPtr = uintToHex4_no_end(lis.x, bufPtr);
         bufPtr = uintToHex4(lis.y, bufPtr);
+        *bufPtr++ = '\n';
+        *bufPtr++ = '\0';
         digitalWrite(4, HIGH);
-        Serial.println(buf);
+        Serial.print(buf);
         Serial.flush();
         digitalWrite(4, LOW);
       }
-    } else if (inputString[0] == 'P' && stringLength == (3+12)) {
+    } else if (inputString[0] == 'P' && stringLength == (3 + 12)) {
       if (id == boardID) {
         envelopeRate = hexToInt16(&inputString[3]);
         envelopeThreshold = hexToInt16(&inputString[7]);
