@@ -2,8 +2,17 @@ char RS485inputString[64] = {'\0'};       // a String to hold incoming data
 unsigned char RS485inputStringIndex = 0;
 boolean RS485stringComplete = false;  // whether the string is complete
 
-unsigned char startID = 0;
-unsigned char endID = 9;
+char USBinputString[256] = {'\0'};       // a String to hold incoming data
+unsigned char USBinputStringIndex = 0;
+boolean USBstringComplete = false;  // whether the string is complete
+
+#define START_ID  0
+#define END_ID  9
+
+char dataTextBuffer[(END_ID - START_ID + 1) * 10 + 2];
+
+
+unsigned char currentAccessingID = END_ID + 1;
 
 void setup() {
 
@@ -18,6 +27,9 @@ void setup() {
   pinMode(4, OUTPUT); //TEST
   pinMode(5, OUTPUT); //TEST
   pinMode(6, OUTPUT); //TEST
+
+  memset(dataTextBuffer, 0, sizeof(dataTextBuffer));
+  dataTextBuffer[(END_ID - START_ID + 1) * 10] = '\n';
 }
 
 void loop() {
@@ -30,9 +42,10 @@ void loop() {
     uint8_t RS485stringLength = strlen(RS485inputString);
     // Serial.println(RS485stringLength);
     if (RS485inputString[0] == 'E' && RS485stringLength == 13) {
-      digitalWrite(4,HIGH);
       previousSendMicros = currentMicros - 2000;
-      digitalWrite(4,LOW);
+
+      unsigned char dataIndex = id - START_ID;
+      memcpy(&dataTextBuffer[dataIndex * 10], &RS485inputString[3], 10);
     }
 
     RS485inputStringIndex = 0;
@@ -41,23 +54,67 @@ void loop() {
     RS485stringComplete = false;
   }
 
-  if ((signed int)(currentMicros - previousSendMicros) >= 1200) { //send next request command 
+  if ((signed int)(currentMicros - previousSendMicros) >= 1200) { //send next request command
+    currentAccessingID++;
+    if (currentAccessingID > END_ID) {
+      if (currentAccessingID == (END_ID + 1)) {
+        if (USBstringComplete) {  //through put
+          //replace all \r to \n
+          char *bufPtr = USBinputString;
+          for (unsigned char i = 0; i < USBinputStringIndex; i++) {
+            if (*bufPtr == '\r') *bufPtr = '\n';
+            bufPtr++;
+          }
 
-    char buf[8];
-    char* bufPtr = buf;
-    *bufPtr++ = 'E';
-    bufPtr = ucharToHex2_no_end(9, bufPtr);
-    *bufPtr++ = '\n';
-    *bufPtr++ = '\0';
+          digitalWrite(2, HIGH);
+          Serial1.write(USBinputString);
+          Serial1.flush();
+          digitalWrite(2, LOW);
 
-    digitalWrite(2, HIGH);
-    Serial1.write(buf);
-    Serial1.flush();
-    digitalWrite(2, LOW);
-    previousSendMicros = micros();
+          USBinputStringIndex = 0;
+          USBinputString[0] = '\0';
+          USBstringComplete = false;
+        }
+
+      } else {
+        currentAccessingID = START_ID;
+        //give report
+        Serial.print(dataTextBuffer);
+
+        memset(dataTextBuffer, ' ', (END_ID - START_ID + 1) * 10);
+      }
+    }
+
+    if (currentAccessingID <= END_ID) {
+      char buf[8];
+      char* bufPtr = buf;
+      *bufPtr++ = 'E';
+      bufPtr = ucharToHex2_no_end(currentAccessingID, bufPtr);
+      *bufPtr++ = '\n';
+      *bufPtr++ = '\0';
+
+      digitalWrite(2, HIGH);
+      Serial1.write(buf);
+      Serial1.flush();
+      digitalWrite(2, LOW);
+      previousSendMicros = micros();
+    }
   }
 
-
+  while (Serial.available()) {
+    // get the new byte:
+    char inChar = (char)Serial.read();
+    if (inChar == '\n') {
+      USBstringComplete = true;
+      USBinputString[USBinputStringIndex] = '\0';
+      USBinputStringIndex++;
+    } else {
+      if (USBinputStringIndex < 254) {
+        USBinputString[USBinputStringIndex] = inChar;
+        USBinputStringIndex++;
+      }
+    }
+  }
 
   bool resetPreviousSendMicros = false;
   while (Serial1.available()) {
@@ -76,8 +133,6 @@ void loop() {
     resetPreviousSendMicros = true;
   }
   if (resetPreviousSendMicros) {
-    digitalWrite(5,HIGH);
     previousSendMicros = micros();
-    digitalWrite(5,LOW);
   }
 }
