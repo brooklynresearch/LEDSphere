@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.5.1">
+<eagle version="8.7.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -11656,6 +11656,8 @@ Source: www.tycoelectronics.com .. ENG_DS_1654001_1099_RJ_L_0507.pdf</descriptio
 <part name="GND17" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="X3" library="myownParts" deviceset="RJ45-8P8C" device="" technology="-8L-B"/>
 <part name="X1" library="myownParts" deviceset="RJ45-8P8C" device="" technology="-8L-B"/>
+<part name="R14" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="10K"/>
+<part name="P+10" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -11767,7 +11769,9 @@ Add pull up resistor on RX due to HiZ of SP485</text>
 <instance part="C23" gate="G$1" x="-66.04" y="15.24"/>
 <instance part="C24" gate="G$1" x="-66.04" y="-5.08"/>
 <instance part="C25" gate="G$1" x="-66.04" y="-25.4"/>
-<instance part="P+20" gate="1" x="-55.88" y="-50.8"/>
+<instance part="P+20" gate="1" x="-55.88" y="-50.8" smashed="yes">
+<attribute name="VALUE" x="-58.42" y="-50.8" size="1.778" layer="96"/>
+</instance>
 <instance part="GND27" gate="1" x="-55.88" y="-63.5"/>
 <instance part="R11" gate="G$1" x="-48.26" y="-58.42" rot="R90"/>
 <instance part="GND28" gate="1" x="-38.1" y="-68.58"/>
@@ -11799,6 +11803,10 @@ Add pull up resistor on RX due to HiZ of SP485</text>
 <instance part="GND17" gate="1" x="71.12" y="81.28"/>
 <instance part="X3" gate="G$1" x="-35.56" y="-55.88"/>
 <instance part="X1" gate="G$1" x="-20.32" y="-55.88"/>
+<instance part="R14" gate="G$1" x="-88.9" y="-45.72"/>
+<instance part="P+10" gate="1" x="-83.82" y="-43.18" smashed="yes">
+<attribute name="VALUE" x="-83.82" y="-43.18" size="1.778" layer="96"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -12117,6 +12125,9 @@ Add pull up resistor on RX due to HiZ of SP485</text>
 <pinref part="R12" gate="G$1" pin="1"/>
 <wire x1="-93.98" y1="-53.34" x2="-99.06" y2="-53.34" width="0.1524" layer="91"/>
 <label x="-99.06" y="-53.34" size="1.778" layer="95"/>
+<pinref part="R14" gate="G$1" pin="1"/>
+<wire x1="-93.98" y1="-53.34" x2="-93.98" y2="-45.72" width="0.1524" layer="91"/>
+<junction x="-93.98" y="-53.34"/>
 </segment>
 </net>
 <net name="TX" class="0">
@@ -12344,6 +12355,10 @@ Add pull up resistor on RX due to HiZ of SP485</text>
 <wire x1="-109.22" y1="78.74" x2="-106.68" y2="78.74" width="0.1524" layer="91"/>
 <junction x="-109.22" y="78.74"/>
 <junction x="-106.68" y="78.74"/>
+</segment>
+<segment>
+<pinref part="R14" gate="G$1" pin="2"/>
+<pinref part="P+10" gate="1" pin="+5V"/>
 </segment>
 </net>
 <net name="D9" class="0">
