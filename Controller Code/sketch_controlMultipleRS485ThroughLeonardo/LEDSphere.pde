@@ -1,4 +1,4 @@
-int dimScale = 8;
+int dimScale = 1;
 class LEDSphere {
   int id;
   float xpos, ypos;       // x and y position of bar
