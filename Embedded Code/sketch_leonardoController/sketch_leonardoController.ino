@@ -6,8 +6,8 @@ char USBinputString[256] = {'\0'};       // a String to hold incoming data
 unsigned char USBinputStringIndex = 0;
 boolean USBstringComplete = false;  // whether the string is complete
 
-#define START_ID  0
-#define END_ID  9
+#define START_ID  1
+#define END_ID  10
 
 char dataTextBuffer[(END_ID - START_ID + 1) * 10 + 2];
 

@@ -3,13 +3,15 @@ import processing.serial.*;
 
 Serial myPort;       
 
-int  startID = 0;
-int endID = 9;
+int  startID = 1;
+int endID = 10;
 int totalSphereCount = endID-startID+1;
 
 LEDSphere spheres[] = new LEDSphere[totalSphereCount];
 
 boolean gotData = false;
+
+String outBuffer = "";
 
 void setup() {
 
@@ -33,34 +35,60 @@ void setup() {
 
   size(1200, 300);
   frameRate(60);
+
+  for (int i=0; i<totalSphereCount; i++) {
+    LEDSphere oneSphere=spheres[i];
+    outBuffer=outBuffer+String.format("P%02X%04X%04X%04X\r", oneSphere.id, oneSphere.envelopeRate, oneSphere.envelopeThreshold, oneSphere.centerThreshold);
+  }
 }
 
 
 void draw() {
   background(0);
 
+  if ((frameCount%30==0)) {
+    int halfSecond = frameCount/30;
+    if (halfSecond<5) {  //send settings
+      outBuffer="";
+      for (int i=0; i<totalSphereCount; i++) {
+        LEDSphere oneSphere=spheres[i];
+        outBuffer=outBuffer+String.format("P%02X%04X%04X%04X\r", oneSphere.id, oneSphere.envelopeRate, oneSphere.envelopeThreshold, oneSphere.centerThreshold);
+      }
+    } else {  //refresh LED
+      outBuffer="";
+      for (int i=0; i<totalSphereCount; i++) {
+        LEDSphere oneSphere=spheres[i];
+        outBuffer=outBuffer+String.format("L%02X%02X%02X%02X\r", oneSphere.id, oneSphere.fillcolorDim >> 16 & 0xFF, oneSphere.fillcolorDim >> 8 & 0xFF, oneSphere.fillcolorDim >> 0 & 0xFF);
+      }
+    }
+  }
+
   for (int i=0; i<spheres.length; i++) {
     spheres[i].draw();
   }
 
+
   if (gotData) {
-
-
-
     String sendBuf = "";
     for (int i=0; i<totalSphereCount; i++) {
       LEDSphere oneSphere=spheres[i];
       if (oneSphere.changedEvent) {
         sendBuf=sendBuf+String.format("L%02X%02X%02X%02X\r", i+startID, oneSphere.fillcolorDim >> 16 & 0xFF, oneSphere.fillcolorDim >> 8 & 0xFF, oneSphere.fillcolorDim >> 0 & 0xFF);
         oneSphere.changedEvent = false;
+      } else {
+        if (outBuffer.length()>0) {
+          sendBuf=outBuffer;
+          outBuffer="";
+        }
       }
     }
     sendBuf=sendBuf+'\n';
     if (sendBuf.length()>1) {
-      print(sendBuf);
+      //println("SEND");
+      //print(sendBuf);
       myPort.write(sendBuf);
     }
-    
+
     gotData=false;
   }
 }
@@ -84,7 +112,8 @@ void serialEvent(Serial p) {
           int y=Integer.parseInt(yStr, 16);
           if (y>32767) y=y-65536;      
           int eventID=Integer.parseInt(eventStr, 16);
-          spheres[i+startID].updateData(x, y, eventID);
+
+          spheres[i].updateData(x, y, eventID);
         }
       }
     }
@@ -95,4 +124,3 @@ void serialEvent(Serial p) {
 
   gotData=true;
 }
-

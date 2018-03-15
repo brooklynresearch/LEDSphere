@@ -1,4 +1,4 @@
-
+int dimScale = 8;
 class LEDSphere {
   int id;
   float xpos, ypos;       // x and y position of bar
@@ -18,8 +18,6 @@ class LEDSphere {
     ypos=_ypos;
     fillcolor=color(0);
     needUpdateParameter=3;
-
-    centerThreshold=1500;
   }
 
   void draw() {
@@ -46,7 +44,6 @@ class LEDSphere {
       fillcolor=color(0, 192, 0);  //unstable
       break;
     }
-    fillcolorDim=color(red(fillcolor)/1, green(fillcolor)/1, blue(fillcolor)/1);
+    fillcolorDim=color(red(fillcolor)/dimScale, green(fillcolor)/dimScale, blue(fillcolor)/dimScale);
   }
 }
-
