@@ -12,6 +12,8 @@ class LEDSphere {
 
   boolean changedEvent = false;
 
+  int lastUpdated;
+
   LEDSphere (int _id, float _xpos, float _ypos) {
     id=_id;
     xpos=_xpos;
@@ -21,6 +23,12 @@ class LEDSphere {
   }
 
   void draw() {
+    if (frameCount-lastUpdated>60) {
+      lost=true;
+    } else {
+      lost=false;
+    }
+
     stroke(lost?64:255);
     fill(lost?0:fillcolor);
     ellipse(xpos, ypos, 100, 100);
@@ -45,5 +53,7 @@ class LEDSphere {
       break;
     }
     fillcolorDim=color(red(fillcolor)/dimScale, green(fillcolor)/dimScale, blue(fillcolor)/dimScale);
+
+    lastUpdated=frameCount;
   }
 }
