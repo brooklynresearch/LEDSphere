@@ -13852,35 +13852,63 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 </class>
 </classes>
 <parts>
-<part name="U1" library="SparkFun-IC-Microcontroller" deviceset="ATMEGA328P_TQFP" device="" value="ATMEGA328P_TQFP"/>
-<part name="Y1" library="SparkFun-Clocks" deviceset="RESONATOR-16MHZ" device="SMD_3.2X1.3" value="16MHz"/>
+<part name="U1" library="SparkFun-IC-Microcontroller" deviceset="ATMEGA328P_TQFP" device="" value="ATMEGA328P_TQFP">
+<attribute name="LCSC" value="C14877"/>
+</part>
+<part name="Y1" library="SparkFun-Clocks" deviceset="RESONATOR-16MHZ" device="SMD_3.2X1.3" value="16MHz">
+<attribute name="LCSC" value="C91584"/>
+</part>
 <part name="GND1" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="J1" library="SparkFun-Connectors" deviceset="AVR_SPI_PROG_3X2" device="PTH"/>
 <part name="J2" library="SparkFun-Connectors" deviceset="CONN_06" device="SMD" value="RA 6Pin SMD"/>
-<part name="C1" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="R1" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="10K"/>
-<part name="U2" library="SparkFun-Sensors" deviceset="LIS3DH" device=""/>
+<part name="C1" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="R1" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="10K">
+<attribute name="LCSC" value="C17414"/>
+</part>
+<part name="U2" library="SparkFun-Sensors" deviceset="LIS3DH" device="">
+<attribute name="LCSC" value="C15134"/>
+</part>
 <part name="GND2" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND3" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="C2" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="10uF"/>
-<part name="C3" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="C4" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="C5" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
+<part name="C2" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="10uF">
+<attribute name="LCSC" value="C92341"/>
+</part>
+<part name="C3" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="C4" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="C5" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
 <part name="GND4" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND5" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND6" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="+3V5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="GND7" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="C6" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="10uF"/>
-<part name="C7" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
+<part name="C6" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="10uF">
+<attribute name="LCSC" value="C92341"/>
+</part>
+<part name="C7" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
 <part name="P+1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="P+2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="P+3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="P+4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
-<part name="IC1" library="linear" library_urn="urn:adsk.eagle:library:262" deviceset="MCP1703" device="CB" package3d_urn="urn:adsk.eagle:package:16489/2" value="XC6206P332MR"/>
+<part name="IC1" library="linear" library_urn="urn:adsk.eagle:library:262" deviceset="MCP1703" device="CB" package3d_urn="urn:adsk.eagle:package:16489/2" value="XC6206P332MR">
+<attribute name="LCSC" value="C5446"/>
+</part>
 <part name="+3V1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
-<part name="C8" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="C9" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
+<part name="C8" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="C9" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
 <part name="GND8" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="Q1" library="SparkFun-DiscreteSemi" deviceset="MOSFET-NCH" device="-AO3404A" value="CJ3404"/>
 <part name="GND9" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
@@ -13894,66 +13922,150 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <part name="GND11" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="R4" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="DNP"/>
 <part name="J5" library="SparkFun-Connectors" deviceset="CONN_01" device=""/>
-<part name="D1" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="DIODE" device="SOD-123" value="5819"/>
-<part name="R5" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="10K"/>
+<part name="D1" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="DIODE" device="SOD-123" value="5819">
+<attribute name="LCSC" value="C64885"/>
+</part>
+<part name="R5" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="10K">
+<attribute name="LCSC" value="C17414"/>
+</part>
 <part name="+3V2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
-<part name="D2" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="DIODE" device="SOD-123" value="5819"/>
-<part name="D3" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="DIODE" device="SOD-123" value="5819"/>
-<part name="D4" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="DIODE" device="SOD-123" value="5819"/>
-<part name="R6" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="10K"/>
+<part name="D2" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="DIODE" device="SOD-123" value="5819">
+<attribute name="LCSC" value="C64885"/>
+</part>
+<part name="D3" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="DIODE" device="SOD-123" value="5819">
+<attribute name="LCSC" value="C64885"/>
+</part>
+<part name="D4" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="DIODE" device="SOD-123" value="5819">
+<attribute name="LCSC" value="C64885"/>
+</part>
+<part name="R6" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="10K">
+<attribute name="LCSC" value="C17414"/>
+</part>
 <part name="+3V3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
-<part name="R7" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="10K"/>
+<part name="R7" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="10K">
+<attribute name="LCSC" value="C17414"/>
+</part>
 <part name="+3V6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
-<part name="D5" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="DIODE" device="SOD-123" value="5819"/>
-<part name="D6" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="DIODE" device="SOD-123" value="5819"/>
-<part name="U3" library="SparkFun-IC-Comms" deviceset="RS485" device="SOIC" value="SP485"/>
-<part name="D7" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B"/>
-<part name="D8" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B"/>
-<part name="D9" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B"/>
-<part name="D10" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B"/>
-<part name="D11" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B"/>
-<part name="D12" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B"/>
-<part name="D13" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B"/>
-<part name="D14" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B"/>
-<part name="D15" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B"/>
-<part name="D16" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B"/>
-<part name="D17" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B"/>
-<part name="D18" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B"/>
-<part name="C10" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="R8" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="100K"/>
-<part name="R9" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="210K"/>
-<part name="R10" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="40.2k"/>
+<part name="D5" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="DIODE" device="SOD-123" value="5819">
+<attribute name="LCSC" value="C64885"/>
+</part>
+<part name="D6" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="DIODE" device="SOD-123" value="5819">
+<attribute name="LCSC" value="C64885"/>
+</part>
+<part name="U3" library="SparkFun-IC-Comms" deviceset="RS485" device="SOIC" value="SP485">
+<attribute name="LCSC" value="C6855"/>
+</part>
+<part name="D7" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B">
+<attribute name="LCSC" value="C114585"/>
+</part>
+<part name="D8" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B">
+<attribute name="LCSC" value="C114585"/>
+</part>
+<part name="D9" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B">
+<attribute name="LCSC" value="C114585"/>
+</part>
+<part name="D10" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B">
+<attribute name="LCSC" value="C114585"/>
+</part>
+<part name="D11" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B">
+<attribute name="LCSC" value="C114585"/>
+</part>
+<part name="D12" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B">
+<attribute name="LCSC" value="C114585"/>
+</part>
+<part name="D13" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B">
+<attribute name="LCSC" value="C114585"/>
+</part>
+<part name="D14" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B">
+<attribute name="LCSC" value="C114585"/>
+</part>
+<part name="D15" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B">
+<attribute name="LCSC" value="C114585"/>
+</part>
+<part name="D16" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B">
+<attribute name="LCSC" value="C114585"/>
+</part>
+<part name="D17" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B">
+<attribute name="LCSC" value="C114585"/>
+</part>
+<part name="D18" library="SparkFun-LED" library_urn="urn:adsk.eagle:library:529" deviceset="WS2812B" device="" package3d_urn="urn:adsk.eagle:package:39369/1" value="WS2812B">
+<attribute name="LCSC" value="C114585"/>
+</part>
+<part name="C10" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="R8" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="100K">
+<attribute name="LCSC" value="C96346"/>
+</part>
+<part name="R9" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="210K">
+<attribute name="LCSC" value="C170839"/>
+</part>
+<part name="R10" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="40.2k">
+<attribute name="LCSC" value="C104303"/>
+</part>
 <part name="GND13" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND14" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="C12" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="10uF"/>
+<part name="C12" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="10uF">
+<attribute name="LCSC" value="C92341"/>
+</part>
 <part name="P+5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+24V" device=""/>
 <part name="P+6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="P+7" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="PAD1" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="1,6/0,8" device="" package3d_urn="urn:adsk.eagle:package:30830/1"/>
 <part name="PAD2" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="1,6/0,8" device="" package3d_urn="urn:adsk.eagle:package:30830/1"/>
-<part name="C14" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="C15" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="C16" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="C17" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="C18" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="C19" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="C20" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="C21" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="C22" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="C23" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="C24" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
-<part name="C25" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
+<part name="C14" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="C15" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="C16" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="C17" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="C18" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="C19" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="C20" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="C21" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="C22" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="C23" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="C24" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
+<part name="C25" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
 <part name="P+20" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="GND27" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="R11" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="120"/>
 <part name="GND28" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND29" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="P+21" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+24V" device=""/>
-<part name="C26" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF"/>
+<part name="C26" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="0.1uF">
+<attribute name="LCSC" value="C29926"/>
+</part>
 <part name="P+22" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="GND30" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="R12" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="1K"/>
-<part name="R13" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="1K"/>
+<part name="R12" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="1K">
+<attribute name="LCSC" value="C115316"/>
+</part>
+<part name="R13" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="1K">
+<attribute name="LCSC" value="C115316"/>
+</part>
 <part name="J6" library="SparkFun-Connectors" deviceset="CONN_01" device=""/>
 <part name="P+23" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="P+8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
@@ -13964,9 +14076,15 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <part name="PAD4" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="1,6/0,8" device="" package3d_urn="urn:adsk.eagle:package:30830/1"/>
 <part name="PAD5" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="1,6/0,8" device="" package3d_urn="urn:adsk.eagle:package:30830/1"/>
 <part name="GND17" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="X3" library="myownParts" deviceset="RJ45-8P8C" device="" technology="-8L-B"/>
-<part name="X1" library="myownParts" deviceset="RJ45-8P8C" device="" technology="-8L-B"/>
-<part name="R14" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="10K"/>
+<part name="X3" library="myownParts" deviceset="RJ45-8P8C" device="" technology="-8L-B">
+<attribute name="LCSC" value="C86586"/>
+</part>
+<part name="X1" library="myownParts" deviceset="RJ45-8P8C" device="" technology="-8L-B">
+<attribute name="LCSC" value="C86586"/>
+</part>
+<part name="R14" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="10K">
+<attribute name="LCSC" value="C17414"/>
+</part>
 <part name="P+10" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="IC2" library="misc" deviceset="MP2562" device="">
 <attribute name="LCSC" value="C93647"/>
@@ -14005,19 +14123,31 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 </part>
 <part name="GND19" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="P+12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+24V" device=""/>
-<part name="R15" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="17.4K"/>
-<part name="R16" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="200K"/>
+<part name="R15" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="17.4K">
+<attribute name="LCSC" value="C144583"/>
+</part>
+<part name="R16" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="200K">
+<attribute name="LCSC" value="C17539"/>
+</part>
 <part name="GND20" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="GND21" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="C36" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="150pF"/>
-<part name="R17" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="158K"/>
+<part name="C36" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="150pF">
+<attribute name="LCSC" value="C152846"/>
+</part>
+<part name="R17" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:26059/1" value="158K">
+<attribute name="LCSC" value="C104013"/>
+</part>
 <part name="GND22" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 <part name="D20" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="DIODE-" device="DO214AA" package3d_urn="urn:adsk.eagle:package:43433/2" value="B280-13-F">
 <attribute name="LCSC" value="C134445"/>
 </part>
 <part name="GND23" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
-<part name="L1" library="misc" deviceset="SLF12575T" device="" value="15uH"/>
-<part name="C38" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="10uF"/>
+<part name="L1" library="misc" deviceset="SLF12575T" device="" value="15uH">
+<attribute name="LCSC" value="C136211"/>
+</part>
+<part name="C38" library="resistor" library_urn="urn:adsk.eagle:library:348" deviceset="C-EU" device="C0805K" package3d_urn="urn:adsk.eagle:package:26201/1" value="10uF">
+<attribute name="LCSC" value="C92341"/>
+</part>
 <part name="GND12" library="SparkFun-PowerSymbols" deviceset="GND" device=""/>
 </parts>
 <sheets>
@@ -14025,35 +14155,63 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <plain>
 </plain>
 <instances>
-<instance part="U1" gate="U$1" x="40.64" y="48.26"/>
-<instance part="Y1" gate="G$1" x="7.62" y="48.26"/>
+<instance part="U1" gate="U$1" x="40.64" y="48.26">
+<attribute name="LCSC" x="40.64" y="48.26" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="Y1" gate="G$1" x="7.62" y="48.26">
+<attribute name="LCSC" x="7.62" y="48.26" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="GND1" gate="1" x="7.62" y="35.56"/>
 <instance part="J1" gate="G$1" x="53.34" y="5.08"/>
 <instance part="J2" gate="G$1" x="-20.32" y="83.82"/>
-<instance part="C1" gate="G$1" x="5.08" y="78.74" rot="R90"/>
-<instance part="R1" gate="G$1" x="12.7" y="86.36" rot="R90"/>
-<instance part="U2" gate="G$1" x="121.92" y="66.04"/>
+<instance part="C1" gate="G$1" x="5.08" y="78.74" rot="R90">
+<attribute name="LCSC" x="5.08" y="78.74" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R1" gate="G$1" x="12.7" y="86.36" rot="R90">
+<attribute name="LCSC" x="12.7" y="86.36" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="U2" gate="G$1" x="121.92" y="66.04">
+<attribute name="LCSC" x="121.92" y="66.04" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="GND2" gate="1" x="-10.16" y="91.44" rot="R90"/>
 <instance part="GND3" gate="1" x="68.58" y="-5.08"/>
-<instance part="C2" gate="G$1" x="-17.78" y="66.04"/>
-<instance part="C3" gate="G$1" x="-10.16" y="66.04"/>
-<instance part="C4" gate="G$1" x="-2.54" y="66.04"/>
-<instance part="C5" gate="G$1" x="7.62" y="63.5" rot="R90"/>
+<instance part="C2" gate="G$1" x="-17.78" y="66.04">
+<attribute name="LCSC" x="-17.78" y="66.04" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C3" gate="G$1" x="-10.16" y="66.04">
+<attribute name="LCSC" x="-10.16" y="66.04" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C4" gate="G$1" x="-2.54" y="66.04">
+<attribute name="LCSC" x="-2.54" y="66.04" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C5" gate="G$1" x="7.62" y="63.5" rot="R90">
+<attribute name="LCSC" x="7.62" y="63.5" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="GND4" gate="1" x="5.08" y="58.42"/>
 <instance part="GND5" gate="1" x="-10.16" y="58.42"/>
 <instance part="GND6" gate="1" x="15.24" y="17.78"/>
 <instance part="+3V5" gate="G$1" x="104.14" y="88.9"/>
 <instance part="GND7" gate="1" x="104.14" y="38.1"/>
-<instance part="C6" gate="G$1" x="93.98" y="68.58"/>
-<instance part="C7" gate="G$1" x="101.6" y="68.58"/>
+<instance part="C6" gate="G$1" x="93.98" y="68.58">
+<attribute name="LCSC" x="93.98" y="68.58" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C7" gate="G$1" x="101.6" y="68.58">
+<attribute name="LCSC" x="101.6" y="68.58" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="P+1" gate="1" x="12.7" y="96.52"/>
 <instance part="P+2" gate="1" x="33.02" y="106.68"/>
 <instance part="P+3" gate="1" x="68.58" y="12.7"/>
 <instance part="P+4" gate="1" x="-2.54" y="91.44"/>
-<instance part="IC1" gate="G$1" x="48.26" y="104.14"/>
+<instance part="IC1" gate="G$1" x="48.26" y="104.14">
+<attribute name="LCSC" x="48.26" y="104.14" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="+3V1" gate="G$1" x="63.5" y="106.68"/>
-<instance part="C8" gate="G$1" x="33.02" y="101.6"/>
-<instance part="C9" gate="G$1" x="63.5" y="101.6"/>
+<instance part="C8" gate="G$1" x="33.02" y="101.6">
+<attribute name="LCSC" x="33.02" y="101.6" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C9" gate="G$1" x="63.5" y="101.6">
+<attribute name="LCSC" x="63.5" y="101.6" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="GND8" gate="1" x="48.26" y="93.98"/>
 <instance part="Q1" gate="NMOS" x="83.82" y="2.54"/>
 <instance part="GND9" gate="1" x="86.36" y="-5.08"/>
@@ -14067,38 +14225,92 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <instance part="GND11" gate="1" x="137.16" y="-5.08"/>
 <instance part="R4" gate="G$1" x="137.16" y="12.7" rot="R90"/>
 <instance part="J5" gate="G$1" x="147.32" y="15.24" rot="MR0"/>
-<instance part="D1" gate="G$1" x="106.68" y="27.94" rot="R180"/>
-<instance part="R5" gate="G$1" x="147.32" y="35.56" rot="R90"/>
+<instance part="D1" gate="G$1" x="106.68" y="27.94" rot="R180">
+<attribute name="LCSC" x="106.68" y="27.94" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R5" gate="G$1" x="147.32" y="35.56" rot="R90">
+<attribute name="LCSC" x="147.32" y="35.56" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="+3V2" gate="G$1" x="147.32" y="43.18"/>
-<instance part="D2" gate="G$1" x="109.22" y="25.4" rot="R180"/>
-<instance part="D3" gate="G$1" x="111.76" y="22.86" rot="R180"/>
-<instance part="D4" gate="G$1" x="114.3" y="20.32" rot="R180"/>
-<instance part="R6" gate="G$1" x="142.24" y="35.56" rot="R90"/>
+<instance part="D2" gate="G$1" x="109.22" y="25.4" rot="R180">
+<attribute name="LCSC" x="109.22" y="25.4" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D3" gate="G$1" x="111.76" y="22.86" rot="R180">
+<attribute name="LCSC" x="111.76" y="22.86" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D4" gate="G$1" x="114.3" y="20.32" rot="R180">
+<attribute name="LCSC" x="114.3" y="20.32" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R6" gate="G$1" x="142.24" y="35.56" rot="R90">
+<attribute name="LCSC" x="142.24" y="35.56" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="+3V3" gate="G$1" x="142.24" y="43.18"/>
-<instance part="R7" gate="G$1" x="137.16" y="35.56" rot="R90"/>
+<instance part="R7" gate="G$1" x="137.16" y="35.56" rot="R90">
+<attribute name="LCSC" x="137.16" y="35.56" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="+3V6" gate="G$1" x="137.16" y="43.18"/>
-<instance part="D5" gate="G$1" x="81.28" y="50.8" rot="R180"/>
-<instance part="D6" gate="G$1" x="91.44" y="48.26" rot="R180"/>
-<instance part="U3" gate="G$1" x="-71.12" y="-55.88"/>
-<instance part="D7" gate="G$1" x="-91.44" y="73.66"/>
-<instance part="D8" gate="G$1" x="-91.44" y="53.34"/>
-<instance part="D9" gate="G$1" x="-91.44" y="33.02"/>
-<instance part="D10" gate="G$1" x="-91.44" y="12.7"/>
-<instance part="D11" gate="G$1" x="-91.44" y="-7.62"/>
-<instance part="D12" gate="G$1" x="-91.44" y="-27.94"/>
-<instance part="D13" gate="G$1" x="-50.8" y="73.66"/>
-<instance part="D14" gate="G$1" x="-50.8" y="53.34"/>
-<instance part="D15" gate="G$1" x="-50.8" y="33.02"/>
-<instance part="D16" gate="G$1" x="-50.8" y="12.7"/>
-<instance part="D17" gate="G$1" x="-50.8" y="-7.62"/>
-<instance part="D18" gate="G$1" x="-50.8" y="-27.94"/>
-<instance part="C10" gate="G$1" x="109.22" y="-86.36" rot="R90"/>
-<instance part="R8" gate="G$1" x="83.82" y="-99.06" rot="R90"/>
-<instance part="R9" gate="G$1" x="137.16" y="-99.06" rot="R90"/>
-<instance part="R10" gate="G$1" x="137.16" y="-109.22" rot="R90"/>
+<instance part="D5" gate="G$1" x="81.28" y="50.8" rot="R180">
+<attribute name="LCSC" x="81.28" y="50.8" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D6" gate="G$1" x="91.44" y="48.26" rot="R180">
+<attribute name="LCSC" x="91.44" y="48.26" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="U3" gate="G$1" x="-71.12" y="-55.88">
+<attribute name="LCSC" x="-71.12" y="-55.88" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D7" gate="G$1" x="-91.44" y="73.66">
+<attribute name="LCSC" x="-91.44" y="73.66" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D8" gate="G$1" x="-91.44" y="53.34">
+<attribute name="LCSC" x="-91.44" y="53.34" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D9" gate="G$1" x="-91.44" y="33.02">
+<attribute name="LCSC" x="-91.44" y="33.02" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D10" gate="G$1" x="-91.44" y="12.7">
+<attribute name="LCSC" x="-91.44" y="12.7" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D11" gate="G$1" x="-91.44" y="-7.62">
+<attribute name="LCSC" x="-91.44" y="-7.62" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D12" gate="G$1" x="-91.44" y="-27.94">
+<attribute name="LCSC" x="-91.44" y="-27.94" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D13" gate="G$1" x="-50.8" y="73.66">
+<attribute name="LCSC" x="-50.8" y="73.66" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D14" gate="G$1" x="-50.8" y="53.34">
+<attribute name="LCSC" x="-50.8" y="53.34" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D15" gate="G$1" x="-50.8" y="33.02">
+<attribute name="LCSC" x="-50.8" y="33.02" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D16" gate="G$1" x="-50.8" y="12.7">
+<attribute name="LCSC" x="-50.8" y="12.7" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D17" gate="G$1" x="-50.8" y="-7.62">
+<attribute name="LCSC" x="-50.8" y="-7.62" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="D18" gate="G$1" x="-50.8" y="-27.94">
+<attribute name="LCSC" x="-50.8" y="-27.94" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C10" gate="G$1" x="109.22" y="-86.36" rot="R90">
+<attribute name="LCSC" x="109.22" y="-86.36" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R8" gate="G$1" x="83.82" y="-99.06" rot="R90">
+<attribute name="LCSC" x="83.82" y="-99.06" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R9" gate="G$1" x="137.16" y="-99.06" rot="R90">
+<attribute name="LCSC" x="137.16" y="-99.06" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R10" gate="G$1" x="137.16" y="-109.22" rot="R90">
+<attribute name="LCSC" x="137.16" y="-109.22" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="GND13" gate="1" x="76.2" y="-119.38"/>
 <instance part="GND14" gate="1" x="149.86" y="-104.14"/>
-<instance part="C12" gate="G$1" x="142.24" y="-96.52"/>
+<instance part="C12" gate="G$1" x="142.24" y="-96.52">
+<attribute name="LCSC" x="142.24" y="-96.52" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="P+5" gate="1" x="38.1" y="-91.44"/>
 <instance part="P+6" gate="1" x="149.86" y="-91.44"/>
 <instance part="P+7" gate="1" x="10.16" y="76.2"/>
@@ -14110,18 +14322,42 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <attribute name="NAME" x="79.883" y="33.7058" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="72.263" y="36.322" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="C14" gate="G$1" x="-106.68" y="76.2"/>
-<instance part="C15" gate="G$1" x="-106.68" y="55.88"/>
-<instance part="C16" gate="G$1" x="-106.68" y="35.56"/>
-<instance part="C17" gate="G$1" x="-106.68" y="15.24"/>
-<instance part="C18" gate="G$1" x="-106.68" y="-5.08"/>
-<instance part="C19" gate="G$1" x="-106.68" y="-25.4"/>
-<instance part="C20" gate="G$1" x="-66.04" y="76.2"/>
-<instance part="C21" gate="G$1" x="-66.04" y="55.88"/>
-<instance part="C22" gate="G$1" x="-66.04" y="35.56"/>
-<instance part="C23" gate="G$1" x="-66.04" y="15.24"/>
-<instance part="C24" gate="G$1" x="-66.04" y="-5.08"/>
-<instance part="C25" gate="G$1" x="-66.04" y="-25.4"/>
+<instance part="C14" gate="G$1" x="-106.68" y="76.2">
+<attribute name="LCSC" x="-106.68" y="76.2" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C15" gate="G$1" x="-106.68" y="55.88">
+<attribute name="LCSC" x="-106.68" y="55.88" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C16" gate="G$1" x="-106.68" y="35.56">
+<attribute name="LCSC" x="-106.68" y="35.56" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C17" gate="G$1" x="-106.68" y="15.24">
+<attribute name="LCSC" x="-106.68" y="15.24" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C18" gate="G$1" x="-106.68" y="-5.08">
+<attribute name="LCSC" x="-106.68" y="-5.08" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C19" gate="G$1" x="-106.68" y="-25.4">
+<attribute name="LCSC" x="-106.68" y="-25.4" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C20" gate="G$1" x="-66.04" y="76.2">
+<attribute name="LCSC" x="-66.04" y="76.2" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C21" gate="G$1" x="-66.04" y="55.88">
+<attribute name="LCSC" x="-66.04" y="55.88" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C22" gate="G$1" x="-66.04" y="35.56">
+<attribute name="LCSC" x="-66.04" y="35.56" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C23" gate="G$1" x="-66.04" y="15.24">
+<attribute name="LCSC" x="-66.04" y="15.24" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C24" gate="G$1" x="-66.04" y="-5.08">
+<attribute name="LCSC" x="-66.04" y="-5.08" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C25" gate="G$1" x="-66.04" y="-25.4">
+<attribute name="LCSC" x="-66.04" y="-25.4" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="P+20" gate="1" x="-55.88" y="-50.8" smashed="yes">
 <attribute name="VALUE" x="-58.42" y="-50.8" size="1.778" layer="96"/>
 </instance>
@@ -14130,11 +14366,17 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <instance part="GND28" gate="1" x="-38.1" y="-68.58"/>
 <instance part="GND29" gate="1" x="-40.64" y="-63.5"/>
 <instance part="P+21" gate="1" x="-27.94" y="-55.88"/>
-<instance part="C26" gate="G$1" x="-58.42" y="-76.2"/>
+<instance part="C26" gate="G$1" x="-58.42" y="-76.2">
+<attribute name="LCSC" x="-58.42" y="-76.2" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="P+22" gate="1" x="-58.42" y="-71.12"/>
 <instance part="GND30" gate="1" x="-58.42" y="-83.82"/>
-<instance part="R12" gate="G$1" x="-88.9" y="-53.34"/>
-<instance part="R13" gate="G$1" x="-88.9" y="-60.96"/>
+<instance part="R12" gate="G$1" x="-88.9" y="-53.34">
+<attribute name="LCSC" x="-88.9" y="-53.34" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R13" gate="G$1" x="-88.9" y="-60.96">
+<attribute name="LCSC" x="-88.9" y="-60.96" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="J6" gate="G$1" x="165.1" y="15.24" rot="MR0"/>
 <instance part="P+23" gate="1" x="157.48" y="17.78"/>
 <instance part="P+8" gate="1" x="-68.58" y="81.28"/>
@@ -14154,9 +14396,15 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <attribute name="VALUE" x="74.803" y="87.122" size="1.778" layer="96" rot="R180"/>
 </instance>
 <instance part="GND17" gate="1" x="71.12" y="81.28"/>
-<instance part="X3" gate="G$1" x="-35.56" y="-55.88"/>
-<instance part="X1" gate="G$1" x="-20.32" y="-55.88"/>
-<instance part="R14" gate="G$1" x="-88.9" y="-45.72"/>
+<instance part="X3" gate="G$1" x="-35.56" y="-55.88">
+<attribute name="LCSC" x="-35.56" y="-55.88" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="X1" gate="G$1" x="-20.32" y="-55.88">
+<attribute name="LCSC" x="-20.32" y="-55.88" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R14" gate="G$1" x="-88.9" y="-45.72">
+<attribute name="LCSC" x="-88.9" y="-45.72" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="P+10" gate="1" x="-83.82" y="-43.18" smashed="yes">
 <attribute name="VALUE" x="-83.82" y="-43.18" size="1.778" layer="96"/>
 </instance>
@@ -14197,12 +14445,20 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 </instance>
 <instance part="GND19" gate="1" x="38.1" y="-124.46"/>
 <instance part="P+12" gate="1" x="83.82" y="-91.44"/>
-<instance part="R15" gate="G$1" x="76.2" y="-109.22" rot="R90"/>
-<instance part="R16" gate="G$1" x="83.82" y="-121.92" rot="R90"/>
+<instance part="R15" gate="G$1" x="76.2" y="-109.22" rot="R90">
+<attribute name="LCSC" x="76.2" y="-109.22" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R16" gate="G$1" x="83.82" y="-121.92" rot="R90">
+<attribute name="LCSC" x="83.82" y="-121.92" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="GND20" gate="1" x="83.82" y="-129.54"/>
 <instance part="GND21" gate="1" x="101.6" y="-129.54"/>
-<instance part="C36" gate="G$1" x="119.38" y="-121.92"/>
-<instance part="R17" gate="G$1" x="119.38" y="-132.08" rot="R90"/>
+<instance part="C36" gate="G$1" x="119.38" y="-121.92">
+<attribute name="LCSC" x="119.38" y="-121.92" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="R17" gate="G$1" x="119.38" y="-132.08" rot="R90">
+<attribute name="LCSC" x="119.38" y="-132.08" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="GND22" gate="1" x="124.46" y="-139.7"/>
 <instance part="D20" gate="G$1" x="119.38" y="-96.52" smashed="yes" rot="R90">
 <attribute name="NAME" x="121.92" y="-96.0374" size="1.778" layer="95"/>
@@ -14210,8 +14466,12 @@ Source: http://www.diodes.com/datasheets/ds23001.pdf</description>
 <attribute name="LCSC" x="119.38" y="-96.52" size="1.778" layer="96" rot="R90" display="off"/>
 </instance>
 <instance part="GND23" gate="1" x="119.38" y="-101.6"/>
-<instance part="L1" gate="G$1" x="129.54" y="-93.98" rot="R90"/>
-<instance part="C38" gate="G$1" x="149.86" y="-96.52"/>
+<instance part="L1" gate="G$1" x="129.54" y="-93.98" rot="R90">
+<attribute name="LCSC" x="129.54" y="-93.98" size="1.778" layer="96" display="off"/>
+</instance>
+<instance part="C38" gate="G$1" x="149.86" y="-96.52">
+<attribute name="LCSC" x="149.86" y="-96.52" size="1.778" layer="96" display="off"/>
+</instance>
 <instance part="GND12" gate="1" x="137.16" y="-116.84"/>
 </instances>
 <busses>
