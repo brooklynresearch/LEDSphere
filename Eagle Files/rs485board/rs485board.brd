@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="8.7.0">
+<eagle version="9.0.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -3840,21 +3840,9 @@ design rules under a new name.</description>
 <contactref element="C12" pad="1"/>
 <contactref element="C38" pad="1"/>
 <contactref element="R9" pad="2"/>
-<polygon width="0.254" layer="1">
-<vertex x="36.068" y="56.642"/>
-<vertex x="37.338" y="56.642"/>
-<vertex x="37.592" y="56.896"/>
-<vertex x="38.354" y="57.658"/>
-<vertex x="38.354" y="72.644"/>
-<vertex x="38.354" y="74.676"/>
-<vertex x="38.1" y="74.93"/>
-<vertex x="36.83" y="74.93"/>
-<vertex x="36.576" y="74.676"/>
-<vertex x="36.068" y="74.168"/>
-</polygon>
-<wire x1="37.465" y1="69.85" x2="37.465" y2="62.119" width="1.27" layer="1"/>
-<wire x1="37.465" y1="62.119" x2="36.56" y2="61.214" width="0.254" layer="1"/>
-<wire x1="36.56" y1="61.214" x2="36.56" y2="57.404" width="0.254" layer="1"/>
+<wire x1="37.465" y1="69.85" x2="37.465" y2="62.119" width="1.524" layer="1"/>
+<wire x1="37.465" y1="62.119" x2="36.56" y2="61.214" width="0.762" layer="1"/>
+<wire x1="36.56" y1="61.214" x2="36.56" y2="57.404" width="0.762" layer="1"/>
 <via x="37.846" y="61.214" extent="1-16" drill="0.35"/>
 <via x="39.37" y="73.406" extent="1-16" drill="0.35"/>
 <wire x1="39.37" y1="61.722" x2="39.37" y2="73.406" width="0.254" layer="1"/>
@@ -3863,7 +3851,7 @@ design rules under a new name.</description>
 <wire x1="15.24" y1="69.85" x2="9.906" y2="69.85" width="0.254" layer="16"/>
 <via x="9.906" y="69.85" extent="1-16" drill="0.35"/>
 <wire x1="9.906" y1="69.85" x2="9.906" y2="68.006" width="0.254" layer="1"/>
-<wire x1="36.56" y1="61.214" x2="37.846" y2="61.214" width="0.254" layer="1"/>
+<wire x1="36.56" y1="61.214" x2="37.846" y2="61.214" width="0.508" layer="1"/>
 <wire x1="37.846" y1="61.214" x2="38.862" y2="61.214" width="0.254" layer="1"/>
 <wire x1="38.862" y1="61.214" x2="39.37" y2="61.722" width="0.254" layer="1"/>
 <wire x1="45.212" y1="43.942" x2="43.942" y2="45.212" width="0.508" layer="1"/>
@@ -4467,40 +4455,19 @@ design rules under a new name.</description>
 </signal>
 </signals>
 <errors>
-<approved hash="5,1,241c89682063a6e9"/>
 <approved hash="5,1,a5b1b8c8e08164cb"/>
-<approved hash="5,1,55d4cc3fc341691a"/>
-<approved hash="5,1,eb76a80784dacdb1"/>
-<approved hash="5,1,338f51a36c34f0fd"/>
-<approved hash="5,1,6972d091b01a2d07"/>
 <approved hash="5,1,69dff029b9676142"/>
-<approved hash="5,1,5596cc7fc3636c89"/>
-<approved hash="5,1,abaaf3acc33f56f6"/>
-<approved hash="5,1,abc8f3a8c3395307"/>
-<approved hash="5,1,22910fadfa304534"/>
 <approved hash="5,1,d830df5afe9baa6b"/>
-<approved hash="5,1,4b7d6d3b2e5a0215"/>
-<approved hash="5,1,b68f576ceaea5d21"/>
-<approved hash="5,1,994d780667ddeef2"/>
 <approved hash="5,1,831ed8837ab2dd4a"/>
 <approved hash="5,1,8077dbf953c2f7a8"/>
-<approved hash="5,1,8557deef4a7ffca8"/>
 <approved hash="5,1,72d2cdd67ed235a9"/>
-<approved hash="5,1,224943e14ab4d538"/>
-<approved hash="5,1,b1910badda30633a"/>
-<approved hash="5,1,f03624c9a7cf4ecb"/>
-<approved hash="5,1,251dcd963a64f4a1"/>
-<approved hash="5,1,684d3e0667ddaefc"/>
 <approved hash="5,1,03399aa341a2a52c"/>
 <approved hash="5,1,92e90b7d6d31aa6d"/>
-<approved hash="5,1,274946954fb2fd2f"/>
-<approved hash="5,1,40914badfa30413f"/>
 <approved hash="5,1,01e90f7d6d31ac68"/>
 <approved hash="5,1,d7cca56d3e5cc62a"/>
 <approved hash="5,1,3fcca099d682c733"/>
 <approved hash="5,1,2d30b95a9e9bea62"/>
 <approved hash="5,1,b0e94f7d6d31ee6a"/>
-<approved hash="5,1,dac98f495b6f6470"/>
 </errors>
 </board>
 </drawing>
