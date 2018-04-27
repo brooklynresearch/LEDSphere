@@ -33,7 +33,7 @@
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
@@ -167,7 +167,7 @@
 <hole x="108.077" y="26.035" drill="2.9972"/>
 <hole x="86.741" y="26.035" drill="2.9972"/>
 <text x="22.86" y="11.176" size="1.778" layer="25">Led Sphere 2017</text>
-<text x="66.929" y="50.419" size="1.778" layer="26" rot="MR180">Led Sphere 2017
+<text x="66.929" y="50.419" size="1.778" layer="102" rot="MR180">Led Sphere 2017
 Brooklyn Research
 Think Create LLC</text>
 <wire x1="129.159" y1="13.335" x2="65.659" y2="13.335" width="0" layer="20" curve="-90"/>
@@ -231,8 +231,10 @@ Think Create LLC</text>
 <wire x1="0" y1="80.264" x2="1.27" y2="78.994" width="0" layer="20" curve="90"/>
 <wire x1="62.23" y1="78.994" x2="63.5" y2="80.264" width="0" layer="20" curve="90"/>
 <wire x1="63.5" y1="142.494" x2="0" y2="142.494" width="0" layer="20" curve="90"/>
-<text x="22.86" y="90.17" size="1.778" layer="25">Led Sphere 2017</text>
-<text x="62.23" y="105.41" size="1.778" layer="26" rot="MR0">Think Create LLC'</text>
+<text x="22.86" y="90.17" size="1.778" layer="100">Led Sphere 2017</text>
+<text x="62.23" y="105.41" size="1.778" layer="102" rot="MR0">Led Sphere 2017
+Brooklyn Research
+Think Create LLC</text>
 <hole x="2.54" y="81.534" drill="2.9972"/>
 <hole x="60.96" y="99.314" drill="2.9972"/>
 <hole x="2.54" y="120.904" drill="2.9972"/>
@@ -274,7 +276,9 @@ Think Create LLC</text>
 <wire x1="1.27" y1="76.835" x2="0" y2="75.565" width="0" layer="20" curve="90"/>
 <wire x1="0" y1="13.335" x2="63.5" y2="13.335" width="0" layer="20" curve="90"/>
 <text x="88.519" y="11.176" size="1.778" layer="25">Led Sphere 2017</text>
-<text x="1.27" y="50.419" size="1.778" layer="26" rot="MR180">Think Create LLC'</text>
+<text x="1.27" y="50.419" size="1.778" layer="102" rot="MR180">Led Sphere 2017
+Brooklyn Research
+Think Create LLC</text>
 <hole x="60.96" y="74.295" drill="2.9972"/>
 <hole x="2.54" y="56.515" drill="2.9972"/>
 <hole x="60.96" y="34.925" drill="2.9972"/>
@@ -314,8 +318,10 @@ Think Create LLC</text>
 <wire x1="65.659" y1="80.264" x2="66.929" y2="78.994" width="0" layer="20" curve="90"/>
 <wire x1="127.889" y1="78.994" x2="129.159" y2="80.264" width="0" layer="20" curve="90"/>
 <wire x1="129.159" y1="142.494" x2="65.659" y2="142.494" width="0" layer="20" curve="90"/>
-<text x="88.519" y="90.17" size="1.778" layer="25">Led Sphere 2017</text>
-<text x="127.889" y="105.41" size="1.778" layer="26" rot="MR0">Think Create LLC'</text>
+<text x="88.519" y="90.17" size="1.778" layer="100">Led Sphere 2017</text>
+<text x="127.889" y="105.41" size="1.778" layer="102" rot="MR0">Led Sphere 2017
+Brooklyn Research
+Think Create LLC</text>
 <hole x="68.199" y="81.534" drill="2.9972"/>
 <hole x="126.619" y="99.314" drill="2.9972"/>
 <hole x="68.199" y="120.904" drill="2.9972"/>
@@ -412,6 +418,8 @@ Think Create LLC</text>
 <wire x1="131.318" y1="155.829" x2="134.366" y2="155.829" width="0" layer="20"/>
 <wire x1="131.318" y1="0" x2="134.366" y2="0" width="0" layer="20"/>
 <wire x1="134.366" y1="0" x2="134.366" y2="155.829" width="0" layer="20"/>
+<text x="106.68" y="66.04" size="1.778" layer="100" rot="SR180">Led Sphere 2017</text>
+<text x="41.021" y="66.04" size="1.778" layer="100" rot="SR180">Led Sphere 2017</text>
 </plain>
 <libraries>
 <library name="SparkFun-IC-Microcontroller">
