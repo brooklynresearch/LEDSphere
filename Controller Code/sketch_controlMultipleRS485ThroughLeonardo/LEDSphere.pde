@@ -31,7 +31,7 @@ class LEDSphere {
 
     stroke(lost?64:255);
     fill(lost?0:fillcolor);
-    ellipse(xpos, ypos, 100, 100);
+    ellipse(xpos, ypos, 50, 50);
     fill(255);
     text(id+" "+acceX+"\t"+acceY, xpos-50, ypos+70);
   }

@@ -113,27 +113,21 @@ class HotPlugSerial {
       if (id != idInHeartbeat) {
         if (id<0) {
           id=idInHeartbeat;
-          //!!!         controlBoards[id].boardConnected=true;  
-          //!!!         controlBoards[id].hotplugSerial=serial;
+          controlBoards[id].boardConnected=true;  
+          controlBoards[id].hotplugSerial=serial;
         } else {
           println("ERROR: id change from "+ id+" to "+idInHeartbeat);
         }
       } else {
-        //!!!        controlBoards[id].heartBeatTime=millis();
-      }
-      if (parameters.length>=3 && id>=0) {
-        //!!!        controlBoards[id].processSensor(parameters[2].equals("T"));
+        controlBoards[id].heartBeatTime=millis();
       }
       lastHeartBeatTime=millis();
-    } else if (input.startsWith("version")) {
-      if (id>=0) {
-        println("board "+id+" "+input);
-        //!!!        controlBoards[id].version=input.substring(9, 17);
-      }
     } else {
-      //println(input);
+      if (id>=0 && id<10){
+        controlBoards[id].processInput(input);
+      }
     }
-    //!!!   if (!isHeartBeat && id>=0 && id<10) controlBoards[id].serialDataTime=millis();
+    if (!isHeartBeat && id>=0 && id<10) controlBoards[id].serialDataTime=millis();
   }
   boolean update() { 
     if (serial==null) {
@@ -153,12 +147,12 @@ class HotPlugSerial {
     }
 
     //check heartBeat, active not always working
-    if (millis()-lastHeartBeatTime>3000) {  //heartbeat lost
+    if (millis()-lastHeartBeatTime>3500) {  //heartbeat lost
       if (serial!=null) serial.stop();
-      /*      if (id >=0 &&id<controlBoards.length) {
-       controlBoards[id].boardConnected=false;
-       controlBoards[id].hotplugSerial=null;
-       }*/
+      if (id >=0 &&id<controlBoards.length) {
+        controlBoards[id].boardConnected=false;
+        controlBoards[id].hotplugSerial=null;
+      }
       return true;
     }
 

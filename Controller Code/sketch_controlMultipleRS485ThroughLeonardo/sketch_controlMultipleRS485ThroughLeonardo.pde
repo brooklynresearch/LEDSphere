@@ -3,43 +3,23 @@ import processing.serial.*;
 
 Serial myPort;       
 
-int  startID = 1;
-int endID = 10;
-int totalSphereCount = endID-startID+1;
+int controlBoardCount = 10;
+RS485LeonardoController controlBoards[] = new RS485LeonardoController[controlBoardCount];
 
-LEDSphere spheres[] = new LEDSphere[totalSphereCount];
+PImage controlBoardImg;
 
-boolean gotData = false;
 
-String outBuffer = "";
 
 void setup() {
-  /*
-  for (int i=0; i<totalSphereCount; i++) {
-   spheres[i] = new LEDSphere(i+startID, 150+100*i, 150);
-   }
-   
-   String validPort="";
-   String[] allPorts=Serial.list();
-   for (String port : allPorts ) {
-   if (port.startsWith("/dev/tty") && (port.startsWith(".usbmodem", 8) || port.startsWith(".usbserial", 8))) {
-   validPort=port;
-   }
-   }
-   println(validPort);
-   
-   if (validPort.length()>0) {
-   myPort = new Serial(this, validPort, 115200);
-   myPort.bufferUntil('\n');
-   }
-   
-   size(1200, 300);
-   frameRate(60);
-   
-   for (int i=0; i<totalSphereCount; i++) {
-   LEDSphere oneSphere=spheres[i];
-   outBuffer=outBuffer+String.format("P%02X%04X%04X%04X\r", oneSphere.id, oneSphere.envelopeRate, oneSphere.envelopeThreshold, oneSphere.centerThreshold);
-   }*/
+  size(1200, 800);
+  frameRate(30);
+  controlBoardImg = loadImage("control_pcb.png");
+
+  for (int i=0; i<controlBoards.length; i++) {
+    int x=50;
+    int y=50+i*70;
+    controlBoards[i]=new RS485LeonardoController(x, y, i);
+  }
 }
 
 
@@ -63,11 +43,13 @@ void draw() {
 
   SerialHandler_checkSerialPort();
 
-
-
   background(0);
 
-
+  {
+    for (int i=0; i<controlBoards.length; i++) {  //draw board
+      controlBoards[i].draw();
+    }
+  }
 
 
   /*
@@ -120,7 +102,8 @@ void draw() {
 
 void serialEvent(Serial port) {
   int i;
-  String inString = port.readString().trim();
+  String inString = port.readString();
+  inString = inString.substring(0, inString.length() - 1);
   for (i=0; i<hotplugSerials.size(); i++) {
     HotPlugSerial onePort=hotplugSerials.get(i);
     if (onePort.serial==port) {
