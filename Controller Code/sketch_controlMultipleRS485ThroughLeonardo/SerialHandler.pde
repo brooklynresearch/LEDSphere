@@ -91,17 +91,16 @@ class HotPlugSerial {
   String serialName;
   int id=-1;
   int lastHeartBeatTime = 0;
-  HotPlugSerial (PApplet parent, String _serialName) {  
-    try {
-      serial = new Serial(parent, _serialName, 115200);
-      serialName=_serialName;
-      serial.bufferUntil('\n');
-      lastHeartBeatTime=millis();
-      //println("!!! add serial?");
-    } 
-    catch (RuntimeException e) {
-      println(e.getMessage());
-    }
+  int startTime = 0;
+  boolean started = false;
+  PApplet parent;
+
+  HotPlugSerial (PApplet _parent, String _serialName) { 
+    serialName=_serialName;
+    serial=null;
+    startTime=millis();
+    lastHeartBeatTime=millis();
+    parent=_parent;
   } 
   void processInput(String input) {
     boolean isHeartBeat=false;
@@ -137,6 +136,22 @@ class HotPlugSerial {
     //!!!   if (!isHeartBeat && id>=0 && id<10) controlBoards[id].serialDataTime=millis();
   }
   boolean update() { 
+    if (serial==null) {
+      if (!started && (millis()-startTime)>1000) {  //give it some time
+        try {
+          started=true;
+          serial = new Serial(parent, serialName, 115200);
+
+          serial.bufferUntil('\n');
+          lastHeartBeatTime=millis();
+          //println("!!! add serial?");
+        } 
+        catch (RuntimeException e) {
+          println(e.getMessage());
+        }
+      }
+    }
+
     //check heartBeat, active not always working
     if (millis()-lastHeartBeatTime>3000) {  //heartbeat lost
       if (serial!=null) serial.stop();
