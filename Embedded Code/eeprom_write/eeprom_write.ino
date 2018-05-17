@@ -1,4 +1,4 @@
-#define device_ADDR 10
+#define device_ADDR 1
 
 #include <EEPROM.h>
 

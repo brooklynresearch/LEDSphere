@@ -1,3 +1,7 @@
+#include <EEPROM.h>
+
+unsigned char boardID = -1;
+
 char RS485inputString[64] = {'\0'};       // a String to hold incoming data
 unsigned char RS485inputStringIndex = 0;
 boolean RS485stringComplete = false;  // whether the string is complete
@@ -11,15 +15,14 @@ boolean USBstringComplete = false;  // whether the string is complete
 
 char dataTextBuffer[(END_ID - START_ID + 1) * 10 + 2];
 
-
 unsigned char currentAccessingID = END_ID + 1;
 
 void setup() {
+  boardID = EEPROM.read(0);
 
   Serial.begin(115200);
   Serial1.begin(115200);
   delay(500);
-  Serial.print("RS485 Address: ");
   pinMode(2, OUTPUT); //485DIR
   digitalWrite(2, LOW);
 
@@ -34,7 +37,16 @@ void setup() {
 
 void loop() {
   unsigned long currentMicros = micros();
+  unsigned long currentMillis = millis();
   static unsigned long previousSendMicros = 0;
+  static unsigned long previousHeatBeatMillis = 0;
+
+  if ((signed long)(currentMillis - previousHeatBeatMillis) > 2000) {
+    previousHeatBeatMillis = currentMillis;
+    Serial.print("ID:");
+    Serial.print(boardID);
+    Serial.print('\n');
+  }
 
   if (RS485stringComplete) {
 
@@ -80,7 +92,6 @@ void loop() {
         currentAccessingID = START_ID;
         //give report
         Serial.print(dataTextBuffer);
-
         memset(dataTextBuffer, ' ', (END_ID - START_ID + 1) * 10);
       }
     }
