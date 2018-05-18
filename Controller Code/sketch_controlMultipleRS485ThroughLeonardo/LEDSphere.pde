@@ -21,6 +21,10 @@ class LEDSphere {
     fillcolor=color(0);
     needUpdateParameter=3;
   }
+  
+  void update(){
+    
+  }
 
   void draw() {
     if (frameCount-lastUpdated>60) {
@@ -33,7 +37,7 @@ class LEDSphere {
     fill(lost?0:fillcolor);
     ellipse(xpos, ypos, 50, 50);
     fill(255);
-    text(id+" "+acceX+"\t"+acceY, xpos-50, ypos+70);
+    text(id+" "+acceX+"\t"+acceY, xpos-30, ypos+40);
   }
 
   void updateData(int _acceX, int _acceY, int _acceEvent) {

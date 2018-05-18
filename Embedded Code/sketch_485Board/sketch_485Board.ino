@@ -150,24 +150,24 @@ void loop() {
   if (stringComplete) {
     uint8_t id = hexToUchar2(&inputString[1]);
     uint8_t stringLength = strlen(inputString);
-    if (inputString[0] == 'S' && stringLength == 5  ) {
+    if (inputString[0] == 'S' && stringLength == 5  ) { //stream mode
       if (id == boardID) {
         streamRawDataBeginTime = millis();
         uint8_t inputTime = hexToUchar2(&inputString[3]);
         streamTime = ((unsigned int)inputTime) * inputTime * 100ul;
         streamRawData = true;
       }
-    } else if (inputString[0] == 'L' && stringLength == 9 ) {
+    } else if (inputString[0] == 'L' && stringLength == 9 ) { //set light color
       if (id == boardID) {  //L01080808
         uint8_t r = hexToUchar2(&inputString[3]);
         uint8_t g = hexToUchar2(&inputString[5]);
         uint8_t b = hexToUchar2(&inputString[7]);
         for (int i = 0; i < NUMPIXELS; i++) {
-          pixels.setPixelColor(i, pixels.Color(r, g, b)); // Moderately bright green color.
+          pixels.setPixelColor(i, pixels.Color(r, g, b)); 
         }
         pixels.show();
       }
-    } else if (inputString[0] == 'E' && stringLength == 3) {
+    } else if (inputString[0] == 'E' && stringLength == 3) {  //report back current value
       if (id == boardID) {
         char buf[16];
         char* bufPtr = buf;
@@ -184,11 +184,16 @@ void loop() {
         Serial.flush();
         digitalWrite(4, LOW);
       }
-    } else if (inputString[0] == 'P' && stringLength == (3 + 12)) {
+    } else if (inputString[0] == 'P' && stringLength == (3 + 12)) { //set parameters
       if (id == boardID) {
         envelopeRate = hexToInt16(&inputString[3]);
         envelopeThreshold = hexToInt16(&inputString[7]);
         centerThreshold = hexToInt16(&inputString[11]);
+      }
+    } else if (inputString[0] == 'O' && stringLength == (3 + 8)) { //set offset
+      if (id == boardID) {
+        offsetX = hexToInt16(&inputString[3]);
+        offsetY = hexToInt16(&inputString[7]);
       }
     }
 

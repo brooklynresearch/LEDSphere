@@ -15,7 +15,7 @@ class RS485LeonardoController {
   int endID = 10;
   int totalSphereCount = endID-startID+1;
   LEDSphere spheres[] = new LEDSphere[totalSphereCount];
-  
+
   boolean gotData = false;
 
   RS485LeonardoController (int _x, int _y, int _id) {  
@@ -34,14 +34,56 @@ class RS485LeonardoController {
     }
   }
 
-  void draw() {
+  void update() {
     int timeNow=millis();
 
-    for (int i=0; i<spheres.length; i++) {
-      spheres[i].draw();
+    if ((frameCount%30==0)) {
+      int halfSecond = frameCount/30;
+      if (halfSecond<5) {  //send settings
+        outBuffer="";
+        for (int i=0; i<totalSphereCount; i++) {
+          LEDSphere oneSphere=spheres[i];
+          outBuffer=outBuffer+String.format("P%02X%04X%04X%04X\r", oneSphere.id, oneSphere.envelopeRate, oneSphere.envelopeThreshold, oneSphere.centerThreshold);
+        }
+      } else {  //refresh LED
+        outBuffer="";
+        for (int i=0; i<totalSphereCount; i++) {
+          LEDSphere oneSphere=spheres[i];
+          outBuffer=outBuffer+String.format("L%02X%02X%02X%02X\r", oneSphere.id, oneSphere.fillcolorDim >> 16 & 0xFF, oneSphere.fillcolorDim >> 8 & 0xFF, oneSphere.fillcolorDim >> 0 & 0xFF);
+        }
+      }
     }
 
 
+    if (gotData) {
+      String sendBuf = "";
+      for (int i=0; i<totalSphereCount; i++) {
+        LEDSphere oneSphere=spheres[i];
+        if (oneSphere.changedEvent) {
+          sendBuf=sendBuf+String.format("L%02X%02X%02X%02X\r", i+startID, oneSphere.fillcolorDim >> 16 & 0xFF, oneSphere.fillcolorDim >> 8 & 0xFF, oneSphere.fillcolorDim >> 0 & 0xFF);
+          oneSphere.changedEvent = false;
+        } else {
+          if (outBuffer.length()>0) {
+            sendBuf=outBuffer;
+            outBuffer="";
+          }
+        }
+      }
+      sendBuf=sendBuf+'\n';
+      if (sendBuf.length()>1) {
+        //println("SEND");
+        //print(sendBuf);
+        sendData(sendBuf);
+      }
+
+      gotData=false;
+    }
+  }
+
+  void draw() {
+    for (int i=0; i<spheres.length; i++) {
+      spheres[i].draw();
+    }
 
     //draw icon
     //ellipse(x, y, 200, 200);
@@ -70,11 +112,17 @@ class RS485LeonardoController {
     }
   }
 
+  void sendData(String data) {
+    if (hotplugSerial!=null) {
+      hotplugSerial.write(data);
+    }
+  }
+
   void processInput(String input) {
     try {
-      if (inString.length() == totalSphereCount*10) {
+      if (input.length() == totalSphereCount*10) {
         for (int i=0; i<totalSphereCount; i++) {
-          String oneData = inString.substring(i*10, (i+1)*10);
+          String oneData = input.substring(i*10, (i+1)*10);
           if (oneData.charAt(0)==' ') {
             //there is no data
           } else {
@@ -97,5 +145,28 @@ class RS485LeonardoController {
     }
 
     gotData=true;
+  }
+
+  void resetCalibration() {
+    String sendBuf = "";
+    for (int i=0; i<totalSphereCount; i++) {
+      sendBuf=sendBuf+String.format("O%02X%04X%04X\r", i+startID, 0, 0);
+    }
+    sendData(sendBuf);
+  }
+
+  void setCalibration() {
+    String sendBuf = "";
+    for (int i=0; i<totalSphereCount; i++) {
+      LEDSphere oneSphere=spheres[i];
+      if (!oneSphere.lost) {
+        int currentX=oneSphere.acceX;
+        int currentY=oneSphere.acceY;
+        if (currentX<0) currentX+=0x10000;
+        if (currentY<0) currentY+=0x10000;
+        sendBuf=sendBuf+String.format("O%02X%04X%04X\r", i+startID, currentX, currentY);
+      }
+      sendData(sendBuf);
+    }
   }
 }
