@@ -1,0 +1,4 @@
+default/*
+*.dbk
+*.sdf
+!default/Makefile
