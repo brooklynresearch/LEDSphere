@@ -1,4 +1,4 @@
-int dimScale = 1;
+int dimScale = 16;
 class LEDSphere {
   int id;
   float xpos, ypos;       // x and y position of bar
@@ -21,9 +21,8 @@ class LEDSphere {
     fillcolor=color(0);
     needUpdateParameter=3;
   }
-  
-  void update(){
-    
+
+  void update() {
   }
 
   void draw() {
@@ -36,6 +35,20 @@ class LEDSphere {
     stroke(lost?64:255);
     fill(lost?0:fillcolor);
     ellipse(xpos, ypos, 50, 50);
+    if (!lost) {
+      float angle = atan2(acceY, acceX);
+      float strength = sqrt(acceY*acceY+acceX*acceX);
+      float halfPiStrength = 5000;
+      float angleHalf = strength*HALF_PI/halfPiStrength;
+
+      if (strength>256) {
+        noFill();
+        strokeWeight(6);
+        stroke(128);
+        arc(xpos, ypos, 54, 54, angle-angleHalf, angle+angleHalf);
+        strokeWeight(1);
+      }
+    }
     fill(255);
     text(id+" "+acceX+"\t"+acceY, xpos-30, ypos+40);
   }
