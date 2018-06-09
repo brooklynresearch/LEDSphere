@@ -77,20 +77,35 @@ void loop() {
   if (!powerUPLedFinished) {
     static unsigned long LEDPreviousMillis = 0;
     static int stepCount = 0;
-    if (currentMillis - LEDPreviousMillis >= 200) {
+    if (currentMillis - LEDPreviousMillis >= 10) {
       pixels.clear();
-      if (stepCount < 6) {
-        for (int i = 0; i < NUMPIXELS; i++) {
-          uint8_t modValue = (i + stepCount) % 3;
-          uint8_t testBrightness = 15;
-          pixels.setPixelColor(i, pixels.Color((modValue == 0) ? testBrightness : 0, (modValue == 1) ? testBrightness : 0, (modValue == 2) ? testBrightness : 0));
+      if (stepCount < 64) {
+        uint8_t testBrightness = stepCount;
+        for (int i = 0; i < NUMPIXELS; i += 2) {
+          pixels.setPixelColor(i, testBrightness, testBrightness, testBrightness);
         }
+      } else if (stepCount < 64 * 2) {
+        uint8_t testBrightness1 = 127 - stepCount;
+        uint8_t testBrightness2 = 63 - testBrightness1;
+        for (int i = 0; i < NUMPIXELS; i += 2) {
+          pixels.setPixelColor(i, testBrightness1, testBrightness1, testBrightness1);
+          pixels.setPixelColor(i + 1, testBrightness2, testBrightness2, testBrightness2);
+        }
+      } else if (stepCount < 64 * 3) {
+        uint8_t testBrightness3 = 191 - stepCount;
+        for (int i = 0; i < NUMPIXELS; i += 2) {
+          pixels.setPixelColor(i + 1, testBrightness3, testBrightness3, testBrightness3);
+        }
+      }  else {
+        powerUPLedFinished = true;
       }
       pixels.show(); // This sends the updated pixel color to the hardware.
       stepCount++;
-      if (stepCount > 6) powerUPLedFinished = true;;
       LEDPreviousMillis = currentMillis;
     }
+
+
+
   }
 
   static unsigned long sensorPreviousMillis = 0;
@@ -162,8 +177,10 @@ void loop() {
         uint8_t r = hexToUchar2(&inputString[3]);
         uint8_t g = hexToUchar2(&inputString[5]);
         uint8_t b = hexToUchar2(&inputString[7]);
-        for (int i = 0; i < NUMPIXELS; i++) {
-          pixels.setPixelColor(i, pixels.Color(r, g, b)); 
+        if (powerUPLedFinished) {
+          for (int i = 0; i < NUMPIXELS; i++) {
+            pixels.setPixelColor(i, pixels.Color(r, g, b));
+          }
         }
         pixels.show();
       }
