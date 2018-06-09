@@ -12,7 +12,7 @@ Simple_NeoPixel pixels = Simple_NeoPixel(LED_PIN, NEO_GRB + NEO_KHZ800);
 //Simple_NeoPixel pixels = Simple_NeoPixel(LED_PIN, NEO_GRBW + NEO_KHZ800);
 Simple_LIS3DH lis = Simple_LIS3DH(10);
 
-char inputString[64] = {'\0'};       // a String to hold incoming data
+char inputString[128] = {'\0'};       // a String to hold incoming data
 unsigned char inputStringIndex = 0;
 boolean stringComplete = false;  // whether the string is complete
 
@@ -37,6 +37,13 @@ int centerThreshold = 384;
 int offsetX = 0;
 int offsetY = 0;
 
+uint8_t fadeColorR, fadeColorG, fadeColorB;
+uint8_t startColorR, startColorG, startColorB;
+unsigned long fadeBeginTime = 0;
+unsigned long fadeDuration = 0;
+bool fading = false;
+
+uint8_t currentColorR = 0, currentColorG = 0, currentColorB = 0;
 
 void setup() {
 
@@ -103,9 +110,6 @@ void loop() {
       stepCount++;
       LEDPreviousMillis = currentMillis;
     }
-
-
-
   }
 
   static unsigned long sensorPreviousMillis = 0;
@@ -153,7 +157,19 @@ void loop() {
     sensorPreviousMillis = currentMillis;
   }
 
-
+  if (fading && powerUPLedFinished) {
+    unsigned int elaspedTime = millis () - fadeBeginTime;
+    unsigned char r, g, b;
+    if (elaspedTime >= fadeDuration) {
+      fading = false;
+      r = fadeColorR; g = fadeColorG; b = fadeColorB;
+    } else {
+      r = map(elaspedTime, 0, fadeDuration, startColorR, fadeColorR);
+      g = map(elaspedTime, 0, fadeDuration, startColorG, fadeColorG);
+      b = map(elaspedTime, 0, fadeDuration, startColorB, fadeColorB);
+    }
+    setRingColor(r, g, b);
+  }
 
 
   if (streamRawData) {
@@ -178,11 +194,20 @@ void loop() {
         uint8_t g = hexToUchar2(&inputString[5]);
         uint8_t b = hexToUchar2(&inputString[7]);
         if (powerUPLedFinished) {
-          for (int i = 0; i < NUMPIXELS; i++) {
-            pixels.setPixelColor(i, pixels.Color(r, g, b));
-          }
+          setRingColor(r, g, b);
         }
-        pixels.show();
+      }
+    } else if (inputString[0] == 'F' && stringLength == 13 ) { //Fade light color
+      if (id == boardID) {  //F010808080064
+        fadeColorR = hexToUchar2(&inputString[3]);
+        fadeColorG = hexToUchar2(&inputString[5]);
+        fadeColorB = hexToUchar2(&inputString[7]);
+        startColorR = currentColorR;
+        startColorG = currentColorG;
+        startColorB = currentColorB;
+        fadeDuration = hexToInt16(&inputString[9]);
+        fadeBeginTime = millis();
+        fading = true;
       }
     } else if (inputString[0] == 'E' && stringLength == 3) {  //report back current value
       if (id == boardID) {
@@ -234,6 +259,14 @@ void loop() {
     }
   }
 
+}
+
+void setRingColor(uint8_t r, uint8_t g, uint8_t b) {
+  currentColorR = r; currentColorG = g; currentColorB = b;
+  for (int i = 0; i < NUMPIXELS; i++) {
+    pixels.setPixelColor(i, r, g, b);
+  }
+  pixels.show();
 }
 
 unsigned char accelerometerEventProcess(int16_t x, int16_t y) {
