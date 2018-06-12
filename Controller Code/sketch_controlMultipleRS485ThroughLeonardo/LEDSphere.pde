@@ -11,11 +11,13 @@ class LEDSphere {
   int centerThreshold = 384;
 
   boolean changedEvent = false;
+  boolean onGround = false;
 
   int lastUpdated;
 
-  LEDSphere (int _id, float _xpos, float _ypos) {
+  LEDSphere (int _id, float _xpos, float _ypos, boolean _onGround) {
     id=_id;
+    onGround=_onGround;
     xpos=_xpos;
     ypos=_ypos;
     fillcolor=color(0);
@@ -34,7 +36,7 @@ class LEDSphere {
 
     stroke(lost?64:255);
     fill(lost?0:fillcolor);
-    ellipse(xpos, ypos, 50, 50);
+    ellipse(xpos, ypos, 40, 40);
     if (!lost) {
       float angle = atan2(acceY, acceX);
       float strength = sqrt(acceY*acceY+acceX*acceX);
@@ -45,12 +47,15 @@ class LEDSphere {
         noFill();
         strokeWeight(6);
         stroke(128);
-        arc(xpos, ypos, 54, 54, angle-angleHalf, angle+angleHalf);
+        arc(xpos, ypos, 44, 44, angle-angleHalf, angle+angleHalf);
         strokeWeight(1);
       }
     }
-    fill(255);
-    text(id+" "+acceX+"\t"+acceY, xpos-30, ypos+40);
+
+    if ((mouseX>=xpos-20) && (mouseX<=xpos+20) && (mouseY>=ypos-20) && (mouseY<=ypos+20)) {
+      fill(255);
+      text(id+" "+acceX+"\t"+acceY, xpos-20, ypos+32);
+    }
   }
 
   void updateData(int _acceX, int _acceY, int _acceEvent) {

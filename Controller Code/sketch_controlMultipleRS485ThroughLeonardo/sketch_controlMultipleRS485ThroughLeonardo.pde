@@ -3,7 +3,7 @@ import processing.serial.*;
 
 Serial myPort;       
 
-int controlBoardCount = 10;
+int controlBoardCount = 20;
 RS485LeonardoController controlBoards[] = new RS485LeonardoController[controlBoardCount];
 
 PImage controlBoardImg;
@@ -11,14 +11,17 @@ PImage controlBoardImg;
 
 
 void setup() {
-  size(1200, 800);
+  size(1200, 1000);
   frameRate(60);
   controlBoardImg = loadImage("control_pcb.png");
 
-  for (int i=0; i<controlBoards.length; i++) {
-    int x=50;
-    int y=50+i*70;
-    controlBoards[i]=new RS485LeonardoController(x, y, i);
+  for (int i=0; i<controlBoardCount/2; i++) {
+    int x=70;
+    int y=50+i*100;
+    controlBoards[i]=new RS485LeonardoController(x, y+20, i, true);
+    int topUnitID = i+(controlBoardCount/2);
+    controlBoards[topUnitID]=new RS485LeonardoController(x+20, y-10, topUnitID, false);
+   
   }
 }
 
@@ -82,7 +85,7 @@ void keyPressed() {
     }
   }
   if (key == 'c') {
-        for (int i=0; i<controlBoards.length; i++) {
+    for (int i=0; i<controlBoards.length; i++) {
       controlBoards[i].setCalibration();
     }
   }

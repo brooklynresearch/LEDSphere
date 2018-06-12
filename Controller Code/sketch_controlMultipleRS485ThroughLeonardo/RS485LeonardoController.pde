@@ -18,15 +18,21 @@ class RS485LeonardoController {
 
   boolean gotData = false;
 
-  RS485LeonardoController (int _x, int _y, int _id) {  
+  boolean onGround = false;
+
+  RS485LeonardoController (int _x, int _y, int _id, boolean _onGround) {  
     x=_x;
     y=_y;
     id=_id;
+    onGround=_onGround;
     boardConnected=false;
     hotplugSerial=null;
 
+    int sphereOffsetX = onGround?-20+0:20-20;  //offset controller also
+    int sphereOffsetY = onGround?20-20:-20+10;  //offset controller also
+
     for (int i=0; i<totalSphereCount; i++) {
-      spheres[i] = new LEDSphere(i+startID, x+150+100*i, y+0);
+      spheres[i] = new LEDSphere(i+startID, x+140+100*i+sphereOffsetX, y+0+sphereOffsetY, onGround);
     }
     for (int i=0; i<totalSphereCount; i++) {
       LEDSphere oneSphere=spheres[i];
@@ -81,6 +87,7 @@ class RS485LeonardoController {
   }
 
   void draw() {
+
     for (int i=0; i<spheres.length; i++) {
       spheres[i].draw();
     }
@@ -108,7 +115,7 @@ class RS485LeonardoController {
     else if (boardEverConnected) {
       noStroke();
       fill(255, 0, 0);
-      rect(x+controlBoardImg.width/2+12, y-controlBoardImg.height/2+2, 16, 16);
+      rect(x+controlBoardImg.width/2+2, y-controlBoardImg.height/2+10, 8, 8);
     }
   }
 
