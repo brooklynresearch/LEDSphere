@@ -111,6 +111,11 @@ class RS485LeonardoController {
       fill(0, 255, 0);
       rect(x+controlBoardImg.width/2+2, y-controlBoardImg.height/2+6, 8, 4);
     }
+    if (boardConnected) {
+      fill(255);
+      text(id, x+controlBoardImg.width/2+2, y-controlBoardImg.height/2+22);
+    }
+
     if (boardConnected) boardEverConnected=true;
     else if (boardEverConnected) {
       noStroke();
