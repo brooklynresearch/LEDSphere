@@ -123,11 +123,11 @@ class HotPlugSerial {
       }
       lastHeartBeatTime=millis();
     } else {
-      if (id>=0 && id<10){
+      if (id>=0 && id<controlBoardCount) {
         controlBoards[id].processInput(input);
       }
     }
-    if (!isHeartBeat && id>=0 && id<10) controlBoards[id].serialDataTime=millis();
+    if (!isHeartBeat && id>=0 && id<controlBoardCount) controlBoards[id].serialDataTime=millis();
   }
   boolean update() { 
     if (serial==null) {
