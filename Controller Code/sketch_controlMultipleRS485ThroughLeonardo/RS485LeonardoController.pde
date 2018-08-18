@@ -12,7 +12,7 @@ class RS485LeonardoController {
   String outBuffer = "";
 
   int startID = 1;
-  int endID = 10;
+  int endID = 7;
   int totalSphereCount = endID-startID+1;
   LEDSphere spheres[] = new LEDSphere[totalSphereCount];
 
@@ -20,7 +20,7 @@ class RS485LeonardoController {
 
   boolean onGround = false;
 
-  RS485LeonardoController (int _x, int _y, int _id, boolean _onGround) {  
+  RS485LeonardoController (int _x, int _y, int _id, boolean _onGround, int xSpacing, int sphereOffset) {  
     x=_x;
     y=_y;
     id=_id;
@@ -32,7 +32,7 @@ class RS485LeonardoController {
     int sphereOffsetY = onGround?20-20:-20+10;  //offset controller also
 
     for (int i=0; i<totalSphereCount; i++) {
-      spheres[i] = new LEDSphere(i+startID, x+140+100*i+sphereOffsetX, y+0+sphereOffsetY, onGround);
+      spheres[i] = new LEDSphere(i+startID, x+sphereOffset+xSpacing*i+sphereOffsetX, y+0+sphereOffsetY, onGround);
     }
     for (int i=0; i<totalSphereCount; i++) {
       LEDSphere oneSphere=spheres[i];
@@ -113,8 +113,10 @@ class RS485LeonardoController {
     }
     if (boardConnected) {
       fill(255);
-      text(id, x+controlBoardImg.width/2+2, y-controlBoardImg.height/2+22);
+    } else {
+      fill(31);
     }
+    text(id, x+controlBoardImg.width/2+2, y-controlBoardImg.height/2+22);
 
     if (boardConnected) boardEverConnected=true;
     else if (boardEverConnected) {

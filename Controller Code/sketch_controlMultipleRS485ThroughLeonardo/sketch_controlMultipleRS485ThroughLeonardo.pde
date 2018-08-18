@@ -3,7 +3,7 @@ import processing.serial.*;
 
 Serial myPort;       
 
-int controlBoardCount = 20;
+int controlBoardCount = 24;
 RS485LeonardoController controlBoards[] = new RS485LeonardoController[controlBoardCount];
 
 PImage controlBoardImg;
@@ -11,18 +11,41 @@ PImage controlBoardImg;
 
 
 void setup() {
-  size(1200, 1000);
+  size(1780, 700);
   frameRate(60);
   controlBoardImg = loadImage("control_pcb.png");
 
   for (int i=0; i<controlBoardCount/2; i++) {
+
+
     int x=70;
-    int y=50+i*100;
-    controlBoards[i]=new RS485LeonardoController(x, y+20, i, true);
+    int y=50+(i/2)*100;
+
+    if ((i&2) != 0) x+=50;
+
+    int spacingX = 100;
+    int sphereOffsetX = 140;
+    if ((i%2)==1) {
+      spacingX = -100;
+      sphereOffsetX = -120;
+      x+=960+600;
+    }
+
+    controlBoards[i]=new RS485LeonardoController(x, y+20, i, true, spacingX, sphereOffsetX);
     int topUnitID = i+(controlBoardCount/2);
-    controlBoards[topUnitID]=new RS485LeonardoController(x+20, y-10, topUnitID, false);
-   
+    controlBoards[topUnitID]=new RS485LeonardoController(x+20, y-10, topUnitID, false, spacingX, sphereOffsetX);
   }
+
+  for (int i=0; i<7; i++) {
+    print(controlBoards[0].spheres[i].xpos);
+    print(' ');
+  }
+  println();
+  for (int i=0; i<7; i++) {
+    print(controlBoards[1].spheres[i].xpos);
+    print(' ');
+  }
+  println();
 }
 
 
@@ -47,6 +70,8 @@ void draw() {
   SerialHandler_checkSerialPort();
 
   background(0);
+  
+  text(int(frameRate), 20, 650);
 
   {
     for (int i=0; i<controlBoards.length; i++) {  //draw board

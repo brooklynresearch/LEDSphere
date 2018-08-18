@@ -36,7 +36,11 @@ class LEDSphere {
 
     stroke(lost?64:255);
     fill(lost?0:fillcolor);
-    ellipse(xpos, ypos, 40, 40);
+    if (onGround) {
+      ellipse(xpos, ypos, 40, 40);
+    } else {
+      ellipse(xpos, ypos, 36, 36);
+    }
     if (!lost) {
       float angle = atan2(acceY, acceX);
       float strength = sqrt(acceY*acceY+acceX*acceX);
