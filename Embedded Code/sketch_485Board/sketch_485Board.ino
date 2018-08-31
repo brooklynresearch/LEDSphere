@@ -54,21 +54,26 @@ void setup() {
 
   boardID = EEPROM.read(0);
 
-  Serial.print("RS485 Address: ");
+  char compile_date[] = __DATE__ " " __TIME__;
+
+  Serial.print(F("\nCompiled on: "));
+  Serial.println(compile_date);
+
+  Serial.print(F("RS485 Address: "));
   Serial.println(boardID);
 
   pixels.begin(); // This initializes the NeoPixel library.
 
   if (! lis.begin()) {
-    Serial.println("Couldnt start");
+    Serial.println(F("Couldnt start"));
     while (1);
   }
-  Serial.println("LIS3DH found!");
+  Serial.println(F("LIS3DH found!"));
 
   lis.setRange(LIS3DH_RANGE_4_G);   // 2, 4, 8 or 16 G!
 
-  Serial.print("Range = "); Serial.print(2 << lis.getRange());
-  Serial.println("G");
+  Serial.print(F("Range = ")); Serial.print(2 << lis.getRange());
+  Serial.println(F("G"));
 
   lis.setupFifo();
 
@@ -150,7 +155,7 @@ void loop() {
 
 
     if (fifoError) {
-      Serial.println("FIFO ERR");
+      Serial.println(F("FIFO ERR"));
       lis.resetFifo();
     }
 
