@@ -36,16 +36,6 @@ void setup() {
     controlBoards[topUnitID]=new RS485LeonardoController(x+20, y-10, topUnitID, false, spacingX, sphereOffsetX);
   }
 
-  for (int i=0; i<7; i++) {
-    print(controlBoards[0].spheres[i].xpos);
-    print(' ');
-  }
-  println();
-  for (int i=0; i<7; i++) {
-    print(controlBoards[1].spheres[i].xpos);
-    print(' ');
-  }
-  println();
 }
 
 
