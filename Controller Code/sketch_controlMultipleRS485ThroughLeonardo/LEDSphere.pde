@@ -1,4 +1,9 @@
 int dimScale = 16;
+
+int stableColor   = color(64, 64, 64);  
+int tiltColor     = color(0, 0, 192); 
+int unstableColor = color(0, 192, 0);  
+
 class LEDSphere {
   int id;
   float xpos, ypos;       // x and y position of bar
@@ -69,13 +74,13 @@ class LEDSphere {
     acceEvent=_acceEvent;
     switch(_acceEvent) {
     case 0:
-      fillcolor=color(64, 64, 64);  //stable
+      fillcolor=stableColor;
       break;
     case 1:
-      fillcolor=color(0, 0, 192);   //tilt
+      fillcolor=tiltColor;
       break;
     case 2:
-      fillcolor=color(0, 192, 0);  //unstable
+      fillcolor=unstableColor;
       break;
     }
     fillcolorDim=color(red(fillcolor)/dimScale, green(fillcolor)/dimScale, blue(fillcolor)/dimScale);
