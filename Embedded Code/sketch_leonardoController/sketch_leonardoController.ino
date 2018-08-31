@@ -11,7 +11,7 @@ unsigned char USBinputStringIndex = 0;
 boolean USBstringComplete = false;  // whether the string is complete
 
 #define START_ID  1
-#define END_ID  10
+#define END_ID  7
 
 char dataTextBuffer[(END_ID - START_ID + 1) * 10 + 2];
 
