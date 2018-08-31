@@ -117,8 +117,8 @@ void loop() {
     bool fifoError = false;
 
     uint8_t fifoStatus = lis.fifoGetStatus();
-    fifoError = ((fifoStatus & 0x60) != 0);//OVRN_FIFO or EMPTY
-    while ( (fifoStatus & 0x20 ) == 0 ) {
+    fifoError = ((fifoStatus & 0x40) != 0);//OVRN_FIFO
+    while ( (fifoStatus & 0b11111 ) > 0 ) {
       lis.read();      // get X Y and Z data at once
       lis.x -= offsetX;
       lis.y -= offsetY;
