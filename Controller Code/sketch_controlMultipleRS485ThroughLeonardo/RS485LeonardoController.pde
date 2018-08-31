@@ -180,7 +180,7 @@ class RS485LeonardoController {
         if (currentY<0) currentY+=0x10000;
         sendBuf=sendBuf+String.format("O%02X%04X%04X\r", i+startID, currentX, currentY);
       }
-      sendData(sendBuf);
     }
+    sendData(sendBuf);
   }
 }
