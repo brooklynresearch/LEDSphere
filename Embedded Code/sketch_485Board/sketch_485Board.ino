@@ -256,6 +256,7 @@ void loop() {
       stringComplete = true;
       inputString[inputStringIndex] = '\0';
       inputStringIndex++;
+      break;
     } else {
       if (inputStringIndex < 63) {
         inputString[inputStringIndex] = inChar;
