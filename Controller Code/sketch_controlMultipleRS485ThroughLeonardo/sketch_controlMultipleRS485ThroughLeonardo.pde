@@ -35,7 +35,6 @@ void setup() {
     int topUnitID = i+(controlBoardCount/2);
     controlBoards[topUnitID]=new RS485LeonardoController(x+20, y-10, topUnitID, false, spacingX, sphereOffsetX);
   }
-
 }
 
 
@@ -60,7 +59,7 @@ void draw() {
   SerialHandler_checkSerialPort();
 
   background(0);
-  
+
   text(int(frameRate), 20, 650);
 
   {
@@ -102,6 +101,36 @@ void keyPressed() {
   if (key == 'c') {
     for (int i=0; i<controlBoards.length; i++) {
       controlBoards[i].setCalibration();
+    }
+  }
+
+  if (key == 't') {
+    if (dimScale!=1) {
+      dimScale=1;
+    } else {
+      dimScale=64;
+    }
+  }
+
+  if (key == 'o') {
+    overidingColor++;
+    if (overidingColor>4) overidingColor=0;
+    if (overidingColor>0) {
+      int colorOveride = 0;
+      if (overidingColor==1) colorOveride = color(25,0,0);
+      if (overidingColor==2) colorOveride = color(0,25,0);
+      if (overidingColor==3) colorOveride = color(0,0,25);
+      //if (overidingColor==4) colorOveride = color(255,255,255);
+      if (overidingColor==4) colorOveride = color(25,25,25);
+      
+      
+      for (int i=0; i<controlBoards.length; i++) {  //draw board
+        RS485LeonardoController oneBoard = controlBoards[i];
+        for (int j=0;j<oneBoard.spheres.length;j++){
+          oneBoard.spheres[j].fillcolor=colorOveride;
+          oneBoard.spheres[j].fillcolorDim=oneBoard.spheres[j].fillcolor;
+        }
+      }
     }
   }
 }

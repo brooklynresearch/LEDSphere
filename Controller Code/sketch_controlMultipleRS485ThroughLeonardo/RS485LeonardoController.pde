@@ -51,14 +51,17 @@ class RS485LeonardoController {
           LEDSphere oneSphere=spheres[i];
           outBuffer=outBuffer+String.format("P%02X%04X%04X%04X\r", oneSphere.id, oneSphere.envelopeRate, oneSphere.envelopeThreshold, oneSphere.centerThreshold);
         }
-      } else {  //refresh LED
-        outBuffer="";
-        for (int i=0; i<totalSphereCount; i++) {
-          LEDSphere oneSphere=spheres[i];
-          outBuffer=outBuffer+String.format("L%02X%02X%02X%02X\r", oneSphere.id, oneSphere.fillcolorDim >> 16 & 0xFF, oneSphere.fillcolorDim >> 8 & 0xFF, oneSphere.fillcolorDim >> 0 & 0xFF);
-        }
       }
     }
+
+    if ((frameCount%3==0)) {  //refresh LED
+      outBuffer="";
+      for (int i=0; i<totalSphereCount; i++) {
+        LEDSphere oneSphere=spheres[i];
+        outBuffer=outBuffer+String.format("L%02X%02X%02X%02X\r", oneSphere.id, oneSphere.fillcolorDim >> 16 & 0xFF, oneSphere.fillcolorDim >> 8 & 0xFF, oneSphere.fillcolorDim >> 0 & 0xFF);
+      }
+    }
+
 
 
     if (gotData) {
