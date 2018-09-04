@@ -1,3 +1,5 @@
+//#define AUTO_RESET_LEONARDO
+
 #include <EEPROM.h>
 #include <avr/wdt.h>
 
@@ -35,7 +37,9 @@ void setup() {
   memset(dataTextBuffer, 0, sizeof(dataTextBuffer));
   dataTextBuffer[(END_ID - START_ID + 1) * 10] = '\n';
 
+#ifdef AUTO_RESET_LEONARDO
   wdt_enable(WDTO_8S);
+#endif
 }
 
 void loop() {
@@ -120,7 +124,9 @@ void loop() {
     char inChar = (char)Serial.read();
     if (inChar == '\n') {
       USBstringComplete = true;
+#ifdef AUTO_RESET_LEONARDO
       wdt_reset();
+#endif
       USBinputString[USBinputStringIndex] = '\0';
       USBinputStringIndex++;
     } else {
