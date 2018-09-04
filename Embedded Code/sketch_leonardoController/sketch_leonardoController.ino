@@ -1,4 +1,5 @@
 #include <EEPROM.h>
+#include <avr/wdt.h>
 
 unsigned char boardID = -1;
 
@@ -33,6 +34,8 @@ void setup() {
 
   memset(dataTextBuffer, 0, sizeof(dataTextBuffer));
   dataTextBuffer[(END_ID - START_ID + 1) * 10] = '\n';
+
+  wdt_enable(WDTO_8S);
 }
 
 void loop() {
@@ -117,6 +120,7 @@ void loop() {
     char inChar = (char)Serial.read();
     if (inChar == '\n') {
       USBstringComplete = true;
+      wdt_reset();
       USBinputString[USBinputStringIndex] = '\0';
       USBinputStringIndex++;
     } else {

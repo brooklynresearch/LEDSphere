@@ -3,15 +3,13 @@ import processing.serial.*;
 
 Serial myPort;       
 
-int controlBoardCount = 24;
+int controlBoardCount = 28;
 RS485LeonardoController controlBoards[] = new RS485LeonardoController[controlBoardCount];
 
 PImage controlBoardImg;
 
-
-
 void setup() {
-  size(1780, 700);
+  size(1780, 750);
   frameRate(60);
   controlBoardImg = loadImage("control_pcb.png");
 
@@ -114,14 +112,14 @@ void keyPressed() {
 
   if (key == 'o') {
     overidingColor++;
-    if (overidingColor>4) overidingColor=0;
+    if (overidingColor>4) overidingColor=1;
     if (overidingColor>0) {
       int colorOveride = 0;
       if (overidingColor==1) colorOveride = color(25,0,0);
       if (overidingColor==2) colorOveride = color(0,25,0);
       if (overidingColor==3) colorOveride = color(0,0,25);
-      //if (overidingColor==4) colorOveride = color(255,255,255);
-      if (overidingColor==4) colorOveride = color(25,25,25);
+      if (overidingColor==4) colorOveride = color(255,255,255);
+      //if (overidingColor==4) colorOveride = color(25,25,25);
       
       
       for (int i=0; i<controlBoards.length; i++) {  //draw board

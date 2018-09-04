@@ -54,7 +54,7 @@ class RS485LeonardoController {
       }
     }
 
-    if ((frameCount%3==0)) {  //refresh LED
+    if ((frameCount%30==0)) {  //refresh LED
       outBuffer="";
       for (int i=0; i<totalSphereCount; i++) {
         LEDSphere oneSphere=spheres[i];
@@ -136,30 +136,34 @@ class RS485LeonardoController {
   }
 
   void processInput(String input) {
-    try {
-      if (input.length() == totalSphereCount*10) {
-        for (int i=0; i<totalSphereCount; i++) {
-          String oneData = input.substring(i*10, (i+1)*10);
-          if (oneData.charAt(0)==' ') {
-            //there is no data
-          } else {
-            String eventStr = oneData.substring(0, 2);
-            String xStr = oneData.substring(2, 6);
-            String yStr = oneData.substring(6, 10);
-            int x=Integer.parseInt(xStr, 16);
+
+    if (input.length() == totalSphereCount*10) {
+      for (int i=0; i<totalSphereCount; i++) {
+        String oneData = input.substring(i*10, (i+1)*10);
+        if (oneData.charAt(0)==' ') {
+          //there is no data
+        } else {
+          String eventStr = oneData.substring(0, 2);
+          String xStr = oneData.substring(2, 6);
+          String yStr = oneData.substring(6, 10);
+          int x, y, eventID;
+          try {
+            x=Integer.parseInt(xStr, 16);
+            y=Integer.parseInt(yStr, 16);
+            eventID=Integer.parseInt(eventStr, 16);
             if (x>32767) x=x-65536;
-            int y=Integer.parseInt(yStr, 16);
             if (y>32767) y=y-65536;      
-            int eventID=Integer.parseInt(eventStr, 16);
 
             spheres[i].updateData(x, y, eventID);
+          }
+          catch(Exception e) {
+            println("parseInt ERR");
+            //e.printStackTrace();
           }
         }
       }
     }
-    catch(Exception e) {
-      e.printStackTrace();
-    }
+
 
     gotData=true;
   }
