@@ -8,6 +8,8 @@ RS485LeonardoController controlBoards[] = new RS485LeonardoController[controlBoa
 
 PImage controlBoardImg;
 
+int sendColor = color(0, 0, 0);
+
 void setup() {
   size(820, 750);
   frameRate(60);
@@ -68,28 +70,29 @@ void draw() {
   }
 
   int frameMod = frameCount%120;
-  boolean sendData = false;
-  int sendColor = color(0, 0, 0);
+  boolean sendData = (frameCount%10)==0;
+
+
   switch (frameMod) {
   case 100:
     println("White");
     sendColor = color(255, 255, 255);
-    sendData = true;
+
     break;
-  case 70:
+  case 90:
     println("Blue");
     sendColor = color(0, 0, 25);
-    sendData = true;
+
     break;
-  case 40:
+  case 80:
     println("Green");
     sendColor = color(0, 25, 0);
-    sendData = true;
+
     break;
-  case 10:
+  case 70:
     println("Red");
     sendColor = color(25, 0, 0);
-    sendData = true;
+
     break;
   }
 
@@ -97,7 +100,7 @@ void draw() {
     for (int i=0; i<controlBoards.length; i++) {  //draw board
       RS485LeonardoController oneBoard = controlBoards[i];
       String outBuffer = "";
-      for (int j=0; j<10; j++) {
+      for (int j=1; j<=10; j++) {
         outBuffer=outBuffer+String.format("L%02X%02X%02X%02X\r", j, sendColor >> 16 & 0xFF, sendColor >> 8 & 0xFF, sendColor >> 0 & 0xFF);
       }
       outBuffer=outBuffer+'\n';
