@@ -157,7 +157,7 @@ class RS485LeonardoController {
             spheres[i].updateData(x, y, eventID);
           }
           catch(Exception e) {
-            println("parseInt ERR");
+            //println("parseInt ERR");
             //e.printStackTrace();
           }
         }
