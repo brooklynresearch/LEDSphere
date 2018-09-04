@@ -1,4 +1,4 @@
-//#define AUTO_RESET_LEONARDO
+#define AUTO_RESET_LEONARDO
 
 #include <EEPROM.h>
 #include <avr/wdt.h>
@@ -40,6 +40,7 @@ void setup() {
 #ifdef AUTO_RESET_LEONARDO
   wdt_enable(WDTO_8S);
 #endif
+
 }
 
 void loop() {
@@ -47,6 +48,24 @@ void loop() {
   unsigned long currentMillis = millis();
   static unsigned long previousSendMicros = 0;
   static unsigned long previousHeatBeatMillis = 0;
+
+  bool serialOpened = Serial.dtr() || Serial.rts();
+
+#ifdef AUTO_RESET_LEONARDO
+  bool wdtIsEnabled = ((WDTCSR & (1 << WDE)) != 0);
+  static bool wdtWasEnabled = true;
+  static unsigned long wdtDisabledMillis;
+  if (wdtWasEnabled != wdtIsEnabled) {
+    wdtWasEnabled = wdtIsEnabled;
+    if (!wdtIsEnabled) wdtDisabledMillis = currentMillis;
+  }else{
+    if (!wdtIsEnabled){
+      if ((signed long)(currentMillis-wdtDisabledMillis)>1000){
+        wdt_enable(WDTO_8S);  //CDC seems disable WDT
+      }
+    }
+  }
+#endif
 
   if ((signed long)(currentMillis - previousHeatBeatMillis) > 2000) {
     previousHeatBeatMillis = currentMillis;
