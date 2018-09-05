@@ -42,21 +42,27 @@ class LEDSphere {
     stroke(lost?64:255);
     fill(lost?0:fillcolor);
     if (onGround) {
-      ellipse(xpos, ypos, 40, 40);
+      rect(xpos-20, ypos-20, 40, 40);  //increase performance
+      //ellipse(xpos, ypos, 40, 40);
     } else {
-      ellipse(xpos, ypos, 36, 36);
+      rect(xpos-18, ypos-18, 36, 36);
+      //ellipse(xpos, ypos, 36, 36);
     }
+
     if (!lost) {
       float angle = atan2(acceY, acceX);
       float strength = sqrt(acceY*acceY+acceX*acceX);
       float halfPiStrength = 5000;
-      float angleHalf = strength*HALF_PI/halfPiStrength;
+      float angleHalf = strength*HALF_PI/halfPiStrength;//!!!
+      //float fullLength = onGround?40:36;
+      //float lengthStrength = strength*fullLength/halfPiStrength;
 
       if (strength>256) {
         noFill();
         strokeWeight(6);
         stroke(128);
-        arc(xpos, ypos, 44, 44, angle-angleHalf, angle+angleHalf);
+        //line(xpos, ypos,xpos+lengthStrength*cos(angle), ypos+lengthStrength*sin(angle));
+        arc(xpos, ypos, 34, 34, angle-angleHalf, angle+angleHalf);
         strokeWeight(1);
       }
     }

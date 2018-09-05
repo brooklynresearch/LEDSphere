@@ -1,4 +1,4 @@
-
+long accuTime = 0;
 import processing.serial.*;
 
 Serial myPort;       
@@ -37,9 +37,10 @@ void setup() {
 
 
 void draw() {
+  accuTime = 0;
+  long stampTime = System.nanoTime();
 
-
-  if (frameCount%30==0) {
+  if (frameCount%15==0) {
     //hotplug stuff
     {
       int i=0;
@@ -60,8 +61,6 @@ void draw() {
     SerialHandler_checkSerialPort();  //Serial.list() is slow, no need to run every frame
   }
 
-
-
   background(0);
 
   text(int(frameRate), 20, 700);
@@ -72,6 +71,9 @@ void draw() {
       controlBoards[i].draw();
     }
   }
+
+  accuTime+=System.nanoTime()-stampTime;
+  println("Draw us", (accuTime)/1000);
 }
 
 void serialEvent(Serial port) {
