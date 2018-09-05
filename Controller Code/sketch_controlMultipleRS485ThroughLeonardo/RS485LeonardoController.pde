@@ -10,8 +10,6 @@ class RS485LeonardoController {
   int heartBeatTime=-1000;
   int serialDataTime=-1000;
 
-  String outBuffer = "";
-
   int startID = 1;
   int endID = 7;
   int totalSphereCount = endID-startID+1;
@@ -37,10 +35,6 @@ class RS485LeonardoController {
     for (int i=0; i<totalSphereCount; i++) {
       spheres[i] = new LEDSphere(i+startID, x+sphereOffset+xSpacing*i+sphereOffsetX, y+0+sphereOffsetY, onGround);
     }
-    for (int i=0; i<totalSphereCount; i++) {
-      LEDSphere oneSphere=spheres[i];
-      outBuffer=outBuffer+String.format("P%02X%04X%04X%04X\r", oneSphere.id, oneSphere.envelopeRate, oneSphere.envelopeThreshold, oneSphere.centerThreshold);
-    }
   }
 
   void update() {
@@ -53,49 +47,44 @@ class RS485LeonardoController {
     }
     int runFrame = frameCount-startFrame;
     int halfSecond = runFrame/30;
+    String sendBuf = "";
 
     if ((runFrame%30==0)) {
       if (halfSecond<5) {  //send settings
-        outBuffer="";
         for (int i=0; i<totalSphereCount; i++) {
           LEDSphere oneSphere=spheres[i];
-          outBuffer=outBuffer+String.format("P%02X%04X%04X%04X\r", oneSphere.id, oneSphere.envelopeRate, oneSphere.envelopeThreshold, oneSphere.centerThreshold);
+          sendBuf=sendBuf+String.format("P%02X%04X%04X%04X\r", oneSphere.id, oneSphere.envelopeRate, oneSphere.envelopeThreshold, oneSphere.centerThreshold);
         }
       }
     }
 
     if ((halfSecond>=5 && (runFrame%2==0))||(runFrame%15==0)) {  //refresh LED
-      outBuffer="";
       for (int i=0; i<totalSphereCount; i++) {
         LEDSphere oneSphere=spheres[i];
-        outBuffer=outBuffer+String.format("L%02X%02X%02X%02X\r", oneSphere.id, oneSphere.fillcolorDim >> 16 & 0xFF, oneSphere.fillcolorDim >> 8 & 0xFF, oneSphere.fillcolorDim >> 0 & 0xFF);
+        sendBuf=sendBuf+String.format("L%02X%02X%02X%02X\r", oneSphere.id, oneSphere.fillcolorDim >> 16 & 0xFF, oneSphere.fillcolorDim >> 8 & 0xFF, oneSphere.fillcolorDim >> 0 & 0xFF);
       }
     }
 
 
 
     if (gotData) {
-      String sendBuf = "";
       for (int i=0; i<totalSphereCount; i++) {
         LEDSphere oneSphere=spheres[i];
         if (oneSphere.changedEvent) {
-          //sendBuf=sendBuf+String.format("L%02X%02X%02X%02X\r", i+startID, oneSphere.fillcolorDim >> 16 & 0xFF, oneSphere.fillcolorDim >> 8 & 0xFF, oneSphere.fillcolorDim >> 0 & 0xFF);
-          oneSphere.changedEvent = false;
-        } else {
-          if (outBuffer.length()>0) {
-            sendBuf=outBuffer;
-            outBuffer="";
+          if (oneSphere.acceEvent == 2) {
+            println("Unstable", i);
           }
+          oneSphere.changedEvent = false;
         }
       }
-      sendBuf=sendBuf+'\n';
-      if (sendBuf.length()>1) {
-        //println("SEND");
-        //print(sendBuf);
-        sendData(sendBuf);
-      }
-
       gotData=false;
+    }
+
+    sendBuf=sendBuf+'\n';
+    if (sendBuf.length()>1) {
+      //println("SEND");
+      //print(sendBuf);
+      sendData(sendBuf);
     }
   }
 
