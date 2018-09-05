@@ -1,8 +1,8 @@
 int dimScale = 16;
 
-int stableColor   = color(255, 255, 255);  
-int tiltColor     = color(0, 0, 192); 
-int unstableColor = color(0, 192, 0);  
+int stableEdgeColor   = color(255, 255, 255);  
+int tiltEdgeColor     = color(0, 0, 192); 
+int unstableEdgeColor = color(0, 192, 0);  
 
 class LEDSphere {
   int id;
@@ -17,6 +17,8 @@ class LEDSphere {
 
   boolean changedEvent = false;
   boolean onGround = false;
+
+  int effectValue = 0;  //this is used by effect
 
   int lastUpdated;
 
@@ -39,8 +41,28 @@ class LEDSphere {
       lost=false;
     }
 
-    stroke(lost?64:255);
+    if (lost) {
+      stroke(64);
+    } else {
+      switch(acceEvent) {
+      case 0:
+        stroke(stableEdgeColor);
+        break;
+      case 1:
+        stroke(tiltEdgeColor);
+        break;
+      case 2:
+        stroke(unstableEdgeColor);
+        break;
+      default:
+        stroke(stableEdgeColor);
+        break;
+      }
+    }
+
+
     fill(lost?0:fillcolor);
+    strokeWeight(1);
     if (onGround) {
       rect(xpos-20, ypos-20, 40, 40);  //increase performance
       //ellipse(xpos, ypos, 40, 40);
@@ -79,7 +101,7 @@ class LEDSphere {
     if (acceEvent!=_acceEvent)changedEvent = true;
     acceEvent=_acceEvent;
 
-    switch(_acceEvent) {
+/*    switch(_acceEvent) {
     case 0:
       fillcolor=stableColor;
       break;
@@ -90,8 +112,7 @@ class LEDSphere {
       fillcolor=unstableColor;
       break;
     }
-    fillcolorDim=color(red(fillcolor)/dimScale, green(fillcolor)/dimScale, blue(fillcolor)/dimScale);
-
+    fillcolorDim=color(red(fillcolor)/dimScale, green(fillcolor)/dimScale, blue(fillcolor)/dimScale);*/
 
     lastUpdated=frameCount;
   }

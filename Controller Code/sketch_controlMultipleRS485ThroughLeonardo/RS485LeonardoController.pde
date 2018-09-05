@@ -72,7 +72,7 @@ class RS485LeonardoController {
         LEDSphere oneSphere=spheres[i];
         if (oneSphere.changedEvent) {
           if (oneSphere.acceEvent == 2) {
-            println("Unstable", i);
+            effectObjects.addRipple(oneSphere.xpos,oneSphere.ypos,oneSphere.onGround);
           }
           oneSphere.changedEvent = false;
         }

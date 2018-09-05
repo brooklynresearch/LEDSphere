@@ -5,6 +5,7 @@ Serial myPort;
 
 int controlBoardCount = 28;
 RS485LeonardoController controlBoards[] = new RS485LeonardoController[controlBoardCount];
+EffectObjects effectObjects = new EffectObjects();
 
 PImage controlBoardImg;
 
@@ -64,6 +65,9 @@ void draw() {
   background(0);
 
   text(int(frameRate), 20, 700);
+  
+  effectObjects.update();  //this give all spheres color
+  effectObjects.draw();
 
   {
     for (int i=0; i<controlBoards.length; i++) {  //draw board
