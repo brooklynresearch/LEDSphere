@@ -3,6 +3,7 @@ class RS485LeonardoController {
   int y;
   int id;
   boolean boardConnected;
+  boolean boardConnectedLastFrame;
   boolean boardEverConnected;
   Serial hotplugSerial;
 
@@ -19,6 +20,8 @@ class RS485LeonardoController {
   boolean gotData = false;
 
   boolean onGround = false;
+
+  int startFrame = 0;
 
   RS485LeonardoController (int _x, int _y, int _id, boolean _onGround, int xSpacing, int sphereOffset) {  
     x=_x;
@@ -42,9 +45,16 @@ class RS485LeonardoController {
 
   void update() {
     int timeNow=millis();
+    if (boardConnectedLastFrame!=boardConnected) {
+      if (boardConnected) {
+        startFrame=frameCount;
+      }
+      boardConnectedLastFrame=boardConnected;
+    }
+    int runFrame = frameCount-startFrame;
+    int halfSecond = runFrame/30;
 
-    if ((frameCount%30==0)) {
-      int halfSecond = frameCount/30;
+    if ((runFrame%30==0)) {
       if (halfSecond<5) {  //send settings
         outBuffer="";
         for (int i=0; i<totalSphereCount; i++) {
@@ -54,7 +64,7 @@ class RS485LeonardoController {
       }
     }
 
-    if ((frameCount%30==0)) {  //refresh LED
+    if ((halfSecond>=5 && (runFrame%2==0))||(runFrame%15==0)) {  //refresh LED
       outBuffer="";
       for (int i=0; i<totalSphereCount; i++) {
         LEDSphere oneSphere=spheres[i];
@@ -69,7 +79,7 @@ class RS485LeonardoController {
       for (int i=0; i<totalSphereCount; i++) {
         LEDSphere oneSphere=spheres[i];
         if (oneSphere.changedEvent) {
-          sendBuf=sendBuf+String.format("L%02X%02X%02X%02X\r", i+startID, oneSphere.fillcolorDim >> 16 & 0xFF, oneSphere.fillcolorDim >> 8 & 0xFF, oneSphere.fillcolorDim >> 0 & 0xFF);
+          //sendBuf=sendBuf+String.format("L%02X%02X%02X%02X\r", i+startID, oneSphere.fillcolorDim >> 16 & 0xFF, oneSphere.fillcolorDim >> 8 & 0xFF, oneSphere.fillcolorDim >> 0 & 0xFF);
           oneSphere.changedEvent = false;
         } else {
           if (outBuffer.length()>0) {
@@ -131,7 +141,8 @@ class RS485LeonardoController {
 
   void sendData(String data) {
     if (hotplugSerial!=null) {
-      hotplugSerial.write(data);
+      hotplugSerial.write(data);  //todo: check leonardo buffer 
+      //if (id == 20) println(frameCount,data);
     }
   }
 
