@@ -184,6 +184,7 @@ class RS485LeonardoController {
     for (int i=0; i<totalSphereCount; i++) {
       sendBuf=sendBuf+String.format("O%02X%04X%04X\r", i+startID, 0, 0);
     }
+    sendBuf=sendBuf+'\n';
     sendData(sendBuf);
   }
 
@@ -199,6 +200,7 @@ class RS485LeonardoController {
         sendBuf=sendBuf+String.format("O%02X%04X%04X\r", i+startID, currentX, currentY);
       }
     }
+    sendBuf=sendBuf+'\n';
     sendData(sendBuf);
   }
 }

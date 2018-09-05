@@ -58,9 +58,9 @@ void loop() {
   if (wdtWasEnabled != wdtIsEnabled) {
     wdtWasEnabled = wdtIsEnabled;
     if (!wdtIsEnabled) wdtDisabledMillis = currentMillis;
-  }else{
-    if (!wdtIsEnabled){
-      if ((signed long)(currentMillis-wdtDisabledMillis)>1000){
+  } else {
+    if (!wdtIsEnabled) {
+      if ((signed long)(currentMillis - wdtDisabledMillis) > 1000) {
         wdt_enable(WDTO_8S);  //CDC seems disable WDT
       }
     }
@@ -147,7 +147,7 @@ void loop() {
       wdt_reset();
 #endif
       USBinputString[USBinputStringIndex] = '\0';
-      USBinputStringIndex++;
+      //USBinputStringIndex++;
     } else {
       if (USBinputStringIndex < 254) {
         USBinputString[USBinputStringIndex] = inChar;
