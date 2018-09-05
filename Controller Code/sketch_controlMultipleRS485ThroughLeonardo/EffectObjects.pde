@@ -7,6 +7,8 @@ class EffectObjects {
   int ripplesLimit = 10;
   ArrayList<WaveEffectObject> waves = new ArrayList<WaveEffectObject>();
   int wavesLimit = 5;
+  ArrayList<BreathEffectObject> breaths = new ArrayList<BreathEffectObject>();
+  int breathsLimit = 1;
 
   EffectObjects() {
   }
@@ -29,13 +31,22 @@ class EffectObjects {
         ripples.remove(i);
       }
     }
-    
+
     i=0;
     while (i < waves.size()) {
       if (waves.get(i).update()) {
         i++;
       } else {
         waves.remove(i);
+      }
+    }
+
+    i=0;
+    while (i < breaths.size()) {
+      if (breaths.get(i).update()) {
+        i++;
+      } else {
+        breaths.remove(i);
       }
     }
 
@@ -60,6 +71,9 @@ class EffectObjects {
     for (WaveEffectObject wave : waves) {
       wave.draw();
     }
+    for (BreathEffectObject breath : breaths) {
+      breath.draw();
+    }
   }
 
   void addRipple(float _x, float _y, boolean _onGround) {
@@ -71,6 +85,12 @@ class EffectObjects {
   void addWave(float _x, float _angle, boolean _onGround) {
     if (waves.size()<wavesLimit) {
       waves.add(new WaveEffectObject(_x, _angle, _onGround));
+    }
+  }
+
+  void addBreath(boolean _onGround) {
+    if (breaths.size()<breathsLimit) {
+      breaths.add(new BreathEffectObject(_onGround));
     }
   }
 }
@@ -197,5 +217,38 @@ class WaveEffectObject {
     line (currentX, 0, currentX-height*tan(angle+HALF_PI), height);
     //ellipse(startX, startY, diameter, diameter);
     //println(startX, startY, diameter, diameter);
+  }
+}
+
+
+class BreathEffectObject {
+  int startTime;
+  int lifeInMS = 2000;
+  float effectStrength = 50;
+  boolean onGround;
+
+  BreathEffectObject(boolean _onGround) {
+    startTime = millis();
+    onGround=_onGround;
+  }
+  boolean update() {
+    int age = millis()-startTime;
+
+    float strength = effectStrength*(1-(abs(age-lifeInMS/2.0))/(lifeInMS/2.0));
+
+    if (age>=lifeInMS) return false;
+    //update spheres
+    for (int i=0; i<controlBoards.length; i++) {  
+      RS485LeonardoController oneBoard = controlBoards[i];
+      if (oneBoard.onGround != onGround) continue;
+      for (int j=0; j<oneBoard.spheres.length; j++) {
+        oneBoard.spheres[j].effectValue+=strength;
+      }
+    }
+
+    return true;
+  }
+
+  void draw() {
   }
 }

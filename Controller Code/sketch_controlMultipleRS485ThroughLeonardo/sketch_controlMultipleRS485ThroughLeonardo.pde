@@ -129,4 +129,8 @@ void keyPressed() {
   if (key == 'o') {  //test
     effectObjects.addRipple(500, 500, false);
   }
+
+  if (key == 'b') {  //test
+    effectObjects.addBreath(false);
+  }
 }
