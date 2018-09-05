@@ -110,25 +110,4 @@ void keyPressed() {
     }
   }
 
-  if (key == 'o') {
-    overidingColor++;
-    if (overidingColor>4) overidingColor=1;
-    if (overidingColor>0) {
-      int colorOveride = 0;
-      if (overidingColor==1) colorOveride = color(25,0,0);
-      if (overidingColor==2) colorOveride = color(0,25,0);
-      if (overidingColor==3) colorOveride = color(0,0,25);
-      if (overidingColor==4) colorOveride = color(255,255,255);
-      //if (overidingColor==4) colorOveride = color(25,25,25);
-      
-      
-      for (int i=0; i<controlBoards.length; i++) {  //draw board
-        RS485LeonardoController oneBoard = controlBoards[i];
-        for (int j=0;j<oneBoard.spheres.length;j++){
-          oneBoard.spheres[j].fillcolor=colorOveride;
-          oneBoard.spheres[j].fillcolorDim=oneBoard.spheres[j].fillcolor;
-        }
-      }
-    }
-  }
 }

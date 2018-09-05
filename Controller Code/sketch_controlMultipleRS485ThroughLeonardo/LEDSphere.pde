@@ -1,7 +1,5 @@
 int dimScale = 16;
 
-int overidingColor = 0;
-
 int stableColor   = color(255, 255, 255);  
 int tiltColor     = color(0, 0, 192); 
 int unstableColor = color(0, 192, 0);  
@@ -74,20 +72,20 @@ class LEDSphere {
     acceY=_acceY;
     if (acceEvent!=_acceEvent)changedEvent = true;
     acceEvent=_acceEvent;
-    if (overidingColor==0) {
-      switch(_acceEvent) {
-      case 0:
-        fillcolor=stableColor;
-        break;
-      case 1:
-        fillcolor=tiltColor;
-        break;
-      case 2:
-        fillcolor=unstableColor;
-        break;
-      }
-      fillcolorDim=color(red(fillcolor)/dimScale, green(fillcolor)/dimScale, blue(fillcolor)/dimScale);
+
+    switch(_acceEvent) {
+    case 0:
+      fillcolor=stableColor;
+      break;
+    case 1:
+      fillcolor=tiltColor;
+      break;
+    case 2:
+      fillcolor=unstableColor;
+      break;
     }
+    fillcolorDim=color(red(fillcolor)/dimScale, green(fillcolor)/dimScale, blue(fillcolor)/dimScale);
+
 
     lastUpdated=frameCount;
   }
