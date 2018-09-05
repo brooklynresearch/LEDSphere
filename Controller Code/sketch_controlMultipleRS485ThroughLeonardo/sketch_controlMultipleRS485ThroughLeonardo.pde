@@ -65,7 +65,7 @@ void draw() {
   background(0);
 
   text(int(frameRate), 20, 700);
-  
+
   effectObjects.update();  //this give all spheres color
   effectObjects.draw();
 
@@ -121,4 +121,8 @@ void keyPressed() {
       dimScale=64;
     }
   }
+
+  //if (key == 'o') {  //test
+  //  effectObjects.addRipple(500,500,true);
+  //}
 }
