@@ -122,7 +122,11 @@ void keyPressed() {
     }
   }
 
-  //if (key == 'o') {  //test
-  //  effectObjects.addRipple(500,500,true);
-  //}
+  if (key == 'w') {  //test
+    effectObjects.addWave(100, HALF_PI, false);
+  }
+
+  if (key == 'o') {  //test
+    effectObjects.addRipple(500, 500, false);
+  }
 }
