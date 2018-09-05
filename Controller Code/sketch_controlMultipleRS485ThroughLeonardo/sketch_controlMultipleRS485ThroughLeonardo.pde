@@ -38,7 +38,7 @@ void setup() {
 
 void draw() {
   accuTime = 0;
-  long stampTime = System.nanoTime();
+  //long stampTime = System.nanoTime();
 
   if (frameCount%15==0) {
     //hotplug stuff
@@ -72,8 +72,8 @@ void draw() {
     }
   }
 
-  accuTime+=System.nanoTime()-stampTime;
-  println("Draw us", (accuTime)/1000);
+  //accuTime+=System.nanoTime()-stampTime;
+  //println("Draw us", (accuTime)/1000);
 }
 
 void serialEvent(Serial port) {
