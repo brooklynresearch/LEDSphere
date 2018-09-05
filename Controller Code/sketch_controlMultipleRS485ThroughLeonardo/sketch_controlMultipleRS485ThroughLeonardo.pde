@@ -37,28 +37,34 @@ void setup() {
 
 
 void draw() {
-  //hotplug stuff
-  {
-    int i=0;
-    while (i<hotplugSerials.size()) {
-      HotPlugSerial onePort=hotplugSerials.get(i);
-      if (onePort.update()) {
-        println("Remove "+onePort.serialName+" due to inactivity");
-        hotplugSerials.remove(i);
-        continue;
+
+
+  if (frameCount%30==0) {
+    //hotplug stuff
+    {
+      int i=0;
+      while (i<hotplugSerials.size()) {
+        HotPlugSerial onePort=hotplugSerials.get(i);
+        if (onePort.update()) {
+          println("Remove "+onePort.serialName+" due to inactivity");
+          hotplugSerials.remove(i);
+          continue;
+        }
+        i++;
       }
-      i++;
     }
+
+    for (int i=0; i<hotplugSerials.size(); i++) {
+    }
+
+    SerialHandler_checkSerialPort();  //Serial.list() is slow, no need to run every frame
   }
 
-  for (int i=0; i<hotplugSerials.size(); i++) {
-  }
 
-  SerialHandler_checkSerialPort();
 
   background(0);
 
-  text(int(frameRate), 20, 650);
+  text(int(frameRate), 20, 700);
 
   {
     for (int i=0; i<controlBoards.length; i++) {  //draw board
@@ -109,5 +115,4 @@ void keyPressed() {
       dimScale=64;
     }
   }
-
 }
