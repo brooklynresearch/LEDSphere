@@ -31,7 +31,13 @@ ArrayList<String> SerialHandler_validPorts(String[] allPorts) {
         validPorts.add(port);
       }
     }
-  } 
+  } else if (os.indexOf("linux") != -1) {
+    for (String port : allPorts) {
+      if (port.startsWith("/dev/ttyACM") ) {
+        validPorts.add(port);
+      }
+    }
+  }
   return validPorts;
 }
 

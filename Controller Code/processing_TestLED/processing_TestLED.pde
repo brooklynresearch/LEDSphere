@@ -11,13 +11,13 @@ PImage controlBoardImg;
 int sendColor = color(0, 0, 0);
 
 void setup() {
-  size(430, 380);
+  size(430, 280);
   frameRate(60);
   controlBoardImg = loadImage("control_pcb.png");
 
   for (int i=0; i<controlBoardCount/4; i++) {
     int x=50;
-    int y=30+(i)*50;
+    int y=20+(i)*35;
 
     for (int j=0; j<4; j++) {
       int id = i+j*(controlBoardCount/4);
@@ -49,7 +49,7 @@ void draw() {
 
   background(0);
 
-  text(int(frameRate), 20, 360);
+  text(int(frameRate), 20, 260);
 
   {
     for (int i=0; i<controlBoards.length; i++) {  //draw board
