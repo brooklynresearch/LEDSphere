@@ -17,18 +17,12 @@ class RS485LeonardoController {
 
   boolean gotData = false;
 
-  boolean onGround = false;
-
-  RS485LeonardoController (int _x, int _y, int _id, boolean _onGround, int xSpacing, int sphereOffset) {  
+  RS485LeonardoController (int _x, int _y, int _id) {  
     x=_x;
     y=_y;
     id=_id;
-    onGround=_onGround;
     boardConnected=false;
     hotplugSerial=null;
-
-    int sphereOffsetX = onGround?-20+0:20-20;  //offset controller also
-    int sphereOffsetY = onGround?20-20:-20+10;  //offset controller also
 
   }
 

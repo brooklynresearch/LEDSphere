@@ -11,29 +11,18 @@ PImage controlBoardImg;
 int sendColor = color(0, 0, 0);
 
 void setup() {
-  size(820, 750);
+  size(430, 380);
   frameRate(60);
   controlBoardImg = loadImage("control_pcb.png");
 
-  for (int i=0; i<controlBoardCount/2; i++) {
+  for (int i=0; i<controlBoardCount/4; i++) {
+    int x=50;
+    int y=30+(i)*50;
 
-
-    int x=70;
-    int y=50+(i/2)*100;
-
-    if ((i&2) != 0) x+=50;
-
-    int spacingX = 100;
-    int sphereOffsetX = 140;
-    if ((i%2)==1) {
-      spacingX = -100;
-      sphereOffsetX = -120;
-      x+=0+600;
+    for (int j=0; j<4; j++) {
+      int id = i+j*(controlBoardCount/4);
+      controlBoards[id]=new RS485LeonardoController(x+j*100, y, id);
     }
-
-    controlBoards[i]=new RS485LeonardoController(x, y+20, i, true, spacingX, sphereOffsetX);
-    int topUnitID = i+(controlBoardCount/2);
-    controlBoards[topUnitID]=new RS485LeonardoController(x+20, y-10, topUnitID, false, spacingX, sphereOffsetX);
   }
 }
 
@@ -60,7 +49,7 @@ void draw() {
 
   background(0);
 
-  text(int(frameRate), 20, 650);
+  text(int(frameRate), 20, 360);
 
   {
     for (int i=0; i<controlBoards.length; i++) {  //draw board
