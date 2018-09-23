@@ -5,6 +5,7 @@ import serial
 import serial.tools.list_ports
 from time import sleep
 import subprocess
+import time
 
 
 for eachArg in sys.argv:   
@@ -37,6 +38,22 @@ if (leonardoDevice!=None):
     else:
         print "No ID write"
         subprocess.call(["/Users/sundeqing/Library/Arduino15/packages/arduino/tools/avrdude/6.3.0-arduino9/bin/avrdude", "-C/Users/sundeqing/Library/Arduino15/packages/arduino/tools/avrdude/6.3.0-arduino9/etc/avrdude.conf", "-v","-patmega32u4","-cavr109","-P"+leonardoDevice,"-b57600","-D","-Uflash:w:"+flashHex+":i"])
+        
+    #open port to read it for a few seconds
+    
+    print "waiting..."
+    sleep(2)
+    print "Open port to check output"
+    leonardoSerial = serial.Serial(leonardoDevice,baudrate=9600,timeout=0.01,rtscts=1)
+    serialStartTime = time.time()
+    while (time.time()-serialStartTime)<3:
+        try:
+            lineCommand = leonardoSerial.readline().strip()
+        except serial.SerialException:
+            break;
+        if (len(lineCommand)>0):
+            print lineCommand
+    leonardoSerial.close()
     
     
         
