@@ -1,6 +1,10 @@
 int colorIdle = color(255, 255, 255);
 int colorMaxEffect = color(0, 255, 0);
+int tiltColor = color(255, 0, 0);
+
 int maxEffectValue = 255;
+int tiltMaxValue = 255;
+int tiltTransistionTimeMS = 100;
 
 class EffectObjects {
   ArrayList<RippleEffectObject> ripples = new ArrayList<RippleEffectObject>();
@@ -53,11 +57,29 @@ class EffectObjects {
     //color mapping
     for (RS485LeonardoController oneBoard : controlBoards) {
       for (LEDSphere oneSphere : oneBoard.spheres) {
+
+
         if (oneSphere.effectValue==0) {
           oneSphere.fillcolor=colorIdle;
         } else {
           oneSphere.fillcolor=lerpColor(colorIdle, colorMaxEffect, (float)oneSphere.effectValue/maxEffectValue);
         }
+
+        //do tilt color
+        int tiltAccumulate = oneSphere.tiltAccumulate;
+        if (oneSphere.acceEvent==1 || tiltAccumulate>0) {
+          boolean incTilt = (oneSphere.acceEvent==1);
+          int tiltChange = ((millis()-oneSphere.eventChangeMillis)*tiltMaxValue/tiltTransistionTimeMS);
+          if (incTilt) {
+            tiltAccumulate = oneSphere.tiltAccumulateOnLastChange + tiltChange;
+          } else {
+            tiltAccumulate = oneSphere.tiltAccumulateOnLastChange - tiltChange;
+          }
+          tiltAccumulate = constrain(tiltAccumulate, 0, tiltMaxValue);
+          oneSphere.tiltAccumulate=tiltAccumulate;
+          oneSphere.fillcolor=lerpColor(oneSphere.fillcolor, tiltColor, (float)tiltAccumulate/tiltMaxValue);
+        }
+
         oneSphere.fillcolorDim=color(red(oneSphere.fillcolor)/dimScale, green(oneSphere.fillcolor)/dimScale, blue(oneSphere.fillcolor)/dimScale);
       }
     }

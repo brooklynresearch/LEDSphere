@@ -1,5 +1,5 @@
 int dimScale = 16;  //larger number made light dimmer
-boolean debug_Neverlost = true;
+boolean debug_Neverlost = false;
 
 int stableEdgeColor   = color(255, 255, 255);  
 int tiltEdgeColor     = color(0, 0, 192); 
@@ -24,6 +24,9 @@ class LEDSphere {
   int centerThreshold = 384;
 
   boolean changedEvent = false;
+  int eventChangeMillis = 0;
+  int tiltAccumulate = 0;
+  int tiltAccumulateOnLastChange = 0;
   boolean onGround = false;
 
   int effectValue = 0;  //this is used by effect
@@ -109,7 +112,11 @@ class LEDSphere {
   void updateData(int _acceX, int _acceY, int _acceEvent) {
     acceX=_acceX;
     acceY=_acceY;
-    if (acceEvent!=_acceEvent)changedEvent = true;
+    if (acceEvent!=_acceEvent) {
+      changedEvent = true;
+      eventChangeMillis=millis();
+      tiltAccumulateOnLastChange=tiltAccumulate;
+    }
     acceEvent=_acceEvent;
 
     lastUpdated=frameCount;
