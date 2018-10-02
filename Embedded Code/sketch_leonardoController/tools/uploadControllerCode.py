@@ -6,7 +6,9 @@ import serial.tools.list_ports
 from time import sleep
 import subprocess
 import time
+import os
 
+scriptDir = os.path.dirname(os.path.realpath(sys.argv[0]))
 
 for eachArg in sys.argv:   
     print(eachArg)
@@ -25,11 +27,11 @@ if (leonardoDevice!=None):
     
     sleep(1)
     
-    flashHex = "leonardoController20180923.hex"
+    flashHex = scriptDir + "/leonardoController20180923.hex"
     
     if (len(sys.argv)>1):
         print "write ID: "+sys.argv[1]
-        subprocess.call(["./generate_eeprom_content.py",sys.argv[1]])
+        subprocess.call([scriptDir + "/generate_eeprom_content.py",sys.argv[1]])
         eepromHex = "controller_id_eeprom.hex"
         subprocess.call(["/Users/sundeqing/Library/Arduino15/packages/arduino/tools/avrdude/6.3.0-arduino9/bin/avrdude", "-C/Users/sundeqing/Library/Arduino15/packages/arduino/tools/avrdude/6.3.0-arduino9/etc/avrdude.conf", "-v","-patmega32u4","-cavr109","-P"+leonardoDevice,"-b57600","-D","-Uflash:w:"+flashHex+":i","-Ueeprom:w:"+eepromHex+":i"])
         
