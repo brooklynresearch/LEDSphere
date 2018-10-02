@@ -1,5 +1,10 @@
 boolean mirrorRipplesTopBottom = true;
 
+int controlBoardTopDrawOffsetX = 20;
+int controlBoardTopDrawOffsetY = -30;
+int controlBoardBottomDrawOffsetX = 0;
+int controlBoardBottomDrawOffsetY = 0;
+
 class RS485LeonardoController {
   int x;
   int y;
@@ -31,11 +36,16 @@ class RS485LeonardoController {
     boardConnected=false;
     hotplugSerial=null;
 
-    int sphereOffsetX = onGround?-20+0:20-20;  //offset controller also
-    int sphereOffsetY = onGround?20-20:-20+10;  //offset controller also
-
     for (int i=0; i<totalSphereCount; i++) {
-      spheres[i] = new LEDSphere(i+startID, x+sphereOffset+xSpacing*i+sphereOffsetX, y+0+sphereOffsetY, onGround);
+      spheres[i] = new LEDSphere(i+startID, x+sphereOffset+xSpacing*i, y, onGround);
+    }
+
+    if (!onGround) {
+      x=x+controlBoardTopDrawOffsetX;
+      y=y+controlBoardTopDrawOffsetY;
+    } else {
+      x=x+controlBoardBottomDrawOffsetX;
+      y=y+controlBoardBottomDrawOffsetY;
     }
   }
 

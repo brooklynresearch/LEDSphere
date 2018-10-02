@@ -18,7 +18,7 @@ void setup() {
 
 
     int x=70;
-    int y=50+(i/2)*100;
+    int y=70+(i/2)*100;
 
     if ((i&2) != 0) x+=50;
 
@@ -30,9 +30,9 @@ void setup() {
       x+=960+600;
     }
 
-    controlBoards[i]=new RS485LeonardoController(x, y+20, i, true, spacingX, sphereOffsetX);
+    controlBoards[i]=new RS485LeonardoController(x, y, i, true, spacingX, sphereOffsetX);
     int topUnitID = i+(controlBoardCount/2);
-    controlBoards[topUnitID]=new RS485LeonardoController(x+20, y-10, topUnitID, false, spacingX, sphereOffsetX);
+    controlBoards[topUnitID]=new RS485LeonardoController(x, y, topUnitID, false, spacingX, sphereOffsetX);
   }
 }
 
@@ -124,6 +124,7 @@ void keyPressed() {
 
   if (key == 'w') {  //test
     effectObjects.addWave(100, HALF_PI, false);
+    effectObjects.addWave(100, HALF_PI, true);
   }
 
   if (key == 'o') {  //test
