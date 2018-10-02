@@ -1,5 +1,5 @@
 int colorIdle = color(255, 255, 255);
-int colorMaxEffect = color(255, 0, 0);
+int colorMaxEffect = color(0, 255, 0);
 int maxEffectValue = 255;
 
 class EffectObjects {
@@ -50,6 +50,7 @@ class EffectObjects {
       }
     }
 
+    //color mapping
     for (RS485LeonardoController oneBoard : controlBoards) {
       for (LEDSphere oneSphere : oneBoard.spheres) {
         if (oneSphere.effectValue==0) {

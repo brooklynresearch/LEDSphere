@@ -1,3 +1,5 @@
+boolean mirrorRipplesTopBottom = true;
+
 class RS485LeonardoController {
   int x;
   int y;
@@ -72,7 +74,10 @@ class RS485LeonardoController {
         LEDSphere oneSphere=spheres[i];
         if (oneSphere.changedEvent) {
           if (oneSphere.acceEvent == 2) {
-            effectObjects.addRipple(oneSphere.xpos,oneSphere.ypos,oneSphere.onGround);
+            effectObjects.addRipple(oneSphere.xpos, oneSphere.ypos, oneSphere.onGround);
+            if (mirrorRipplesTopBottom) {
+              effectObjects.addRipple(oneSphere.xpos, oneSphere.ypos, !oneSphere.onGround);
+            }
           }
           oneSphere.changedEvent = false;
         }

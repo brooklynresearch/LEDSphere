@@ -1,4 +1,4 @@
-int dimScale = 16;
+int dimScale = 16;  //larger number made light dimmer
 
 int stableEdgeColor   = color(255, 255, 255);  
 int tiltEdgeColor     = color(0, 0, 192); 
@@ -101,18 +101,18 @@ class LEDSphere {
     if (acceEvent!=_acceEvent)changedEvent = true;
     acceEvent=_acceEvent;
 
-/*    switch(_acceEvent) {
-    case 0:
-      fillcolor=stableColor;
-      break;
-    case 1:
-      fillcolor=tiltColor;
-      break;
-    case 2:
-      fillcolor=unstableColor;
-      break;
-    }
-    fillcolorDim=color(red(fillcolor)/dimScale, green(fillcolor)/dimScale, blue(fillcolor)/dimScale);*/
+    /*    switch(_acceEvent) {
+     case 0:
+     fillcolor=stableColor;
+     break;
+     case 1:
+     fillcolor=tiltColor;
+     break;
+     case 2:
+     fillcolor=unstableColor;
+     break;
+     }
+     fillcolorDim=color(red(fillcolor)/dimScale, green(fillcolor)/dimScale, blue(fillcolor)/dimScale);*/
 
     lastUpdated=frameCount;
   }
