@@ -1,4 +1,4 @@
-#define AUTO_RESET_LEONARDO
+//#define AUTO_RESET_LEONARDO
 
 #include <EEPROM.h>
 #include <avr/wdt.h>
