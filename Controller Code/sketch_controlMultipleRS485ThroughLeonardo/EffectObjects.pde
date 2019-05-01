@@ -1,6 +1,6 @@
-int colorIdle = color(255, 255, 255);
-int colorMaxEffect = color(0, 255, 0);
-int tiltColor = color(255, 0, 0);
+int colorIdle = color(225, 100, 100);
+int colorMaxEffect = color(255, 255, 255);
+int tiltColor = color(225, 100, 100);
 
 int maxEffectValue = 255;
 int tiltMaxValue = 255;
@@ -8,7 +8,7 @@ int tiltTransistionTimeMS = 100;
 
 class EffectObjects {
   ArrayList<RippleEffectObject> ripples = new ArrayList<RippleEffectObject>();
-  int ripplesLimit = 10;
+  int ripplesLimit = 64;
   ArrayList<WaveEffectObject> waves = new ArrayList<WaveEffectObject>();
   int wavesLimit = 5;
   ArrayList<BreathEffectObject> breaths = new ArrayList<BreathEffectObject>();
@@ -99,7 +99,16 @@ class EffectObjects {
     }
   }
 
-  void addRipple(float _x, float _y, boolean _onGround) {
+  void addRipple(float _x, float _y, boolean _onGround, boolean sendOSC) {
+    //also send ripple
+    if (enableOSC && sendOSC) {
+      OscMessage myMessage = new OscMessage("/ripple");
+      myMessage.add(_x);
+      myMessage.add(_y);
+      myMessage.add(_onGround?1:0);
+      oscP5.send(myMessage, myRemoteLocation1);
+      oscP5.send(myMessage, myRemoteLocation2);
+    }
     if (ripples.size()<ripplesLimit) {
       ripples.add(new RippleEffectObject(_x, _y, _onGround));
     }

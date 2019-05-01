@@ -1,4 +1,4 @@
-boolean mirrorRipplesTopBottom = true;
+boolean mirrorRipplesTopBottom = false;  //do it in OSC
 
 int controlBoardTopDrawOffsetX = 20;
 int controlBoardTopDrawOffsetY = -30;
@@ -84,9 +84,9 @@ class RS485LeonardoController {
         LEDSphere oneSphere=spheres[i];
         if (oneSphere.changedEvent) {
           if (oneSphere.acceEvent == 2) {
-            effectObjects.addRipple(oneSphere.xpos, oneSphere.ypos, oneSphere.onGround);
+            effectObjects.addRipple(oneSphere.xpos, oneSphere.ypos, oneSphere.onGround, true);
             if (mirrorRipplesTopBottom) {
-              effectObjects.addRipple(oneSphere.xpos, oneSphere.ypos, !oneSphere.onGround);
+              effectObjects.addRipple(oneSphere.xpos, oneSphere.ypos, !oneSphere.onGround, true);
             }
           }
           oneSphere.changedEvent = false;
