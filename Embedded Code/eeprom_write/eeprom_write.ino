@@ -1,4 +1,4 @@
-#define device_ADDR 21
+#define device_ADDR 2
 
 #include <EEPROM.h>
 
@@ -25,7 +25,3 @@ void setup()
 void loop()
 {
 }
-
-
-
-

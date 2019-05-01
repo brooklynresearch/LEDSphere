@@ -1,4 +1,4 @@
-int dimScale = 16;  //larger number made light dimmer
+int dimScale = 1;  //larger number made light dimmer
 boolean debug_Neverlost = false;
 
 int stableEdgeColor   = color(255, 255, 255);  

@@ -3,7 +3,7 @@ import processing.serial.*;
 
 Serial myPort;       
 
-int controlBoardCount = 28;
+int controlBoardCount = 24;
 RS485LeonardoController controlBoards[] = new RS485LeonardoController[controlBoardCount];
 EffectObjects effectObjects = new EffectObjects();
 

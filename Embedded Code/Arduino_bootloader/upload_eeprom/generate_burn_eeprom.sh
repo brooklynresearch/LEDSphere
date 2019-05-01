@@ -1,6 +1,7 @@
 #!/bin/bash
-avrdudePath='/Users/sundeqing/Library/Arduino15/packages/arduino/tools/avrdude/6.3.0-arduino9'
-serialPort='/dev/cu.usbserial-A96LT7BB' 
+
+avrdudePath='/Applications/Arduino.app/Contents/Java/hardware/tools/avr'
+serialPort='/dev/cu.usbserial-A700ONTI' 
 
 python generate_eeprom_content.py $1
 
