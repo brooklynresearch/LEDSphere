@@ -20,8 +20,8 @@ class LEDSphere {
   boolean lost;
   int needUpdateParameter;
   int envelopeRate = 32;
-  int envelopeThreshold =768;
-  int centerThreshold = 384;
+  int envelopeThreshold =768+256;  //unstable 
+  int centerThreshold = 10384;  //tilt value, orignial value is 384
 
   boolean changedEvent = false;
   int eventChangeMillis = 0;
