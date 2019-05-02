@@ -129,6 +129,35 @@ void keyPressed() {
   if (key == 'd') {
     //print some debug info
     println("hotplugSerials has "+hotplugSerials.size()+" elements");
+
+    String[] cmd = {
+      "/bin/sh", "-c", "system_profiler SPUSBDataType | grep Leonardo -c"
+    };
+
+    Process p = exec(cmd);
+    String lineBuf="-1";  
+    try {
+      String line;
+      BufferedReader input =  
+        new BufferedReader  
+        (new java.io.InputStreamReader(p.getInputStream()));  
+      while ((line = input.readLine()) != null) {
+        lineBuf=line;
+      }  
+      input.close();
+    } 
+    catch (Exception e) {
+    }
+    int lineNumber = Integer.valueOf(lineBuf);
+    println("Leonardo on USB tree: ", lineNumber);
+  }
+
+  if (key=='f') {  //reset usb hub
+    String[] cmd = {
+      "/bin/sh", "-c", "~/Downloads/reenumerate -v 0x05e3,0x0610"
+    };
+
+    Process p = exec(cmd);
   }
 
   if (key == 'r') {  //reset calibration
@@ -143,7 +172,6 @@ void keyPressed() {
   }
 
   if (key == 't') {
-    
   }
 
   if (key == 'w') {  //test

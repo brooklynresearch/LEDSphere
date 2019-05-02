@@ -131,9 +131,9 @@ class RippleEffectObject {
   int startTime;
   float startX, startY; 
   boolean onGround;
-  int lifeInMS = 2400;
-  float pixelPerMS = .2;
-  float effectDist = 200;  //this is width of effect ring
+  int lifeInMS = 5000;
+  float pixelPerMS = .04;
+  float effectDist = 100;  //this is width of effect ring
   float effectStrength = 255;
 
   float diameter = 0;
