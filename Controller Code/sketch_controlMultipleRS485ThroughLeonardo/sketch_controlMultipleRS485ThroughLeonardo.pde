@@ -143,11 +143,7 @@ void keyPressed() {
   }
 
   if (key == 't') {
-    if (dimScale!=1) {
-      dimScale=1;
-    } else {
-      dimScale=64;
-    }
+    
   }
 
   if (key == 'w') {  //test
@@ -156,7 +152,7 @@ void keyPressed() {
   }
 
   if (key == 'o') {  //test
-    effectObjects.addRipple(500, 500, false, true);
+    effectObjects.addRipple(500, 500, true, true);
   }
 
   if (key == 'b') {  //test

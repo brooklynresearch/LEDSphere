@@ -131,9 +131,9 @@ class RippleEffectObject {
   int startTime;
   float startX, startY; 
   boolean onGround;
-  int lifeInMS = 4000;
-  float pixelPerMS = .8;
-  float effectDist = 200;
+  int lifeInMS = 2400;
+  float pixelPerMS = .2;
+  float effectDist = 200;  //this is width of effect ring
   float effectStrength = 255;
 
   float diameter = 0;
@@ -159,6 +159,21 @@ class RippleEffectObject {
     diameter = age*pixelPerMS;
     float radius = diameter/2;
     if (age>=lifeInMS) return false;
+
+    float effectStrengthWeakend = effectStrength;
+    float effectDistMapped = effectDist;
+    if (age>(lifeInMS/2)) {  //make it weak in the second half of life
+      if (lifeInMS>0) {
+        effectStrengthWeakend = map(age, lifeInMS/2, lifeInMS, effectStrength, 0);
+      } else {
+        effectStrengthWeakend = 0;
+      }
+    }
+    if (radius<effectDist) { //make initial ripple not wide.
+      effectDistMapped=radius*1.5;
+      if (effectDistMapped>effectDist) effectDistMapped = effectDist;
+    }
+
     //update spheres
     for (int i=0; i<controlBoards.length; i++) {  //draw board
       RS485LeonardoController oneBoard = controlBoards[i];
@@ -166,8 +181,18 @@ class RippleEffectObject {
       for (int j=0; j<oneBoard.spheres.length; j++) {
         float sphereDist = otherSphereDistace[i][j];
         float rippleDist = abs(sphereDist-radius);
+        float addEffect = 0;
         if (rippleDist<=effectDist) {
-          oneBoard.spheres[j].effectValue+=map(rippleDist, 0, effectDist, effectStrength, 0);
+          if (effectDistMapped>0) {
+            addEffect=map(rippleDist, 0, effectDistMapped, effectStrengthWeakend, 0);
+          }
+        }
+        //make center one bright
+        if (sphereDist<100) {
+          addEffect=addEffect*4;
+        }
+        if (addEffect>0) {
+          oneBoard.spheres[j].effectValue+=addEffect;
         }
       }
     }
